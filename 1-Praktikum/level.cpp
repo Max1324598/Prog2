@@ -1,9 +1,11 @@
 #include "level.h"
+#include "door.h"
 #include "tile.h"
 #include "floor.h"
 #include "wall.h"
 #include "portal.h"
 #include "character.h"
+#include "switch.h"
 
 Level::Level()
     : maxRow{10}, maxColumn{15}, stageVector{}, characterVector{}
@@ -53,7 +55,7 @@ void Level::createEmptyLevel(int rows, int columns)
             for (int j{0}; j <= columns; j++) {
                 if (isBoundary(i, j)) {
 
-                    stageVector.at(i).emplace_back(new Floor(i, j, nullptr));
+                    stageVector.at(i).emplace_back(new Wall(i, j, nullptr));
 
                 } else {
                     stageVector.at(i).emplace_back(new Floor(i, j,nullptr));
@@ -61,6 +63,11 @@ void Level::createEmptyLevel(int rows, int columns)
             }
 
         }
+        Door* door = new Door(5,2,nullptr);
+        Switch* swit = new Switch(2,1,nullptr);
+        swit->attach(door);
+        stageVector.at(5).at(2) = door;
+        stageVector.at(2).at(1) = swit;
     }
 
 

@@ -12,7 +12,7 @@ class Tile
 {
 public:
     Tile() = delete;
-    Tile (int row, int column, const string& texture, Character* character);
+    Tile(int row, int column, const string& texture, Character* character);
     virtual ~Tile() = default;
 
 
@@ -23,6 +23,7 @@ public:
     string getTexture() const;
     int getRow() const;
     int getColumn() const;
+    string setTexture(std::string s);
 
     //setter
 
@@ -34,7 +35,7 @@ public:
 
 
 
-private:
+protected:
     int row;
     int column;
     string texture;

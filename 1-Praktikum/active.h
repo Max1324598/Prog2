@@ -5,11 +5,11 @@ class Passive;
 class Active
 {
 public:
-    virtual ~Active() = 0;
+    virtual ~Active() = default;
     std::vector<Passive*> passiveObjects;
     void attach(Passive*);
     void detach(Passive*);
-    void activate();
+    virtual void activate();
 };
 
 #endif // ACTIVE_H

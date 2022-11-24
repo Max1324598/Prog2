@@ -6,6 +6,7 @@ void Active::activate(){
     }
 }
 
+
 void Active::attach(Passive* newPassiveObject){
     bool alreadyListed = false;
     for(auto &n : passiveObjects){

@@ -55,24 +55,28 @@ OBJECTS_DIR   = ./
 SOURCES       = ../1-Praktikum/abstractUI.cpp \
 		../1-Praktikum/active.cpp \
 		../1-Praktikum/character.cpp \
+		../1-Praktikum/door.cpp \
 		../1-Praktikum/dungeoncrawler.cpp \
 		../1-Praktikum/floor.cpp \
 		../1-Praktikum/level.cpp \
 		../1-Praktikum/main.cpp \
 		../1-Praktikum/passive.cpp \
 		../1-Praktikum/portal.cpp \
+		../1-Praktikum/switch.cpp \
 		../1-Praktikum/terminalUI.cpp \
 		../1-Praktikum/tile.cpp \
 		../1-Praktikum/wall.cpp 
 OBJECTS       = abstractUI.o \
 		active.o \
 		character.o \
+		door.o \
 		dungeoncrawler.o \
 		floor.o \
 		level.o \
 		main.o \
 		passive.o \
 		portal.o \
+		switch.o \
 		terminalUI.o \
 		tile.o \
 		wall.o
@@ -221,22 +225,26 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../1-Praktikum/1-Praktikum.pro ../1-Praktikum/abstractUI.h \
 		../1-Praktikum/active.h \
 		../1-Praktikum/character.h \
+		../1-Praktikum/door.h \
 		../1-Praktikum/dungeoncrawler.h \
 		../1-Praktikum/floor.h \
 		../1-Praktikum/level.h \
 		../1-Praktikum/passive.h \
 		../1-Praktikum/portal.h \
+		../1-Praktikum/switch.h \
 		../1-Praktikum/terminalUI.h \
 		../1-Praktikum/tile.h \
 		../1-Praktikum/wall.h ../1-Praktikum/abstractUI.cpp \
 		../1-Praktikum/active.cpp \
 		../1-Praktikum/character.cpp \
+		../1-Praktikum/door.cpp \
 		../1-Praktikum/dungeoncrawler.cpp \
 		../1-Praktikum/floor.cpp \
 		../1-Praktikum/level.cpp \
 		../1-Praktikum/main.cpp \
 		../1-Praktikum/passive.cpp \
 		../1-Praktikum/portal.cpp \
+		../1-Praktikum/switch.cpp \
 		../1-Praktikum/terminalUI.cpp \
 		../1-Praktikum/tile.cpp \
 		../1-Praktikum/wall.cpp
@@ -555,8 +563,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/active.h ../1-Praktikum/character.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/floor.h ../1-Praktikum/level.h ../1-Praktikum/passive.h ../1-Praktikum/portal.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/active.cpp ../1-Praktikum/character.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/level.cpp ../1-Praktikum/main.cpp ../1-Praktikum/passive.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/active.h ../1-Praktikum/character.h ../1-Praktikum/door.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/floor.h ../1-Praktikum/level.h ../1-Praktikum/passive.h ../1-Praktikum/portal.h ../1-Praktikum/switch.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/active.cpp ../1-Praktikum/character.cpp ../1-Praktikum/door.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/level.cpp ../1-Praktikum/main.cpp ../1-Praktikum/passive.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/switch.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -614,9 +622,18 @@ active.o: ../1-Praktikum/active.cpp ../1-Praktikum/passive.h \
 character.o: ../1-Praktikum/character.cpp ../1-Praktikum/character.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o character.o ../1-Praktikum/character.cpp
 
+door.o: ../1-Praktikum/door.cpp ../1-Praktikum/door.h \
+		../1-Praktikum/tile.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o door.o ../1-Praktikum/door.cpp
+
 dungeoncrawler.o: ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/dungeoncrawler.h \
 		../1-Praktikum/tile.h \
 		../1-Praktikum/level.h \
+		../1-Praktikum/door.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
 		../1-Praktikum/character.h \
 		../1-Praktikum/abstractUI.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dungeoncrawler.o ../1-Praktikum/dungeoncrawler.cpp
@@ -626,7 +643,10 @@ floor.o: ../1-Praktikum/floor.cpp ../1-Praktikum/floor.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o floor.o ../1-Praktikum/floor.cpp
 
 level.o: ../1-Praktikum/level.cpp ../1-Praktikum/level.h \
+		../1-Praktikum/door.h \
 		../1-Praktikum/tile.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
 		../1-Praktikum/floor.h \
 		../1-Praktikum/wall.h \
 		../1-Praktikum/portal.h \
@@ -634,6 +654,10 @@ level.o: ../1-Praktikum/level.cpp ../1-Praktikum/level.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o level.o ../1-Praktikum/level.cpp
 
 main.o: ../1-Praktikum/main.cpp ../1-Praktikum/level.h \
+		../1-Praktikum/door.h \
+		../1-Praktikum/tile.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
 		../1-Praktikum/terminalUI.h \
 		../1-Praktikum/abstractUI.h \
 		../1-Praktikum/dungeoncrawler.h
@@ -647,10 +671,18 @@ portal.o: ../1-Praktikum/portal.cpp ../1-Praktikum/portal.h \
 		../1-Praktikum/tile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o portal.o ../1-Praktikum/portal.cpp
 
+switch.o: ../1-Praktikum/switch.cpp ../1-Praktikum/switch.h \
+		../1-Praktikum/tile.h \
+		../1-Praktikum/active.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o switch.o ../1-Praktikum/switch.cpp
+
 terminalUI.o: ../1-Praktikum/terminalUI.cpp ../1-Praktikum/terminalUI.h \
 		../1-Praktikum/abstractUI.h \
 		../1-Praktikum/level.h \
+		../1-Praktikum/door.h \
 		../1-Praktikum/tile.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
 		../1-Praktikum/dungeoncrawler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o terminalUI.o ../1-Praktikum/terminalUI.cpp
 

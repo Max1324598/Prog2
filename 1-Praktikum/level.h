@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include <vector>
+#include "door.h"
 using std::vector;
 
 class Tile;

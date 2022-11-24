@@ -11,12 +11,14 @@ SOURCES += \
         abstractUI.cpp \
         active.cpp \
         character.cpp \
+        door.cpp \
         dungeoncrawler.cpp \
         floor.cpp \
         level.cpp \
         main.cpp \
         passive.cpp \
         portal.cpp \
+        switch.cpp \
         terminalUI.cpp \
         tile.cpp \
         wall.cpp
@@ -30,11 +32,13 @@ HEADERS += \
     abstractUI.h \
     active.h \
     character.h \
+    door.h \
     dungeoncrawler.h \
     floor.h \
     level.h \
     passive.h \
     portal.h \
+    switch.h \
     terminalUI.h \
     tile.h \
     wall.h
