@@ -53,21 +53,25 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../1-Praktikum/abstractUI.cpp \
+		../1-Praktikum/active.cpp \
 		../1-Praktikum/character.cpp \
 		../1-Praktikum/dungeoncrawler.cpp \
 		../1-Praktikum/floor.cpp \
 		../1-Praktikum/level.cpp \
 		../1-Praktikum/main.cpp \
+		../1-Praktikum/passive.cpp \
 		../1-Praktikum/portal.cpp \
 		../1-Praktikum/terminalUI.cpp \
 		../1-Praktikum/tile.cpp \
 		../1-Praktikum/wall.cpp 
 OBJECTS       = abstractUI.o \
+		active.o \
 		character.o \
 		dungeoncrawler.o \
 		floor.o \
 		level.o \
 		main.o \
+		passive.o \
 		portal.o \
 		terminalUI.o \
 		tile.o \
@@ -195,6 +199,7 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_post.prf \
+		../1-Praktikum/.qmake.stash \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -214,19 +219,23 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/lex.prf \
 		../1-Praktikum/1-Praktikum.pro ../1-Praktikum/abstractUI.h \
+		../1-Praktikum/active.h \
 		../1-Praktikum/character.h \
 		../1-Praktikum/dungeoncrawler.h \
 		../1-Praktikum/floor.h \
 		../1-Praktikum/level.h \
+		../1-Praktikum/passive.h \
 		../1-Praktikum/portal.h \
 		../1-Praktikum/terminalUI.h \
 		../1-Praktikum/tile.h \
 		../1-Praktikum/wall.h ../1-Praktikum/abstractUI.cpp \
+		../1-Praktikum/active.cpp \
 		../1-Praktikum/character.cpp \
 		../1-Praktikum/dungeoncrawler.cpp \
 		../1-Praktikum/floor.cpp \
 		../1-Praktikum/level.cpp \
 		../1-Praktikum/main.cpp \
+		../1-Praktikum/passive.cpp \
 		../1-Praktikum/portal.cpp \
 		../1-Praktikum/terminalUI.cpp \
 		../1-Praktikum/tile.cpp \
@@ -365,6 +374,7 @@ Makefile: ../1-Praktikum/1-Praktikum.pro ../../../Qt/6.4.0/gcc_64/mkspecs/linux-
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -509,6 +519,7 @@ Makefile: ../1-Praktikum/1-Praktikum.pro ../../../Qt/6.4.0/gcc_64/mkspecs/linux-
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/qt_config.prf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/toolchain.prf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/default_pre.prf:
@@ -544,8 +555,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/character.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/floor.h ../1-Praktikum/level.h ../1-Praktikum/portal.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/character.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/level.cpp ../1-Praktikum/main.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/active.h ../1-Praktikum/character.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/floor.h ../1-Praktikum/level.h ../1-Praktikum/passive.h ../1-Praktikum/portal.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/active.cpp ../1-Praktikum/character.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/level.cpp ../1-Praktikum/main.cpp ../1-Praktikum/passive.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -596,6 +607,10 @@ compiler_clean: compiler_moc_predefs_clean
 abstractUI.o: ../1-Praktikum/abstractUI.cpp ../1-Praktikum/abstractUI.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o abstractUI.o ../1-Praktikum/abstractUI.cpp
 
+active.o: ../1-Praktikum/active.cpp ../1-Praktikum/passive.h \
+		../1-Praktikum/active.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o active.o ../1-Praktikum/active.cpp
+
 character.o: ../1-Praktikum/character.cpp ../1-Praktikum/character.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o character.o ../1-Praktikum/character.cpp
 
@@ -623,6 +638,10 @@ main.o: ../1-Praktikum/main.cpp ../1-Praktikum/level.h \
 		../1-Praktikum/abstractUI.h \
 		../1-Praktikum/dungeoncrawler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../1-Praktikum/main.cpp
+
+passive.o: ../1-Praktikum/passive.cpp ../1-Praktikum/passive.h \
+		../1-Praktikum/active.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o passive.o ../1-Praktikum/passive.cpp
 
 portal.o: ../1-Praktikum/portal.cpp ../1-Praktikum/portal.h \
 		../1-Praktikum/tile.h
