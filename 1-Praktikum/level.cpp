@@ -53,7 +53,7 @@ void Level::createEmptyLevel(int rows, int columns)
             for (int j{0}; j <= columns; j++) {
                 if (isBoundary(i, j)) {
 
-                    stageVector.at(i).emplace_back(new Wall(i, j, nullptr));
+                    stageVector.at(i).emplace_back(new Floor(i, j, nullptr));
 
                 } else {
                     stageVector.at(i).emplace_back(new Floor(i, j,nullptr));
