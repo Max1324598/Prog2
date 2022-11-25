@@ -2,7 +2,7 @@
 
 #ifndef TILE_H
 #define TILE_H
-
+#include <typeinfo>
 #include <string>
 using std::string;
 

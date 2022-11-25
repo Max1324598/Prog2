@@ -17,7 +17,9 @@ SOURCES += \
         level.cpp \
         main.cpp \
         passive.cpp \
+        pit.cpp \
         portal.cpp \
+        ramp.cpp \
         switch.cpp \
         terminalUI.cpp \
         tile.cpp \
@@ -37,7 +39,9 @@ HEADERS += \
     floor.h \
     level.h \
     passive.h \
+    pit.h \
     portal.h \
+    ramp.h \
     switch.h \
     terminalUI.h \
     tile.h \

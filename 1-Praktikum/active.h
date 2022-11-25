@@ -8,8 +8,9 @@ public:
     virtual ~Active() = default;
     std::vector<Passive*> passiveObjects;
     void attach(Passive*);
-    void detach(Passive*);
+    virtual void detach(Passive*) = 0;
     virtual void activate();
+
 };
 
 #endif // ACTIVE_H

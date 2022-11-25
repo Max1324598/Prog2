@@ -6,7 +6,8 @@
 #include "portal.h"
 #include "character.h"
 #include "switch.h"
-
+#include "pit.h"
+#include "ramp.h"
 Level::Level()
     : maxRow{10}, maxColumn{15}, stageVector{}, characterVector{}
 {
@@ -66,8 +67,14 @@ void Level::createEmptyLevel(int rows, int columns)
         Door* door = new Door(5,2,nullptr);
         Switch* swit = new Switch(2,1,nullptr);
         swit->attach(door);
+        Pit* pit = new Pit(7,7,nullptr);
+        Pit* pit2 = new Pit(7,6,nullptr);
+        Ramp* ramp = new Ramp(7,8,nullptr);
         stageVector.at(5).at(2) = door;
         stageVector.at(2).at(1) = swit;
+        stageVector.at(7).at(7) = pit;
+        stageVector.at(7).at(6) = pit2;
+        stageVector.at(7).at(8) = ramp;
     }
 
 

@@ -61,7 +61,9 @@ SOURCES       = ../1-Praktikum/abstractUI.cpp \
 		../1-Praktikum/level.cpp \
 		../1-Praktikum/main.cpp \
 		../1-Praktikum/passive.cpp \
+		../1-Praktikum/pit.cpp \
 		../1-Praktikum/portal.cpp \
+		../1-Praktikum/ramp.cpp \
 		../1-Praktikum/switch.cpp \
 		../1-Praktikum/terminalUI.cpp \
 		../1-Praktikum/tile.cpp \
@@ -75,7 +77,9 @@ OBJECTS       = abstractUI.o \
 		level.o \
 		main.o \
 		passive.o \
+		pit.o \
 		portal.o \
+		ramp.o \
 		switch.o \
 		terminalUI.o \
 		tile.o \
@@ -230,7 +234,9 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../1-Praktikum/floor.h \
 		../1-Praktikum/level.h \
 		../1-Praktikum/passive.h \
+		../1-Praktikum/pit.h \
 		../1-Praktikum/portal.h \
+		../1-Praktikum/ramp.h \
 		../1-Praktikum/switch.h \
 		../1-Praktikum/terminalUI.h \
 		../1-Praktikum/tile.h \
@@ -243,7 +249,9 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../1-Praktikum/level.cpp \
 		../1-Praktikum/main.cpp \
 		../1-Praktikum/passive.cpp \
+		../1-Praktikum/pit.cpp \
 		../1-Praktikum/portal.cpp \
+		../1-Praktikum/ramp.cpp \
 		../1-Praktikum/switch.cpp \
 		../1-Praktikum/terminalUI.cpp \
 		../1-Praktikum/tile.cpp \
@@ -563,8 +571,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/active.h ../1-Praktikum/character.h ../1-Praktikum/door.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/floor.h ../1-Praktikum/level.h ../1-Praktikum/passive.h ../1-Praktikum/portal.h ../1-Praktikum/switch.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/active.cpp ../1-Praktikum/character.cpp ../1-Praktikum/door.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/level.cpp ../1-Praktikum/main.cpp ../1-Praktikum/passive.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/switch.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/active.h ../1-Praktikum/character.h ../1-Praktikum/door.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/floor.h ../1-Praktikum/level.h ../1-Praktikum/passive.h ../1-Praktikum/pit.h ../1-Praktikum/portal.h ../1-Praktikum/ramp.h ../1-Praktikum/switch.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/active.cpp ../1-Praktikum/character.cpp ../1-Praktikum/door.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/level.cpp ../1-Praktikum/main.cpp ../1-Praktikum/passive.cpp ../1-Praktikum/pit.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/ramp.cpp ../1-Praktikum/switch.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -650,7 +658,10 @@ level.o: ../1-Praktikum/level.cpp ../1-Praktikum/level.h \
 		../1-Praktikum/floor.h \
 		../1-Praktikum/wall.h \
 		../1-Praktikum/portal.h \
-		../1-Praktikum/character.h
+		../1-Praktikum/character.h \
+		../1-Praktikum/switch.h \
+		../1-Praktikum/pit.h \
+		../1-Praktikum/ramp.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o level.o ../1-Praktikum/level.cpp
 
 main.o: ../1-Praktikum/main.cpp ../1-Praktikum/level.h \
@@ -667,9 +678,17 @@ passive.o: ../1-Praktikum/passive.cpp ../1-Praktikum/passive.h \
 		../1-Praktikum/active.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o passive.o ../1-Praktikum/passive.cpp
 
+pit.o: ../1-Praktikum/pit.cpp ../1-Praktikum/pit.h \
+		../1-Praktikum/tile.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pit.o ../1-Praktikum/pit.cpp
+
 portal.o: ../1-Praktikum/portal.cpp ../1-Praktikum/portal.h \
 		../1-Praktikum/tile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o portal.o ../1-Praktikum/portal.cpp
+
+ramp.o: ../1-Praktikum/ramp.cpp ../1-Praktikum/ramp.h \
+		../1-Praktikum/tile.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ramp.o ../1-Praktikum/ramp.cpp
 
 switch.o: ../1-Praktikum/switch.cpp ../1-Praktikum/switch.h \
 		../1-Praktikum/tile.h \

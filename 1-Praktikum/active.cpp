@@ -9,8 +9,8 @@ void Active::activate(){
 
 void Active::attach(Passive* newPassiveObject){
     bool alreadyListed = false;
-    for(auto &n : passiveObjects){
-        if(n == newPassiveObject)
+    for(auto &listedObject : passiveObjects){
+        if(listedObject == newPassiveObject)
             alreadyListed = true;
     }
     if(!alreadyListed)
