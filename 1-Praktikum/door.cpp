@@ -15,7 +15,14 @@ Tile* Door::onLeave(Tile* fromTile, Character* who){
 }
 
 void Door::notify(Active* source){
-    open = true;
-    this->texture = "/";
+
+    if(!open){
+        this->texture = "/";
+        open = true;
+    }
+    else{
+        this->texture = "X";
+        open = false;
+    }
 }
 

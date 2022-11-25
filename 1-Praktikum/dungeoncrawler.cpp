@@ -64,6 +64,7 @@ void DungeonCrawler::turn(int movingDir)
 
         //stand still
     case 5:{
+        std::cout << "Diese Runde wurde ausgesetzt.\n\n";
         break;
     }
 
@@ -112,6 +113,7 @@ void DungeonCrawler::turn(int movingDir)
 
 
     default:{
+            std::cout << "Keine gültige Eingabe. Eingabe nur zwischen 1-9!\n\n";
             break;
         }
 
