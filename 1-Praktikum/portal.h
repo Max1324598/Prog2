@@ -7,7 +7,6 @@
 class Portal : public Tile
 {
 public:
-    Portal() = delete;
     Portal(int row,int column, Character* character, Tile* destination);
     ~Portal() override = default;
 

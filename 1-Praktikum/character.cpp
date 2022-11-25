@@ -3,7 +3,7 @@
 
 
 Character::Character()
-    : texture {"X"}, tile{nullptr}
+    : texture {"C"}, tile{nullptr}
 {}
 
 Character::Character(const std::string &texture, Tile *tile)

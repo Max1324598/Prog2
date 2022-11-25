@@ -50,4 +50,8 @@ bool Tile::hasCharacter() const{
     else return true;
 }
 
+string Tile::setTexture(std::string s){
+    texture = s;
+}
+
 

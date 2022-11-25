@@ -9,12 +9,18 @@ CONFIG -= app_bundle
 
 SOURCES += \
         abstractUI.cpp \
+        active.cpp \
         character.cpp \
+        door.cpp \
         dungeoncrawler.cpp \
         floor.cpp \
         level.cpp \
         main.cpp \
+        passive.cpp \
+        pit.cpp \
         portal.cpp \
+        ramp.cpp \
+        switch.cpp \
         terminalUI.cpp \
         tile.cpp \
         wall.cpp
@@ -26,11 +32,17 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     abstractUI.h \
+    active.h \
     character.h \
+    door.h \
     dungeoncrawler.h \
     floor.h \
     level.h \
+    passive.h \
+    pit.h \
     portal.h \
+    ramp.h \
+    switch.h \
     terminalUI.h \
     tile.h \
     wall.h
