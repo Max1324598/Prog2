@@ -20,24 +20,29 @@ void TerminalUI::draw(Level * currentLvl){
     while(true){
 
         for(int i = 0; i < currentLvl->getMaxRow(); i++){
-                   for (int j = 0; j < currentLvl-> getMaxColumn(); j++) {
+            for (int j = 0; j < currentLvl-> getMaxColumn(); j++) {
 
-                       cout <<  currentLvl-> getStageVector().at(i).at(j)->getTexture();
+                cout <<  currentLvl-> getStageVector().at(i).at(j)->getTexture();
 
-                   }
-                    cout << std::endl;
-         }
+            }
+            cout << std::endl;
+        }
 
 
         cout << std::endl <<"Bewegungsrichtung angeben (numbad)\n"
-                "Beenden des Programmes durch '0'" << std::endl;
+                            "Beenden des Programmes durch '0'" << std::endl;
 
         std::cin >> input;
-        if (!std::cin) throw std::runtime_error{"Ungueltige Eingabe!"};
+        if (!std::cin){
+            std::cin.clear();
+            std::cin.ignore();
+            cout << "Die Eingabe ist ungueltig, versuche es erneut" << std::endl;
+            continue;
+        }
 
         //Beenden des Programms durch "0"
         if (input == 0){
-            cout << "Programm beendet";
+            cout << "Programm beendet" << std::endl;
             return;
         }
 

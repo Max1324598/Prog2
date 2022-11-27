@@ -76,12 +76,6 @@ void Level::createEmptyLevel(int rows, int columns)
 
 }
 
-
-
-
-
-
-
 void Level::setPortals(int row1, int column1, int row2, int column2)
 {
     Portal* newPortal1 = new Portal (row1, column1, nullptr, nullptr);
