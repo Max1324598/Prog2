@@ -19,6 +19,10 @@ public:
     void createEmptyLevel(int rows, int columns);
     void createCharacter (int row, int col);
     void setPortals(int row1, int column1, int row2, int column2);
+    void setDoor(int row, int column);
+    void setSwitch(int row, int column);
+    void setPit(int row, int column);
+    void setRamp (int row, int column);
     void placeCharacter(Character *c, int row, int col);
 
     Tile *getTile(int row, int col);
