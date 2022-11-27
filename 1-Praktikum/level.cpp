@@ -1,5 +1,7 @@
 #include "level.h"
 #include "door.h"
+#include "guardcontroller.h"
+#include "npc.h"
 #include "tile.h"
 #include "floor.h"
 #include "wall.h"
@@ -9,12 +11,12 @@
 #include "pit.h"
 #include "ramp.h"
 Level::Level()
-    : maxRow{10}, maxColumn{15}, stageVector{}, characterVector{}
+    : maxRow{15}, maxColumn{20}, stageVector{}, characterVector{}
 {
 
     createEmptyLevel(maxRow, maxColumn);
     setPortals(1,2,8,8);
-    createCharacter(1,1);
+
 }
 
 
@@ -22,17 +24,17 @@ Level::Level()
 Level::~Level()
 {
     for (std::vector<Tile*>& vec: stageVector) {
-            for (Tile*& tile : vec) {
+        for (Tile*& tile : vec) {
 
-                delete tile;
-                tile = nullptr;
-            }
+            delete tile;
+            tile = nullptr;
+        }
     }
 
-        for (Character*& ch : characterVector){
-            delete ch;
-            ch = nullptr;
-        }
+    for (Character*& ch : characterVector){
+        delete ch;
+        ch = nullptr;
+    }
 }
 
 
@@ -49,38 +51,53 @@ bool Level::isBoundary(int currentRow, int currentColumn) const
 void Level::createEmptyLevel(int rows, int columns)
 {
 
-        for (int i{0}; i <= rows; i++) {
+    for (int i{0}; i <= rows; i++) {
 
-            stageVector.emplace_back(std::vector<Tile*>{});
+        stageVector.emplace_back(std::vector<Tile*>{});
 
-            for (int j{0}; j <= columns; j++) {
-                if (isBoundary(i, j)) {
+        for (int j{0}; j <= columns; j++) {
+            if (isBoundary(i, j)) {
 
-                    stageVector.at(i).emplace_back(new Wall(i, j, nullptr));
+                stageVector.at(i).emplace_back(new Wall(i, j, nullptr));
 
-                } else {
-                    stageVector.at(i).emplace_back(new Floor(i, j,nullptr));
-                }
+            } else {
+                stageVector.at(i).emplace_back(new Floor(i, j,nullptr));
             }
-
         }
-        Door* door = new Door(5,2,nullptr);
-        Switch* swit = new Switch(2,1,nullptr);
-        swit->attach(door);
-        Pit* pit = new Pit(7,7,nullptr);
-        Pit* pit2 = new Pit(7,6,nullptr);
-        Ramp* ramp = new Ramp(7,8,nullptr);
-        stageVector.at(5).at(2) = door;
-        stageVector.at(2).at(1) = swit;
-        stageVector.at(7).at(7) = pit;
-        stageVector.at(7).at(6) = pit2;
-        stageVector.at(7).at(8) = ramp;
+
     }
 
 
 
 
+    Door* door = new Door(5,2,nullptr);
+    Switch* swit = new Switch(2,1,nullptr);
+    swit->attach(door);
+    Pit* pit = new Pit(7,7,nullptr);
+    Pit* pit2 = new Pit(7,6,nullptr);
+    Ramp* ramp = new Ramp(7,8,nullptr);
+    GuardController* controller = new GuardController(std::vector<int>{6,6,2,2,4,4,8,8});
+    GuardController* controller2 = new GuardController(std::vector<int>{8,8,8,2,2,2});
+    Npc* npc1 = new Npc("N",stageVector.at(5).at(5),controller);
+    Npc* npc2 = new Npc("B",stageVector.at(9).at(9),controller2);
+    placeNPC(npc1);
+    placeNPC(npc2);
+    stageVector.at(5).at(2) = door;
+    stageVector.at(2).at(1) = swit;
+    stageVector.at(7).at(7) = pit;
+    stageVector.at(7).at(6) = pit2;
+    stageVector.at(7).at(8) = ramp;
+}
 
+
+
+
+void Level::placeNPC(Character* npc){
+    characterVector.push_back(npc);
+    int row = npc->getTile()->getRow();
+    int col = npc->getTile()->getColumn();
+    placeCharacter(npc,row,col);
+}
 
 
 void Level::setPortals(int row1, int column1, int row2, int column2)
@@ -141,3 +158,4 @@ const vector<Character *> &Level::getCharacterVector() const
 {
     return characterVector;
 }
+

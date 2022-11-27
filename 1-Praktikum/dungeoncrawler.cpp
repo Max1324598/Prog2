@@ -5,18 +5,29 @@
 #include "abstractUI.h"
 #include <iostream>
 
-DungeonCrawler::DungeonCrawler(Level *currentLevel, AbstractUI *currentAbcractUI)
-    : currentLevel {currentLevel}, currentAbstractUI{currentAbcractUI}
+DungeonCrawler::DungeonCrawler(Level *currentLevel, AbstractUI *currentAbcractUI,Character* currentCharacter)
+    : currentLevel {currentLevel}, currentAbstractUI{currentAbcractUI}, currentCharacter{currentCharacter}
 {
     currentAbcractUI->setCurrentDungeonCrawler(this);
 }
 
 void DungeonCrawler::turn(int movingDir)
 {
+    turnMove(movingDir,currentCharacter);
+    for(auto& character : currentLevel->getCharacterVector()){
+        Npc* currentNPC = dynamic_cast<Npc*>(character);
+        int movingDir = currentNPC->getController()->move();
+        turnMove(movingDir,currentNPC);
+    }
 
-    Tile* currentTile{currentLevel->getCharacterVector().at(0)->getTile()};
+}
+
+void DungeonCrawler::turnMove(int movingDir,Character* character)
+{
+
+    Tile* currentTile{character->getTile()};
     Tile* nextTile{nullptr};
-    Character* currentChar{currentLevel->getCharacterVector().at(0)};
+    Character* currentChar{character};
 
 
 

@@ -10,9 +10,11 @@
 
 int main() try
 {
-    Level* test1{new Level()};
+       Level* test1{new Level()};
        TerminalUI* test2 = new TerminalUI();
-       DungeonCrawler* dg = new DungeonCrawler(test1, test2);
+       Character* character = new Character();
+       test1->placeCharacter(character,1,1);
+       DungeonCrawler* dg = new DungeonCrawler(test1, test2,character);
        test2->draw(test1);
 
        delete test1;

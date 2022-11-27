@@ -2,7 +2,7 @@
 #define LEVEL_H
 
 #include <vector>
-#include "door.h"
+
 using std::vector;
 
 class Tile;
@@ -20,6 +20,7 @@ public:
     void createCharacter (int row, int col);
     void setPortals(int row1, int column1, int row2, int column2);
     void placeCharacter(Character *c, int row, int col);
+    void placeNPC(Character* npc);
 
     Tile *getTile(int row, int col);
     const Tile *getTile(int row, int col) const;
