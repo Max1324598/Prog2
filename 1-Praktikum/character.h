@@ -10,7 +10,7 @@ class Character
 public:
     Character();
     Character(const string& texture, Tile* tile);
-
+    virtual ~Character() = default;
     //getter
     string getTexture() const {return texture;}
     virtual Tile *getTile() const;

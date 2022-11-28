@@ -23,7 +23,7 @@ public:
     string getTexture() const;
     int getRow() const;
     int getColumn() const;
-    string setTexture(std::string s);
+
 
     //setter
 

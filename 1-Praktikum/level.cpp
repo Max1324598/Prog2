@@ -11,11 +11,12 @@
 #include "pit.h"
 #include "ramp.h"
 Level::Level()
-    : maxRow{15}, maxColumn{20}, stageVector{}, characterVector{}
+    : maxRow{0}, maxColumn{0}, stageVector{}, characterVector{}
 {
 
-    createEmptyLevel(maxRow, maxColumn);
-    setPortals(1,2,8,8);
+    //createEmptyLevel(maxRow, maxColumn);
+    testLevel(maxRow,maxColumn);
+    //setPortals(1,2,8,8);
 
 }
 
@@ -158,4 +159,52 @@ const vector<Character *> &Level::getCharacterVector() const
 {
     return characterVector;
 }
+
+void Level::testLevel(int row, int columns){
+
+    int c{0};
+    const std :: string l = {
+        "##########"
+        "#O.......#"
+        "#...<....#"
+        "#..___...#"
+        "#..___...#"
+        "#........#"
+        "#######X##"
+        "#O.......#"
+        "#...?....#"
+        "##########" };
+
+    for (int i{0}; i < row; i++) {
+
+        stageVector.emplace_back(std::vector<Tile*>());
+
+        for (int j{0}; j < columns; j++) {
+
+            if(l.at(c) == '#')
+                stageVector.at(i).emplace_back(new Wall(i,j,nullptr));
+            if(l.at(c) == 'O')
+                stageVector.at(i).emplace_back(new Portal(i,j,nullptr,nullptr));
+            if(l.at(c) == '<')
+                stageVector.at(i).emplace_back(new Ramp(i,j,nullptr));
+            if(l.at(c) == '_')
+                stageVector.at(i).emplace_back(new Pit(i,j,nullptr));
+            if(l.at(c) == 'X')
+                stageVector.at(i).emplace_back(new Door(i,j,nullptr));
+            if(l.at(c) == '.')
+                stageVector.at(i).emplace_back(new Floor(i,j,nullptr));
+
+            c++;
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
 

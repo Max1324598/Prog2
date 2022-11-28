@@ -21,6 +21,7 @@ public:
     void setPortals(int row1, int column1, int row2, int column2);
     void placeCharacter(Character *c, int row, int col);
     void placeNPC(Character* npc);
+    void testLevel(int row, int columns);
 
     Tile *getTile(int row, int col);
     const Tile *getTile(int row, int col) const;
