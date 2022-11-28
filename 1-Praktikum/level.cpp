@@ -11,12 +11,12 @@
 #include "pit.h"
 #include "ramp.h"
 Level::Level()
-    : maxRow{0}, maxColumn{0}, stageVector{}, characterVector{}
+    : maxRow{15}, maxColumn{15}, stageVector{}, characterVector{}
 {
 
-    //createEmptyLevel(maxRow, maxColumn);
-    testLevel(maxRow,maxColumn);
-    //setPortals(1,2,8,8);
+    //testLevel(maxRow,maxColumn);
+    createEmptyLevel(maxRow, maxColumn);
+    setPortals(1,2,8,8);
 
 }
 
