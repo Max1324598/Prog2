@@ -13,7 +13,7 @@ int main() try
     Level* level{new Level()};
     TerminalUI* ui = new TerminalUI();
     Character* player = new Character();
-    level->placePlayer(player,1,1);
+    level->placeCharacter(player,1,1);
     DungeonCrawler* dg = new DungeonCrawler(level, ui ,player);
     ui->draw(level);
 

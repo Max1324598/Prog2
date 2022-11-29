@@ -18,17 +18,10 @@ Level::Level()
     Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
     sp->attach(dp);
 
-    GuardController* controller = new GuardController(std::vector<int>{6,6,2,2,4,4,8,8});
-    GuardController* controller2 = new GuardController(std::vector<int>{8,8,8,2,2,2});
-    Npc* npc1 = new Npc("N",stageVector.at(5).at(5),controller);
-    Npc* npc2 = new Npc("B",stageVector.at(8).at(8),controller2);
-    placeNPC(npc1);
-    placeNPC(npc2);
-
+    createNpc(5,5, {6,6,2,2,4,4,8,8});
+    createNpc(8,8, {8,8,8,2,2,2});
 
     setPortals(1,8,8,1);
-
-
 }
 
 
@@ -107,13 +100,6 @@ void Level::createStringLevel(int rows, int columns)
 
         for (int j{0}; j < columns; j++) {
 
-
-
-
-
-
-
-
             if (lev.at(k) == '#') {
                 stageVector.at(i).push_back(new Wall(i, j, nullptr));
             }
@@ -185,23 +171,25 @@ void Level::setRamp(int row, int column)
 
 
 
-void Level::placePlayer(Character *c, int row, int col)
+void Level::placeCharacter(Character *c, int row, int col)
 {
     c->setTile(getTile(row,col));
     stageVector.at(row).at(col)->setCharacter(c);
 }
 
-void Level::placeNPC(Character* npc){
+void Level::createNpc(int row, int col, std::vector<int> pattern) {
+    GuardController* npcController = new GuardController(pattern);
+    Npc* npc = new Npc("N", nullptr, npcController);
+    npc->setCurrentController(npcController);
+    placeCharacter(npc, row, col);
     characterVector.push_back(npc);
-    int row = npc->getTile()->getRow();
-    int col = npc->getTile()->getColumn();
-    placePlayer(npc,row,col);
 }
+
 
 void Level::createCharacter(int row, int col)
 {
     characterVector.push_back(new Character());
-    placePlayer(characterVector.at(characterVector.size()-1),row, col);
+    placeCharacter(characterVector.at(characterVector.size()-1),row, col);
 }
 
 //getter
