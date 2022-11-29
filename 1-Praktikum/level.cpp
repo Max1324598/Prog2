@@ -1,5 +1,7 @@
 #include "level.h"
 #include "door.h"
+#include "guardcontroller.h"
+#include "npc.h"
 #include "tile.h"
 #include "floor.h"
 #include "wall.h"
@@ -13,7 +15,7 @@ Level::Level()
 {
 
     createEmptyLevel(maxRow, maxColumn);
-    setPortals(1,2,8,8);
+    setDoor(5,2);
     setDoor(5,2);
     setSwitch(2,1);
     Switch* sp = dynamic_cast<Switch*>(stageVector.at(2).at(1));
@@ -23,7 +25,28 @@ Level::Level()
     setPit(7,6);
     setRamp(7,8);
 
-    createCharacter(1,1);
+
+    GuardController* controller = new GuardController(std::vector<int>{6,6,2,2,4,4,8,8});
+    GuardController* controller2 = new GuardController(std::vector<int>{8,8,8,2,2,2});
+    Npc* npc1 = new Npc("N",stageVector.at(5).at(5),controller);
+    Npc* npc2 = new Npc("B",stageVector.at(9).at(9),controller2);
+    placeNPC(npc1);
+    placeNPC(npc2);
+
+
+    setPortals(1,2,8,8);
+
+
+    //    createCharacter(1,1);
+
+    //    GuardController* controller = new GuardController(std::vector<int>{6,6,2,2,4,4,8,8});
+    //    GuardController* controller2 = new GuardController(std::vector<int>{8,8,8,2,2,2});
+    //    Npc* npc1 = new Npc("N",stageVector.at(5).at(5),controller);
+    //    Npc* npc2 = new Npc("B",stageVector.at(8).at(8),controller2);
+    //    placeNPC(npc1);
+    //    placeNPC(npc2);
+
+
 }
 
 
@@ -120,16 +143,23 @@ void Level::setRamp(int row, int column)
 
 
 
-void Level::placeCharacter(Character *c, int row, int col)
+void Level::placePlayer(Character *c, int row, int col)
 {
     c->setTile(getTile(row,col));
     stageVector.at(row).at(col)->setCharacter(c);
 }
 
+void Level::placeNPC(Character* npc){
+    characterVector.push_back(npc);
+    int row = npc->getTile()->getRow();
+    int col = npc->getTile()->getColumn();
+    placePlayer(npc,row,col);
+}
+
 void Level::createCharacter(int row, int col)
 {
     characterVector.push_back(new Character());
-    placeCharacter(characterVector.at(characterVector.size()-1),row, col);
+    placePlayer(characterVector.at(characterVector.size()-1),row, col);
 }
 
 //getter
@@ -162,3 +192,4 @@ const vector<Character *> &Level::getCharacterVector() const
 {
     return characterVector;
 }
+

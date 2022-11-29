@@ -22,4 +22,3 @@ void Character::setTile(Tile *newTile)
     tile = newTile;
 }
 
-

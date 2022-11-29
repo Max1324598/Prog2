@@ -10,10 +10,10 @@ class Character
 public:
     Character();
     Character(const string& texture, Tile* tile);
-
+    virtual ~Character() = default;
     //getter
     string getTexture() const {return texture;}
-    Tile *getTile() const;
+    virtual Tile *getTile() const;
     //setter
     void setTile(Tile *newTile);
 

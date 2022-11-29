@@ -23,7 +23,8 @@ public:
     void setSwitch(int row, int column);
     void setPit(int row, int column);
     void setRamp (int row, int column);
-    void placeCharacter(Character *c, int row, int col);
+    void placePlayer(Character *c, int row, int col);
+    void placeNPC(Character *npc);
 
     Tile *getTile(int row, int col);
     const Tile *getTile(int row, int col) const;
