@@ -17,6 +17,7 @@ public:
     //Methoden
     bool isBoundary(int currentRow, int currentColumn) const;
     void createEmptyLevel(int rows, int columns);
+    void createStringLevel (int rows, int columns);
     void createCharacter (int row, int col);
     void setPortals(int row1, int column1, int row2, int column2);
     void setDoor(int row, int column);

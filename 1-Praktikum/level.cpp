@@ -11,40 +11,22 @@
 #include "pit.h"
 #include "ramp.h"
 Level::Level()
-    : maxRow{10}, maxColumn{15}, stageVector{}, characterVector{}
+    : maxRow{10}, maxColumn{10}, stageVector{}, characterVector{}
 {
-
-    createEmptyLevel(maxRow, maxColumn);
-    setDoor(5,2);
-    setDoor(5,2);
-    setSwitch(2,1);
-    Switch* sp = dynamic_cast<Switch*>(stageVector.at(2).at(1));
-    Door* dp = dynamic_cast<Door*>(stageVector.at(5).at(2));
+    createStringLevel(maxRow,maxColumn);
+    Switch* sp = dynamic_cast<Switch*>(stageVector.at(8).at(4));
+    Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
     sp->attach(dp);
-    setPit(7,7);
-    setPit(7,6);
-    setRamp(7,8);
-
 
     GuardController* controller = new GuardController(std::vector<int>{6,6,2,2,4,4,8,8});
     GuardController* controller2 = new GuardController(std::vector<int>{8,8,8,2,2,2});
     Npc* npc1 = new Npc("N",stageVector.at(5).at(5),controller);
-    Npc* npc2 = new Npc("B",stageVector.at(9).at(9),controller2);
+    Npc* npc2 = new Npc("B",stageVector.at(8).at(8),controller2);
     placeNPC(npc1);
     placeNPC(npc2);
 
 
-    setPortals(1,2,8,8);
-
-
-    //    createCharacter(1,1);
-
-    //    GuardController* controller = new GuardController(std::vector<int>{6,6,2,2,4,4,8,8});
-    //    GuardController* controller2 = new GuardController(std::vector<int>{8,8,8,2,2,2});
-    //    Npc* npc1 = new Npc("N",stageVector.at(5).at(5),controller);
-    //    Npc* npc2 = new Npc("B",stageVector.at(8).at(8),controller2);
-    //    placeNPC(npc1);
-    //    placeNPC(npc2);
+    setPortals(1,8,8,1);
 
 
 }
@@ -98,6 +80,66 @@ void Level::createEmptyLevel(int rows, int columns)
     }
 
 }
+
+void Level::createStringLevel(int rows, int columns)
+{
+    const std::string lev = {
+        "##########"
+        "#........#"
+        "#...<....#"
+        "#..___...#"
+        "#..___...#"
+        "#........#"
+        "#######X##"
+        "#........#"
+        "#...?....#"
+        "##########" };
+
+
+
+    int k{0};
+
+
+    for (int i{0}; i < rows; i++) {
+
+        stageVector.emplace_back();
+
+
+        for (int j{0}; j < columns; j++) {
+
+
+
+
+
+
+
+
+            if (lev.at(k) == '#') {
+                stageVector.at(i).push_back(new Wall(i, j, nullptr));
+            }
+            if (lev.at(k) == '.') {
+                stageVector.at(i).push_back(new Floor(i, j, nullptr));
+            }
+            if (lev.at(k) == '_') {
+                stageVector.at(i).push_back(new Pit(i, j, nullptr));
+            }
+            if (lev.at(k) == '<') {
+                stageVector.at(i).push_back(new Ramp(i, j, nullptr));
+            }
+            if (lev.at(k)== '?'){
+                stageVector.at(i).push_back(new Switch(i,j,nullptr));
+            }
+            if (lev.at(k)== 'X'){
+                stageVector.at(i).push_back(new Door(i,j,nullptr));
+            }
+            k++;
+        }
+    }
+}
+
+
+
+
 
 void Level::setPortals(int row1, int column1, int row2, int column2)
 {
