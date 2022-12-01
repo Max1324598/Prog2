@@ -119,6 +119,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
         break;
 
 
+
     default:{
             std::cout << "Keine gültige Eingabe. Eingabe nur zwischen 1-9!\n\n";
             break;
