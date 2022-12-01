@@ -9,7 +9,7 @@ public:
     int move() override;
 private:
     std::vector<int> pattern;
-    int patternCounter;
+    unsigned int patternCounter;
 };
 
 #endif // GUARDCONTROLLER_H
