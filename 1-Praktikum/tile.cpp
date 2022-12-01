@@ -11,14 +11,15 @@ Tile::Tile (int row, int column, const string& texture, Character* character)
 //Methoden
 bool Tile::moveTo(Tile *destTile, Character *who)
 {
+    Tile* onEnterResult = destTile->onEnter(this,who);
 
     if (this->onLeave(destTile,who) == nullptr) return false;
-    if (destTile->onEnter(this,who) == nullptr) return false;
+    if (onEnterResult == nullptr) return false;
 
 
     this->setCharacter(nullptr);
-    who->setTile(destTile->onEnter(this, who));
-    destTile->onEnter(this, who)->setCharacter(who);
+    who->setTile(onEnterResult);
+    onEnterResult->setCharacter(who);
     return true;
 }
 //getter
