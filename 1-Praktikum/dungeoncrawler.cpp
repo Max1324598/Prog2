@@ -34,7 +34,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
     switch (movingDir) {
     //move down and left
     case 1:{
-        if ((currentTile->getRow() < currentLevel->getMaxRow()) && (currentTile->getColumn()  > 0 )){
+        if ((currentTile->getRow() < currentLevel->getMaxRow()-1) && (currentTile->getColumn()  > 0 )){
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() +1).at(currentTile->getColumn()-1);
 
             currentTile->moveTo(nextTile, currentChar);
@@ -43,23 +43,20 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
     }
         //move down
     case 2:{
-        if (currentTile->getRow() < currentLevel->getMaxRow()) {
+        if (currentTile->getRow() < currentLevel->getMaxRow()-1) {
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() + 1).at(currentTile->getColumn());
 
-            if(nextTile->getRow() < currentLevel->getMaxRow() && nextTile->getColumn() < currentLevel->getMaxColumn())
-                currentTile->moveTo(nextTile, currentChar);
-
+            currentTile->moveTo(nextTile, currentChar);
         }
 
         break;
     }
 
     case 3:{
-        if ((currentTile->getRow() < currentLevel->getMaxRow()) && (currentTile->getColumn()  < currentLevel->getMaxColumn())) {
+        if ((currentTile->getRow() < currentLevel->getMaxRow()-1)  && (currentTile->getColumn()  < currentLevel->getMaxColumn()-1)) {
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() + 1).at(currentTile->getColumn()+1);
 
-            if(nextTile->getRow() < currentLevel->getMaxRow() && nextTile->getColumn() < currentLevel->getMaxColumn())
-                currentTile->moveTo(nextTile, currentChar);
+            currentTile->moveTo(nextTile, currentChar);
         } break;
     }
 
@@ -68,8 +65,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
         if (currentTile->getColumn()  > 0 ){
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() ).at(currentTile->getColumn()-1);
 
-            if(nextTile->getRow() < currentLevel->getMaxRow() && nextTile->getColumn() < currentLevel->getMaxColumn())
-                currentTile->moveTo(nextTile, currentChar);
+            currentTile->moveTo(nextTile, currentChar);
         }
         break;}
 
@@ -82,10 +78,10 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
 
         //move right
     case 6:{
-        if (currentTile->getColumn()  < currentLevel->getMaxColumn() ){
+        if (currentTile->getColumn()  < currentLevel->getMaxColumn() -1){
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() ).at(currentTile->getColumn()+1);
-            if(nextTile->getRow() < currentLevel->getMaxRow() && nextTile->getColumn() < currentLevel->getMaxColumn())
-                currentTile->moveTo(nextTile, currentChar);
+
+            currentTile->moveTo(nextTile, currentChar);
 
         }
 
@@ -95,8 +91,8 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
     case 7:{
         if ((currentTile->getColumn()  > 0 ) && (currentTile->getRow() > 0)){
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() -1 ).at(currentTile->getColumn()-1);
-            if(nextTile->getRow() < currentLevel->getMaxRow() && nextTile->getColumn() < currentLevel->getMaxColumn())
-                currentTile->moveTo(nextTile, currentChar);
+
+            currentTile->moveTo(nextTile, currentChar);
         }
         break;}
 
@@ -106,21 +102,22 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
     case 8:{
         if (currentTile->getRow() > 0) {
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() - 1).at(currentTile->getColumn());
-            if(nextTile->getRow() < currentLevel->getMaxRow() && nextTile->getColumn() < currentLevel->getMaxColumn())
-                currentTile->moveTo(nextTile, currentChar);
+
+            currentTile->moveTo(nextTile, currentChar);
 
         }
         break;
     }
 
     case 9:{
-        if ((currentTile->getRow() > 0) &&(currentTile->getColumn()  < currentLevel->getMaxColumn()) ) {
+        if ((currentTile->getRow() > 0) &&(currentTile->getColumn()  < currentLevel->getMaxColumn()-1)) {
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() - 1).at(currentTile->getColumn()+1);
-            if(nextTile->getRow() < currentLevel->getMaxRow() && nextTile->getColumn() < currentLevel->getMaxColumn())
-                currentTile->moveTo(nextTile, currentChar);
+
+            currentTile->moveTo(nextTile, currentChar);
 
         }
         break;
+
 
 
     default:{
