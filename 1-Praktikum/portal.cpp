@@ -11,7 +11,7 @@ Portal::Portal(int row,int column, Character *character, Tile *destination)
 Tile *Portal::onEnter(Tile *fromTile, Character *who)
 {
 
-       return destination;
+    return destination;
 }
 
 Tile *Portal::onLeave(Tile *destTile, Character *who)

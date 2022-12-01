@@ -10,18 +10,20 @@
 
 int main() try
 {
-    Level* test1{new Level()};
-       TerminalUI* test2 = new TerminalUI();
-       DungeonCrawler* dg = new DungeonCrawler(test1, test2);
-       test2->draw(test1);
+    Level* level{new Level()};
+    TerminalUI* ui = new TerminalUI();
+    Character* player = new Character();
+    level->placeCharacter(player,1,1);
+    DungeonCrawler* dg = new DungeonCrawler(level, ui ,player);
+    ui->draw(level);
 
-       delete test1;
-       delete test2;
-       delete dg;
+    delete level;
+    delete ui;
+    delete dg;
 
-       test1 = nullptr;
-       test2 = nullptr;
-       dg = nullptr;
+    level = nullptr;
+    ui = nullptr;
+    dg = nullptr;
 }
 
 catch (std::exception& e)
@@ -35,9 +37,9 @@ catch (std::exception& e)
 catch (...)
 {
 
-    std::cerr << "Unbekannte Ausnahme! " << std::endl;
+std::cerr << "Unbekannte Ausnahme! " << std::endl;
 
-    return -3;
+return -3;
 
 
 }

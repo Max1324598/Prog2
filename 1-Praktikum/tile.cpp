@@ -12,19 +12,19 @@ Tile::Tile (int row, int column, const string& texture, Character* character)
 bool Tile::moveTo(Tile *destTile, Character *who)
 {
 
-   if (this->onLeave(destTile,who) == nullptr) return false;
-   if (destTile->onEnter(this,who) == nullptr) return false;
+    if (this->onLeave(destTile,who) == nullptr) return false;
+    if (destTile->onEnter(this,who) == nullptr) return false;
 
 
     this->setCharacter(nullptr);
-               who->setTile(destTile->onEnter(this, who));
-               destTile->onEnter(this, who)->setCharacter(who);
+    who->setTile(destTile->onEnter(this, who));
+    destTile->onEnter(this, who)->setCharacter(who);
     return true;
 }
 //getter
 string Tile::getTexture() const{
     if (hasCharacter() == true) return character->getTexture();
-   else return texture ;
+    else return texture ;
 
 }
 
