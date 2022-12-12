@@ -19,10 +19,12 @@ StartScreen::StartScreen(QWidget *parent) :
 
     QIcon ButtonIcon(buttonTexture);
 
+
     ui->newGameButton->setIcon(ButtonIcon);
     ui->newGameButton->setIconSize(buttonTexture.rect().size());
 
     ui->backGroundLabel->setPixmap(backGroundTexture);
+
 
     connect(ui->newGameButton, &QPushButton::clicked, this, &StartScreen::onButtonClicked);
 
