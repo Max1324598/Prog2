@@ -7,7 +7,7 @@
 class Portal : public Tile
 {
 public:
-    Portal(int row,int column, Character* character, Tile* destination);
+    Portal(int row,int column, Character* character, Tile* destination, int PortalType);
     ~Portal() override = default;
 
     //virtuelle Methoden
@@ -19,6 +19,7 @@ public:
 
 private:
     Tile* destination;
+    int portalType;
 };
 
 #endif // PORTAL_H

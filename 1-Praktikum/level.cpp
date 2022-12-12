@@ -10,6 +10,7 @@
 #include "switch.h"
 #include "pit.h"
 #include "ramp.h"
+#include "door.h"
 Level::Level()
     : maxRow{10}, maxColumn{10}, stageVector{}, characterVector{}
 {
@@ -21,7 +22,7 @@ Level::Level()
     createNpc(5,5, {6,6,2,2,4,4,8,8});
     createNpc(8,8, {8,8,8,2,2,2});
 
-    setPortals(1,8,8,1);
+    setPortals(1,8,8,1,1);
 }
 
 
@@ -127,10 +128,10 @@ void Level::createStringLevel(int rows, int columns)
 
 
 
-void Level::setPortals(int row1, int column1, int row2, int column2)
+void Level::setPortals(int row1, int column1, int row2, int column2, int type)
 {
-    Portal* newPortal1 = new Portal (row1, column1, nullptr, nullptr);
-    Portal* newPortal2 = new Portal (row2, column2, nullptr, nullptr);
+    Portal* newPortal1 = new Portal (row1, column1, nullptr, nullptr, type);
+    Portal* newPortal2 = new Portal (row2, column2, nullptr, nullptr, type);
     newPortal1 ->setDestination(newPortal2);
     newPortal2 ->setDestination(newPortal1);
 

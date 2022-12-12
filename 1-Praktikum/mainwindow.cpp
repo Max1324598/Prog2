@@ -1,23 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 #include <qlabel.h>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
+    QMainWindow(parent),ui(new Ui::MainWindow),fieldLabel{}, currentGui{currentGui}
 {
     ui->setupUi(this);
 
-  // this->setStyleSheet("background-color: black;");
-   // QPixmap backGroundTexture("../textures/bloody_frame.png");
 
-
-
-//    QLabel *backGroundLabel = new QLabel();
-//    backGroundLabel->setPixmap(backGroundTexture);
-//    backGroundLabel->setScaledContents(true);
-//    ui->horizontalLayout->addWidget(backGroundLabel);
 
 
 
@@ -26,4 +18,18 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::draw(Level *level)
+{
+    for (int i{}; i<level->getMaxRow();i++){
+        for (int j{}; j<level->getMaxColumn();j++){
+
+        }
+    }
+}
+
+void MainWindow::setCurrentGui(GraphicalUI *newCurrentGui)
+{
+    currentGui = newCurrentGui;
 }
