@@ -22,9 +22,17 @@ private:
     StartScreen* startScreen;
     MainWindow* mainWindow;
 
-    std::vector<QPixmap> floors;
-    std::vector<QPixmap> portals;
-    std::vector<QPixmap> others;
+    std::vector<QPixmap> floorTextures;
+    std::vector<QPixmap> portalTextures;
+    std::vector<QPixmap> doorTextures;
+
+
+    QPixmap wallTexture{QPixmap(QPixmap("../textures/portal/portal1.png"))};
+    QPixmap switchTexture{QPixmap(QPixmap("../textures/switch.png"))};
+    QPixmap rampTexture{QPixmap(QPixmap("../textures/ramp.png"))};
+    QPixmap pitTexture{QPixmap(QPixmap("../textures/pit.png"))};
+
+
 };
 
 #endif // GRAPHICALUI_H

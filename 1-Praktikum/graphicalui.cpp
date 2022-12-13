@@ -6,15 +6,20 @@
 
 GraphicalUI::GraphicalUI()
 {
-    floors.push_back(QPixmap("../textures/floor/floor1.png"));
-    floors.push_back(QPixmap("../textures/floor/floor2.png"));
-    floors.push_back(QPixmap("../textures/floor/floor3.png"));
-    floors.push_back(QPixmap("../textures/floor/floor4.png"));
-    floors.push_back(QPixmap("../textures/floor/floor5.png"));
+    floorTextures.push_back(QPixmap("../textures/floor/floor1.png"));
+    floorTextures.push_back(QPixmap("../textures/floor/floor2.png"));
+    floorTextures.push_back(QPixmap("../textures/floor/floor3.png"));
+    floorTextures.push_back(QPixmap("../textures/floor/floor4.png"));
+    floorTextures.push_back(QPixmap("../textures/floor/floor5.png"));
 
-    portals.push_back(QPixmap("../textures/portal/portal1.png"));
-    portals.push_back(QPixmap("../textures/portal/portal2.png"));
-    portals.push_back(QPixmap("../textures/portal/portal3.png"));
+    portalTextures.push_back(QPixmap("../textures/portal/portal1.png"));
+    portalTextures.push_back(QPixmap("../textures/portal/portal2.png"));
+    portalTextures.push_back(QPixmap("../textures/portal/portal3.png"));
+
+    doorTextures.push_back(QPixmap("../textures/doors/door1.png"));
+    doorTextures.push_back(QPixmap("../textures/doors/door2.png"));
+
+
 
     startScreen = new StartScreen();
     startScreen->setGraphicalUi(this);

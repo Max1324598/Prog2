@@ -19,8 +19,8 @@ Level::Level()
     Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
     sp->attach(dp);
 
-    createNpc(5,5, {6,6,2,2,4,4,8,8});
-    createNpc(8,8, {8,8,8,2,2,2});
+    //createNpc(5,5, {6,6,2,2,4,4,8,8});
+    //createNpc(8,8, {8,8,8,2,2,2});
 
     setPortals(1,8,8,1,1);
 }
