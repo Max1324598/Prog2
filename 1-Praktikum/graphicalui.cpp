@@ -26,7 +26,7 @@ GraphicalUI::GraphicalUI()
     startScreen->setGraphicalUi(this);
 
     mainWindow = new MainWindow(this);
-   // mainWindow->setCurrentGui(this);
+    mainWindow->setCurrentGui(this);
 
     startScreen->show();
 
@@ -48,4 +48,39 @@ QPixmap GraphicalUI::getRandomFloorTexture()
     int randomNumber = rand()%5;
     QPixmap randomFloorTexture = floorTextures.at(randomNumber);
     return randomFloorTexture;
+}
+
+const std::vector<QPixmap> &GraphicalUI::getPortalTextures() const
+{
+    return portalTextures;
+}
+
+const std::vector<QPixmap> &GraphicalUI::getDoorTextures() const
+{
+    return doorTextures;
+}
+
+const QPixmap &GraphicalUI::getWallTexture() const
+{
+    return wallTexture;
+}
+
+const QPixmap &GraphicalUI::getPitTexture() const
+{
+    return pitTexture;
+}
+
+const QPixmap &GraphicalUI::getSwitchTexture() const
+{
+    return switchTexture;
+}
+
+const QPixmap &GraphicalUI::getRampTexture() const
+{
+    return rampTexture;
+}
+
+const QPixmap &GraphicalUI::getCharacterTexture() const
+{
+    return characterTexture;
 }

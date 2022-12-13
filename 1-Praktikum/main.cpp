@@ -19,17 +19,17 @@ int main(int argc, char *argv[]) try
     //TerminalUI* ui = new TerminalUI();
     GraphicalUI* ui = new GraphicalUI();
     Character* player = new Character();
-    //level->placeCharacter(player,1,1);
+    level->placeCharacter(player,1,1);
     DungeonCrawler* dg = new DungeonCrawler(level, ui ,player);
     ui->draw(level);
 
-    delete level;
-    delete ui;
-    delete dg;
+//    delete level;
+//    delete ui;
+//    delete dg;
 
-    level = nullptr;
-    ui = nullptr;
-    dg = nullptr;
+//    level = nullptr;
+//    ui = nullptr;
+//    dg = nullptr;
 
     return QApplication.exec();
 }
