@@ -20,6 +20,19 @@ public:
     QPixmap getRandomFloorTexture();
 
 
+    const std::vector<QPixmap> &getPortalTextures() const;
+
+    const std::vector<QPixmap> &getDoorTextures() const;
+
+    const QPixmap &getWallTexture()const;
+    const QPixmap &getPitTexture() const;
+
+    const QPixmap &getSwitchTexture() const;
+
+    const QPixmap &getRampTexture() const;
+
+    const QPixmap &getCharacterTexture() const;
+
 private:
     StartScreen* startScreen;
     MainWindow* mainWindow;
@@ -28,11 +41,11 @@ private:
     std::vector<QPixmap> portalTextures;
     std::vector<QPixmap> doorTextures;
 
-
-    QPixmap wallTexture{QPixmap(QPixmap("../textures/portal/portal1.png"))};
-    QPixmap switchTexture{QPixmap(QPixmap("../textures/switch.png"))};
-    QPixmap rampTexture{QPixmap(QPixmap("../textures/ramp.png"))};
-    QPixmap pitTexture{QPixmap(QPixmap("../textures/pit.png"))};
+    QPixmap characterTexture = QPixmap("../textures/char/front/char_front_1.png");
+    QPixmap wallTexture = QPixmap("../textures/wall/wall1.png");
+    QPixmap switchTexture= QPixmap ("../textures/switch.png");
+    QPixmap rampTexture = QPixmap("../textures/ramp.png");
+    QPixmap pitTexture = QPixmap("../textures/pit.png");
 
 
 };
