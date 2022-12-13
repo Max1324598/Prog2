@@ -56,7 +56,14 @@
        <height>521</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout"/>
+     <layout class="QGridLayout" name="levelLayout">
+      <property name="topMargin">
+       <number>11</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>8</number>
+      </property>
+     </layout>
     </widget>
     <widget class="QWidget" name="gridLayoutWidget_2">
      <property name="geometry">

@@ -17,6 +17,8 @@ public:
     void draw(Level* level) override;
     void switchWindow();
 
+    QPixmap getRandomFloorTexture();
+
 
 private:
     StartScreen* startScreen;

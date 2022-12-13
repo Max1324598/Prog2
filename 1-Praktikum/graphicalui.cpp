@@ -1,6 +1,7 @@
 #include "graphicalui.h"
 #include "startscreen.h"
 #include "mainwindow.h"
+#include <cstdlib>
 
 
 
@@ -25,7 +26,7 @@ GraphicalUI::GraphicalUI()
     startScreen->setGraphicalUi(this);
 
     mainWindow = new MainWindow(this);
-    mainWindow->setCurrentGui(this);
+   // mainWindow->setCurrentGui(this);
 
     startScreen->show();
 
@@ -40,4 +41,11 @@ void GraphicalUI::switchWindow()
 {
     startScreen->hide();
     mainWindow->show();
+}
+
+QPixmap GraphicalUI::getRandomFloorTexture()
+{
+    int randomNumber = rand()%5;
+    QPixmap randomFloorTexture = floorTextures.at(randomNumber);
+    return randomFloorTexture;
 }
