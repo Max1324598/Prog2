@@ -1,8 +1,8 @@
 #include "portal.h"
 
 //ctor
-Portal::Portal(int row,int column, Character *character, Tile *destination)
-    : Tile{row, column, "O", character}, destination {destination}
+Portal::Portal(int row,int column, Character *character, Tile *destination,int portalType)
+    : Tile{row, column, "O", character}, destination {destination}, portalType{portalType}
 {}
 
 

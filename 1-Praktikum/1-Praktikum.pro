@@ -1,6 +1,6 @@
-QT -= gui
-
-CONFIG += c++17 console
+QT += core gui
+greaterThan ( QT_MAJOR_VERSION , 4) : QT += widgets
+CONFIG += c ++11 console
 CONFIG -= app_bundle
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -15,14 +15,17 @@ SOURCES += \
         door.cpp \
         dungeoncrawler.cpp \
         floor.cpp \
+        graphicalui.cpp \
         guardcontroller.cpp \
         level.cpp \
         main.cpp \
+        mainwindow.cpp \
         npc.cpp \
         passive.cpp \
         pit.cpp \
         portal.cpp \
         ramp.cpp \
+        startscreen.cpp \
         switch.cpp \
         terminalUI.cpp \
         tile.cpp \
@@ -41,14 +44,21 @@ HEADERS += \
     door.h \
     dungeoncrawler.h \
     floor.h \
+    graphicalui.h \
     guardcontroller.h \
     level.h \
+    mainwindow.h \
     npc.h \
     passive.h \
     pit.h \
     portal.h \
     ramp.h \
+    startscreen.h \
     switch.h \
     terminalUI.h \
     tile.h \
     wall.h
+
+FORMS += \
+    mainwindow.ui \
+    startscreen.ui
