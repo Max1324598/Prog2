@@ -16,15 +16,13 @@ int main(int argc, char *argv[]) try
 
 
     Level* level{new Level()};
-    //TerminalUI* ui = new TerminalUI();
-    GraphicalUI* ui = new GraphicalUI();
     Character* player = new Character();
-    //level->placeCharacter(player,1,1);
+    level->placeCharacter(player,1,1);
+    //TerminalUI* ui = new TerminalUI();
+    GraphicalUI* ui = new GraphicalUI(level);
     DungeonCrawler* dg = new DungeonCrawler(level, ui ,player);
     ui->setCurrentDungeonCrawler(dg);
-    level->placeCharacter(player,1,1);
     ui->setCurrentLevel(level);
-    ui->draw(level);
 
 
 

@@ -176,6 +176,7 @@ void Level::placeCharacter(Character *c, int row, int col)
 {
     c->setTile(getTile(row,col));
     stageVector.at(row).at(col)->setCharacter(c);
+    playerCharacter = c;
 }
 
 void Level::createNpc(int row, int col, std::vector<int> pattern) {
@@ -222,5 +223,10 @@ int Level::getMaxColumn() const
 const vector<Character *> &Level::getCharacterVector() const
 {
     return characterVector;
+}
+
+Character *Level::getPlayerCharacter() const
+{
+    return playerCharacter;
 }
 

@@ -5,7 +5,7 @@
 
 
 
-GraphicalUI::GraphicalUI()
+GraphicalUI::GraphicalUI(Level *currentLevel): currentLevel{currentLevel}
 {
     floorTextures.push_back(QPixmap("../textures/floor/floor1.png"));
     floorTextures.push_back(QPixmap("../textures/floor/floor2.png"));

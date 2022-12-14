@@ -38,6 +38,8 @@ public slots:
 private:
     Ui::MainWindow *ui;
     std::vector<std::vector<QLabel*>> fieldLabel;
+    std::vector<QLabel*> npcLabels;
+    QLabel* playerLabel;
     GraphicalUI* currentGui;
 
 };

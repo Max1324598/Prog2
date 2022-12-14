@@ -11,7 +11,7 @@ class MainWindow;
 class GraphicalUI :public AbstractUI
 {
 public:
-    GraphicalUI();
+    GraphicalUI(Level* currentLevel);
     ~GraphicalUI() override  = default;
 
     void draw(Level* level) override;

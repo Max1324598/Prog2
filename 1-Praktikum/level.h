@@ -38,11 +38,14 @@ public:
     const vector<Character *> &getCharacterVector() const;
 
 
+    Character *getPlayerCharacter() const;
+
 private:
     int maxRow;
     int maxColumn;
     vector<std::vector<Tile*>> stageVector;
     vector<Character*> characterVector;
+    Character* playerCharacter = nullptr;
 
 };
 
