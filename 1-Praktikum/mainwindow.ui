@@ -74,7 +74,7 @@
        <height>181</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="buttonLayout">
       <item row="0" column="2">
        <widget class="QPushButton" name="direction9">
         <property name="text">
@@ -276,13 +276,16 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-40</y>
+       <y>-20</y>
        <width>1200</width>
        <height>701</height>
       </rect>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(0,0,0,0)</string>
      </property>
      <property name="text">
       <string/>

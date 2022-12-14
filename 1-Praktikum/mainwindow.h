@@ -24,6 +24,12 @@ public:
 
     void setCurrentGui(GraphicalUI *newCurrentGui);
 
+    void getCharacterTexture(QLabel* characterLabel, Tile* stageVectorContent);
+
+    void setCharacterLabelTexture(Tile* stageVectorContent, QLabel* characterLabel);
+
+    void setNpcLabelTexture(QLabel* npcLabel, Tile* stageVectorContent);
+
 public slots:
     void buttonOneMove();
     void buttonTwoMove();

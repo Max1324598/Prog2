@@ -3,14 +3,12 @@
 #include "floor.h"
 #include "pit.h"
 #include "portal.h"
-#include "qdialog.h"
 #include "switch.h"
 #include "ui_mainwindow.h"
 #include "tile.h"
 #include "graphicalui.h"
 #include "wall.h"
-#include "npc.h"
-
+#include <iostream>
 #include <qlabel.h>
 
 MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
@@ -18,7 +16,11 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->label->raise();
+    ui->gridLayoutWidget_2->raise();
+
     Tile* stageVectorContent{nullptr};
+
 
 
     ui->levelLayout->setContentsMargins(0,0,0,0);
@@ -43,16 +45,10 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
 
             if(dynamic_cast<Floor*>(stageVectorContent) != nullptr){
                 label->setPixmap(currentGui->getRandomFloorTexture());
-
-
                 ui->levelLayout->addWidget(label,i,j);
             }
             if(dynamic_cast<Wall*>(stageVectorContent) != nullptr){
                 label->setPixmap(currentGui->getWallTexture());
-                label->setScaledContents(true);
-                label->setMinimumSize(30,30);
-
-                fieldLabel.at(i).at(j) = label;
                 ui->levelLayout->addWidget(label,i,j);
             }
 
@@ -62,29 +58,16 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
                     label->setPixmap(currentGui->getDoorTextures().at(0));
                 else
                     label->setPixmap(currentGui->getDoorTextures().at(1));
-                label->setScaledContents(true);
-                label->setMinimumSize(30,30);
 
-                fieldLabel.at(i).at(j) = label;
                 ui->levelLayout->addWidget(label,i,j);
             }
             if(dynamic_cast<Pit*>(stageVectorContent) != nullptr){
                 label->setPixmap(currentGui->getPitTexture());
-                label->setScaledContents(true);
-                label->setMinimumSize(30,30);
-
-
-
-                fieldLabel.at(i).at(j) = label;
                 ui->levelLayout->addWidget(label,i,j);
             }
 
             if(dynamic_cast<Ramp*>(stageVectorContent) != nullptr){
                 label->setPixmap(currentGui->getRampTexture());
-                label->setScaledContents(true);
-                label->setMinimumSize(30,30);
-
-                fieldLabel.at(i).at(j) = label;
                 ui->levelLayout->addWidget(label,i,j);
             }
 
@@ -97,18 +80,10 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
                 if(portal->getPortalType() == 3)
                     label->setPixmap(currentGui->getPortalTextures().at(2));
 
-                label->setScaledContents(true);
-                label->setMinimumSize(30,30);
-
-                fieldLabel.at(i).at(j) = label;
                 ui->levelLayout->addWidget(label,i,j);
             }
             if(dynamic_cast<Switch*>(stageVectorContent) != nullptr){
                 label->setPixmap(currentGui->getSwitchTexture());
-                label->setScaledContents(true);
-                label->setMinimumSize(30,30);
-
-                fieldLabel.at(i).at(j) = label;
                 ui->levelLayout->addWidget(label,i,j);
             }
 
@@ -146,21 +121,21 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
         }
 
 
-
-
-        connect(ui->direction1, &QPushButton::clicked, this, &MainWindow::buttonOneMove);
-        connect(ui->direction2, &QPushButton::clicked, this, &MainWindow::buttonTwoMove);
-        connect(ui->direction3, &QPushButton::clicked, this, &MainWindow::buttonThreeMove);
-        connect(ui->direction4, &QPushButton::clicked, this, &MainWindow::buttonFourMove);
-        connect(ui->direction5, &QPushButton::clicked, this, &MainWindow::buttonFiveMove);
-        connect(ui->direction6, &QPushButton::clicked, this, &MainWindow::buttonSixMove);
-        connect(ui->direction7, &QPushButton::clicked, this, &MainWindow::buttonSevenMove);
-        connect(ui->direction8, &QPushButton::clicked, this, &MainWindow::buttonEightMove);
-        connect(ui->direction9, &QPushButton::clicked, this, &MainWindow::buttonNineMove);
-
-
-
     }
+
+    connect(ui->direction1, &QPushButton::clicked, this, &MainWindow::buttonOneMove);
+    connect(ui->direction2, &QPushButton::clicked, this, &MainWindow::buttonTwoMove);
+    connect(ui->direction3, &QPushButton::clicked, this, &MainWindow::buttonThreeMove);
+    connect(ui->direction4, &QPushButton::clicked, this, &MainWindow::buttonFourMove);
+    connect(ui->direction5, &QPushButton::clicked, this, &MainWindow::buttonFiveMove);
+    connect(ui->direction6, &QPushButton::clicked, this, &MainWindow::buttonSixMove);
+    connect(ui->direction7, &QPushButton::clicked, this, &MainWindow::buttonSevenMove);
+    connect(ui->direction8, &QPushButton::clicked, this, &MainWindow::buttonEightMove);
+    connect(ui->direction9, &QPushButton::clicked, this, &MainWindow::buttonNineMove);
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -176,7 +151,7 @@ void MainWindow::draw(Level *level)
     for (int i{}; i<level->getMaxRow();i++){
         for (int j{}; j<level->getMaxColumn();j++){
 
-            Tile* stageVectorContent = level->getStageVector().at(i).at(j);
+            stageVectorContent = level->getStageVector().at(i).at(j);
             bool hasCharacter = stageVectorContent->hasCharacter();
 
             if(dynamic_cast<Door*>(stageVectorContent) != nullptr)
@@ -193,59 +168,37 @@ void MainWindow::draw(Level *level)
                     openedDoor->setPixmap(currentGui->getDoorTextures().at(1));
                 }
             }
-
             if(hasCharacter){
                 bool isNPC = (stageVectorContent->getCharacter()->getTexture() != "C");
-                int npc_counter = 0;
                 if(isNPC){
                     for(unsigned int i = 0; i < npcLabels.size(); i++){ //nicht aktuelle npcs löschen
                         ui->levelLayout->removeWidget(npcLabels.at(i));
                         delete npcLabels.at(i);
-                        npc_counter++;
                     }
                     npcLabels.clear();
+                    for(int k = 0; k < level->getCharacterVector().size(); k++){
+                        QLabel* npcLabel = new QLabel();
+                        npcLabel->setScaledContents(true);
+                        npcLabel->raise();
+                        npcLabel->setMinimumSize(30,30);
+                        npcLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
 
-                    for(int i = 0; i < npc_counter; i++){
-                        QLabel* npc = new QLabel();
-                        npc->setScaledContents(true);
-                        npc->raise();
-                        npc->setMinimumSize(30,30);
-                        npc->setStyleSheet("background-color: rgba(0,0,0,0)");
-                        int row = level->getCharacterVector().at(i)->getTile()->getRow();
-                        int col = level->getCharacterVector().at(i)->getTile()->getColumn();
+                        int row = level->getCharacterVector().at(k)->getTile()->getRow();
+                        int col = level->getCharacterVector().at(k)->getTile()->getColumn();
                         fieldLabel.at(row).at(col)->lower();
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 1)
-                            npc->setPixmap(currentGui->getZombieLeft());
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 2)
-                            npc->setPixmap(currentGui->getZombieLeft());
 
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 3)
-                            npc->setPixmap(currentGui->getZombieRight());
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 4)
-                            npc->setPixmap(currentGui->getZombieLeft());
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 5)
-                            npc->setPixmap(currentGui->getZombieRight());
+                        setNpcLabelTexture(npcLabel, stageVectorContent);
 
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 6)
-                            npc->setPixmap(currentGui->getZombieRight());
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 7)
-                            npc->setPixmap(currentGui->getZombieLeft());
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 8)
-                            npc->setPixmap(currentGui->getZombieRight());
 
-                        if(stageVectorContent->getCharacter()->getLastMovingDir() == 9)
-                            npc->setPixmap(currentGui->getZombieRight());
-
-                        if(dynamic_cast<Pit*>(stageVectorContent) != nullptr){
+                        ui->levelLayout->addWidget(npcLabel, row, col);
+                        npcLabels.push_back(npcLabel);
+                        if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
                             fieldLabel.at(row).at(col)->raise();
+                            fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
                         }
-
-                        ui->levelLayout->addWidget(npc, row, col);
-                        npcLabels.push_back(npc);
-
                     }
-                }
-                else {
+                } else {
+
                     ui->levelLayout->removeWidget(playerLabel);
                     delete playerLabel;
 
@@ -259,37 +212,67 @@ void MainWindow::draw(Level *level)
                     int row = level->getPlayerCharacter()->getTile()->getRow();
                     int col = level->getPlayerCharacter()->getTile()->getColumn();
 
-                    if(stageVectorContent->getCharacter()->getLastMovingDir() == 2)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureDown());
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 1)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 3)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
 
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 4)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 5)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureDown());
+                    setCharacterLabelTexture(stageVectorContent, characterLabel);
 
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 6)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 7)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
 
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 8)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureUp());
-                    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 9)
-                        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
                     ui->levelLayout->addWidget(characterLabel, row, col);
                     playerLabel = characterLabel;
-                    if(dynamic_cast<Pit*>(stageVectorContent) != nullptr){
+                    if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
                         fieldLabel.at(row).at(col)->raise();
+                        fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
                     }
 
                 }
             }
         }
     }
+}
+
+void MainWindow::setCharacterLabelTexture(Tile* stageVectorContent, QLabel* characterLabel)
+{
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 2)
+        characterLabel->setPixmap(currentGui->getCharacterTextureDown());
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 1)
+        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 3)
+        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
+
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 4)
+        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 5)
+        characterLabel->setPixmap(currentGui->getCharacterTextureDown());
+
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 6)
+        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 7)
+        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
+
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 8)
+        characterLabel->setPixmap(currentGui->getCharacterTextureUp());
+    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 9)
+        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
+}
+
+void MainWindow::setNpcLabelTexture(QLabel* npcLabel, Tile* stageVectorContent)
+{
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 1)
+        npcLabel->setPixmap(currentGui->getZombieLeft());
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 2)
+        npcLabel->setPixmap(currentGui->getZombieLeft());
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 3)
+        npcLabel->setPixmap(currentGui->getZombieRight());
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 4)
+        npcLabel->setPixmap(currentGui->getZombieLeft());
+
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 5)
+        npcLabel->setPixmap(currentGui->getZombieRight());
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 6)
+        npcLabel->setPixmap(currentGui->getZombieRight());
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 7)
+        npcLabel->setPixmap(currentGui->getZombieLeft());
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 8)
+        npcLabel->setPixmap(currentGui->getZombieRight());
 }
 
 void MainWindow::buttonOneMove(){
