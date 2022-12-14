@@ -35,6 +35,8 @@ public:
 
 
 
+    Character *getCharacter() const;
+
 protected:
     int row;
     int column;

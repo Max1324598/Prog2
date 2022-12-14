@@ -25,3 +25,8 @@ void Portal::setDestination(Tile *newDestination)
 {
     destination = newDestination;
 }
+
+int Portal::getPortalType() const
+{
+    return portalType;
+}

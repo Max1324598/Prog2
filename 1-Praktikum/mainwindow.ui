@@ -50,13 +50,20 @@
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>111</y>
+       <x>-20</x>
+       <y>40</y>
        <width>861</width>
        <height>521</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout"/>
+     <layout class="QGridLayout" name="levelLayout">
+      <property name="topMargin">
+       <number>11</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>8</number>
+      </property>
+     </layout>
     </widget>
     <widget class="QWidget" name="gridLayoutWidget_2">
      <property name="geometry">
@@ -268,8 +275,8 @@
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>19</y>
+       <x>-260</x>
+       <y>-40</y>
        <width>1200</width>
        <height>701</height>
       </rect>
@@ -298,7 +305,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

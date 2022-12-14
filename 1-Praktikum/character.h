@@ -17,10 +17,13 @@ public:
     //setter
     void setTile(Tile *newTile);
 
+    int getLastMovingDir() const;
+    void setLastMovingDir(int newLastMovingDir);
+
 private:
     string texture;
     Tile* tile;
-
+    int lastMovingDir = 5;
 };
 
 #endif // CHARACTER_H

@@ -38,6 +38,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() +1).at(currentTile->getColumn()-1);
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(1);
         } break;
 
     }
@@ -47,6 +48,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() + 1).at(currentTile->getColumn());
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(2);
         }
 
         break;
@@ -57,6 +59,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() + 1).at(currentTile->getColumn()+1);
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(3);
         } break;
     }
 
@@ -66,12 +69,14 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() ).at(currentTile->getColumn()-1);
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(4);
         }
         break;}
 
         //stand still
     case 5:{
         std::cout << "Diese Runde wurde ausgesetzt.\n\n";
+        currentChar->setLastMovingDir(5);
         break;
     }
 
@@ -82,6 +87,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() ).at(currentTile->getColumn()+1);
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(6);
 
         }
 
@@ -93,6 +99,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() -1 ).at(currentTile->getColumn()-1);
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(7);
         }
         break;}
 
@@ -104,6 +111,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() - 1).at(currentTile->getColumn());
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(8);
 
         }
         break;
@@ -114,6 +122,7 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
             nextTile = currentLevel->getStageVector().at(currentTile->getRow() - 1).at(currentTile->getColumn()+1);
 
             currentTile->moveTo(nextTile, currentChar);
+            currentChar->setLastMovingDir(9);
 
         }
         break;

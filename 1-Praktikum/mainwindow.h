@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <qlabel.h>
+#include "dungeoncrawler.h"
 #include "level.h"
 
 class GraphicalUI;
@@ -22,6 +23,17 @@ public:
     void draw(Level* level);
 
     void setCurrentGui(GraphicalUI *newCurrentGui);
+
+public slots:
+    void buttonOneMove();
+    void buttonTwoMove();
+    void buttonThreeMove();
+    void buttonFourMove();
+    void buttonFiveMove();
+    void buttonSixMove();
+    void buttonSevenMove();
+    void buttonEightMove();
+    void buttonNineMove();
 
 private:
     Ui::MainWindow *ui;

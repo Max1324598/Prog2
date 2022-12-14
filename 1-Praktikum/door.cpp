@@ -26,3 +26,8 @@ void Door::notify(Active* source){
     }
 }
 
+bool Door::getIsOpen() const
+{
+    return isOpen;
+}
+

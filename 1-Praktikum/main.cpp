@@ -21,7 +21,14 @@ int main(int argc, char *argv[]) try
     Character* player = new Character();
     //level->placeCharacter(player,1,1);
     DungeonCrawler* dg = new DungeonCrawler(level, ui ,player);
+    ui->setCurrentDungeonCrawler(dg);
+    level->placeCharacter(player,1,1);
+    ui->setCurrentLevel(level);
     ui->draw(level);
+
+
+
+    return QApplication.exec();
 
     delete level;
     delete ui;
@@ -30,8 +37,6 @@ int main(int argc, char *argv[]) try
     level = nullptr;
     ui = nullptr;
     dg = nullptr;
-
-    return QApplication.exec();
 }
 
 catch (std::exception& e)

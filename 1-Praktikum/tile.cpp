@@ -36,6 +36,11 @@ void Tile::setCharacter(Character *newCharacter)
     character = newCharacter;
 }
 
+Character* Tile::getCharacter() const
+{
+    return character;
+}
+
 int Tile::getRow() const
 {
     return row;
@@ -50,6 +55,7 @@ bool Tile::hasCharacter() const{
     if  (character == nullptr) return false;
     else return true;
 }
+
 
 string Tile::setTexture(std::string s){
     texture = s;

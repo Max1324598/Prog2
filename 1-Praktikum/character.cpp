@@ -22,3 +22,13 @@ void Character::setTile(Tile *newTile)
     tile = newTile;
 }
 
+int Character::getLastMovingDir() const
+{
+    return lastMovingDir;
+}
+
+void Character::setLastMovingDir(int newLastMovingDir)
+{
+    lastMovingDir = newLastMovingDir;
+}
+
