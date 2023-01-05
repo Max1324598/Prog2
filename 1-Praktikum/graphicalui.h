@@ -12,39 +12,27 @@ class GraphicalUI :public AbstractUI
 {
 public:
     GraphicalUI(Level* currentLevel);
-    ~GraphicalUI() override  = default;
+    ~GraphicalUI();
 
     void draw(Level* level) override;
     void switchWindow();
 
-    QPixmap getRandomFloorTexture();
-
-
-    const std::vector<QPixmap> &getPortalTextures() const;
-
-    const std::vector<QPixmap> &getDoorTextures() const;
-
-    const QPixmap &getWallTexture()const;
-    const QPixmap &getPitTexture() const;
-
-    const QPixmap &getSwitchTexture() const;
-
-    const QPixmap &getRampTexture() const;
-
-    const QPixmap &getCharacterTextureDown() const;
-
     void setCurrentLevel(Level *newCurrentLevel);
-
     Level *getCurrentLevel() const;
 
+    //Texture-Getter
+    QPixmap getRandomFloorTexture();
+    const std::vector<QPixmap> &getPortalTextures() const;
+    const std::vector<QPixmap> &getDoorTextures() const;
+    const QPixmap &getWallTexture()const;
+    const QPixmap &getPitTexture() const;
+    const QPixmap &getSwitchTexture() const;
+    const QPixmap &getRampTexture() const;
+    const QPixmap &getCharacterTextureDown() const;
     const QPixmap &getCharacterTextureUp() const;
-
     const QPixmap &getCharacterTextureRight() const;
-
     const QPixmap &getCharacterTextureLeft() const;
-
     const QPixmap &getZombieRight() const;
-
     const QPixmap &getZombieLeft() const;
 
 private:

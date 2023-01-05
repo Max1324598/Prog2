@@ -8,6 +8,7 @@
 
 int main(int argc, char *argv[]) try
 {
+    srand(time(NULL));
     QApplication QApplication(argc, argv);
 
 
@@ -19,8 +20,19 @@ int main(int argc, char *argv[]) try
     DungeonCrawler* dg = new DungeonCrawler(level, ui ,player);
     ui->setCurrentDungeonCrawler(dg);
 
+    //delete?
 
-    return QApplication.exec();
+
+    int r=QApplication.exec();
+
+    delete ui;
+    delete dg;
+    delete player;
+    delete level;
+
+
+
+    return r;
 
 }
 

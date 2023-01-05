@@ -26,9 +26,16 @@ GraphicalUI::GraphicalUI(Level *currentLevel): currentLevel{currentLevel}
     startScreen->setGraphicalUi(this);
 
     mainWindow = new MainWindow(this);
-    mainWindow->setCurrentGui(this);
 
     startScreen->show();
+
+}
+
+GraphicalUI::~GraphicalUI()
+{
+    delete startScreen;
+
+    delete mainWindow;
 
 }
 

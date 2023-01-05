@@ -94,7 +94,7 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
                     isNPC = true;
 
                 if(isNPC){
-                    QLabel* npcLabel = new QLabel();
+                    QLabel* npcLabel = new QLabel(this);
                     npcLabel->setPixmap(currentGui->getZombieRight());
                     npcLabel->setScaledContents(true);
                     npcLabel->setMinimumSize(30,30);
@@ -116,13 +116,11 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
                     playerLabel = characterLabel;
                 }
             }
-
-
         }
-
-
     }
 
+
+    //TODO: Eigene Button Klasse
     connect(ui->direction1, &QPushButton::clicked, this, &MainWindow::buttonOneMove);
     connect(ui->direction2, &QPushButton::clicked, this, &MainWindow::buttonTwoMove);
     connect(ui->direction3, &QPushButton::clicked, this, &MainWindow::buttonThreeMove);
@@ -168,65 +166,64 @@ void MainWindow::draw(Level *level)
                     openedDoor->setPixmap(currentGui->getDoorTextures().at(1));
                 }
             }
-            if(hasCharacter){
-                bool isNPC = (stageVectorContent->getCharacter()->getTexture() != "C");
-                if(isNPC){
-                    for(unsigned int i = 0; i < npcLabels.size(); i++){ //nicht aktuelle npcs löschen
-                        ui->levelLayout->removeWidget(npcLabels.at(i));
-                        delete npcLabels.at(i);
-                    }
-                    npcLabels.clear();
-                    for(int k = 0; k < level->getCharacterVector().size(); k++){
-                        QLabel* npcLabel = new QLabel();
-                        npcLabel->setScaledContents(true);
-                        npcLabel->raise();
-                        npcLabel->setMinimumSize(30,30);
-                        npcLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
+        }
+    }
 
-                        int row = level->getCharacterVector().at(k)->getTile()->getRow();
-                        int col = level->getCharacterVector().at(k)->getTile()->getColumn();
-                        fieldLabel.at(row).at(col)->lower();
+    if(!level->getCharacterVector().empty()){
 
-                        setNpcLabelTexture(npcLabel, stageVectorContent);
+        for(unsigned int i = 0; i < npcLabels.size(); i++){ //nicht aktuelle npcs löschen
+            ui->levelLayout->removeWidget(npcLabels.at(i));
+            delete npcLabels.at(i);
+        }
+        npcLabels.clear();
+        for(int k = 0; k < level->getCharacterVector().size(); k++){
+            QLabel* npcLabel = new QLabel();
+            npcLabel->setScaledContents(true);
+            npcLabel->raise();
+            npcLabel->setMinimumSize(30,30);
+            npcLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
 
+            int row = level->getCharacterVector().at(k)->getTile()->getRow();
+            int col = level->getCharacterVector().at(k)->getTile()->getColumn();
+            fieldLabel.at(row).at(col)->lower();
 
-                        ui->levelLayout->addWidget(npcLabel, row, col);
-                        npcLabels.push_back(npcLabel);
-                        if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
-                            fieldLabel.at(row).at(col)->raise();
-                            fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
-                        }
-                    }
-                } else {
-
-                    ui->levelLayout->removeWidget(playerLabel);
-                    delete playerLabel;
+            setNpcLabelTexture(npcLabel, level->getStageVector().at(row).at(col));
 
 
-                    QLabel* characterLabel = new QLabel();
-                    characterLabel->setScaledContents(true);
-                    characterLabel->raise();
-                    characterLabel->setMinimumSize(30,30);
-                    characterLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
-
-                    int row = level->getPlayerCharacter()->getTile()->getRow();
-                    int col = level->getPlayerCharacter()->getTile()->getColumn();
-
-
-                    setCharacterLabelTexture(stageVectorContent, characterLabel);
-
-
-                    ui->levelLayout->addWidget(characterLabel, row, col);
-                    playerLabel = characterLabel;
-                    if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
-                        fieldLabel.at(row).at(col)->raise();
-                        fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
-                    }
-
-                }
+            ui->levelLayout->addWidget(npcLabel, row, col);
+            npcLabels.push_back(npcLabel);
+            if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
+                fieldLabel.at(row).at(col)->raise();
+                fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
             }
         }
     }
+
+    ui->levelLayout->removeWidget(playerLabel);
+    delete playerLabel;
+
+
+    QLabel* characterLabel = new QLabel(this);
+    characterLabel->setScaledContents(true);
+    characterLabel->raise();
+    characterLabel->setMinimumSize(30,30);
+    characterLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
+
+    int row = level->getPlayerCharacter()->getTile()->getRow();
+    int col = level->getPlayerCharacter()->getTile()->getColumn();
+
+    setCharacterLabelTexture(level->getStageVector().at(row).at(col), characterLabel);
+
+    ui->levelLayout->addWidget(characterLabel, row, col);
+    playerLabel = characterLabel;
+
+    if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
+        fieldLabel.at(row).at(col)->raise();
+        fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
+    }
+
+
+
 }
 
 void MainWindow::setCharacterLabelTexture(Tile* stageVectorContent, QLabel* characterLabel)
@@ -272,6 +269,8 @@ void MainWindow::setNpcLabelTexture(QLabel* npcLabel, Tile* stageVectorContent)
     if(stageVectorContent->getCharacter()->getLastMovingDir() == 7)
         npcLabel->setPixmap(currentGui->getZombieLeft());
     if(stageVectorContent->getCharacter()->getLastMovingDir() == 8)
+        npcLabel->setPixmap(currentGui->getZombieRight());
+    if(stageVectorContent->getCharacter()->getLastMovingDir() == 9)
         npcLabel->setPixmap(currentGui->getZombieRight());
 }
 
