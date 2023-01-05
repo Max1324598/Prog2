@@ -19,8 +19,8 @@ Level::Level()
     Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
     sp->attach(dp);
 
-    //createNpc(5,5, {6,6,2,2,4,4,8,8});
-    //createNpc(8,8, {8,8,8,2,2,2});
+    createNpc(5,5, {6,6,2,2,4,4,8,8});
+    createNpc(8,8, {8,8,8,2,2,2});
 
     setPortals(1,8,8,1,1);
 }
@@ -176,6 +176,7 @@ void Level::placeCharacter(Character *c, int row, int col)
 {
     c->setTile(getTile(row,col));
     stageVector.at(row).at(col)->setCharacter(c);
+    playerCharacter = c;
 }
 
 void Level::createNpc(int row, int col, std::vector<int> pattern) {
@@ -222,5 +223,10 @@ int Level::getMaxColumn() const
 const vector<Character *> &Level::getCharacterVector() const
 {
     return characterVector;
+}
+
+Character *Level::getPlayerCharacter() const
+{
+    return playerCharacter;
 }
 

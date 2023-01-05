@@ -2,36 +2,38 @@
 #include <exception>
 #include <vector>
 #include <QApplication>
-
-
-
 #include "level.h"
-#include "terminalUI.h"
 #include "graphicalui.h"
 #include "dungeoncrawler.h"
 
 int main(int argc, char *argv[]) try
 {
+    srand(time(NULL));
     QApplication QApplication(argc, argv);
 
 
     Level* level{new Level()};
-    //TerminalUI* ui = new TerminalUI();
-    GraphicalUI* ui = new GraphicalUI();
     Character* player = new Character();
-    //level->placeCharacter(player,1,1);
+    level->placeCharacter(player,1,1);
+    GraphicalUI* ui = new GraphicalUI(level);
+    ui->setCurrentLevel(level);
     DungeonCrawler* dg = new DungeonCrawler(level, ui ,player);
-    ui->draw(level);
+    ui->setCurrentDungeonCrawler(dg);
 
-    delete level;
+    //delete?
+
+
+    int r=QApplication.exec();
+
     delete ui;
     delete dg;
+    delete player;
+    delete level;
 
-    level = nullptr;
-    ui = nullptr;
-    dg = nullptr;
 
-    return QApplication.exec();
+
+    return r;
+
 }
 
 catch (std::exception& e)

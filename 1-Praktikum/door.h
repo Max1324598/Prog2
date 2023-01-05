@@ -10,6 +10,8 @@ public:
     Tile* onLeave(Tile* fromTile, Character* who) override;
     void notify(Active* source) override;
 
+    bool getIsOpen() const;
+
 private:
      bool isOpen;
 };

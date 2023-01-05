@@ -17,6 +17,8 @@ public:
     //setter
     void setDestination(Tile *newDestination);
 
+    int getPortalType() const;
+
 private:
     Tile* destination;
     int portalType;
