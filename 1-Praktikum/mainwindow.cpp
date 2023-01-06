@@ -10,7 +10,7 @@
 #include "wall.h"
 #include <iostream>
 #include <qlabel.h>
-
+#include <QStatusBar>
 MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
     QMainWindow(parent),ui(new Ui::MainWindow),fieldLabel{}, currentGui{currentGui}
 {
@@ -19,8 +19,8 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
     ui->label->raise();
     ui->gridLayoutWidget_2->raise();
 
-    Tile* stageVectorContent{nullptr};
 
+    Tile* stageVectorContent{nullptr};
 
 
     ui->levelLayout->setContentsMargins(0,0,0,0);
@@ -90,7 +90,7 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
 
             if(hasCharacter){
                 bool isNPC = false;
-                if(level->getStageVector().at(i).at(j)->getCharacter()->getTexture() != "C") // dynamic_cast funktioniert nicht "character is not polyphormic"
+                if(dynamic_cast<Npc*>(level->getStageVector().at(i).at(j)->getCharacter()) != nullptr) // dynamic_cast funktioniert nicht "character is not polyphormic"
                     isNPC = true;
 
                 if(isNPC){
@@ -145,12 +145,25 @@ void MainWindow::draw(Level *level)
 {
 
     Tile* stageVectorContent{nullptr};
+    QString stamina = "Stamina: ";
+       QString hp = "Hitpoints: ";
+       QString strength = "Strength: ";
+       QString stamFull = stamina + QString::number(level->getPlayerCharacter()->getStamina());
+       QString hpFull = hp + QString::number(level->getPlayerCharacter()->getMaxHP());
+       QString strengthFull = strength + QString::number(level->getPlayerCharacter()->getStrength());
+       ui->textEdit->setText(stamFull);
+       ui->textEdit->setAlignment(Qt::AlignCenter);
+       ui->textEdit_3->setText(hpFull);
+       ui->textEdit_3->setAlignment(Qt::AlignCenter);
+       ui->textEdit_2->setText(strengthFull);
+       ui->textEdit_2->setAlignment(Qt::AlignCenter);
 
     for (int i{}; i<level->getMaxRow();i++){
         for (int j{}; j<level->getMaxColumn();j++){
 
             stageVectorContent = level->getStageVector().at(i).at(j);
             bool hasCharacter = stageVectorContent->hasCharacter();
+
 
             if(dynamic_cast<Door*>(stageVectorContent) != nullptr)
             {

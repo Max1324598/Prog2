@@ -3,7 +3,7 @@
 
 
 Npc::Npc(std::string texture, Tile* tile, AbstractController* controller):
-    Character(texture,tile),currentController{controller}{}
+    Character(texture,tile,20,20),currentController{controller}{}
 
 AbstractController *Npc::getController() const
 {

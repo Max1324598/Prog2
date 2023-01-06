@@ -18,6 +18,7 @@ SOURCES += \
         graphicalui.cpp \
         guardcontroller.cpp \
         level.cpp \
+        levelchanger.cpp \
         main.cpp \
         mainwindow.cpp \
         npc.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     graphicalui.h \
     guardcontroller.h \
     level.h \
+    levelchanger.h \
     mainwindow.h \
     npc.h \
     passive.h \

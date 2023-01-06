@@ -9,7 +9,7 @@ class Character
 {
 public:
     Character();
-    Character(const string& texture, Tile* tile);
+    Character(const string& texture, Tile* tile, int strength, int stamina);
     virtual ~Character() = default;
     //getter
     string getTexture() const {return texture;}
@@ -19,11 +19,18 @@ public:
 
     int getLastMovingDir() const;
     void setLastMovingDir(int newLastMovingDir);
+    int getMaxHP();
+    int getStrength() const;
+
+    int getStamina() const;
 
 private:
     string texture;
     Tile* tile;
     int lastMovingDir = 5;
+    int strength;
+    int stamina;
+    int hitPoints;
 };
 
 #endif // CHARACTER_H

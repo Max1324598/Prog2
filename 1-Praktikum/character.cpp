@@ -3,11 +3,11 @@
 
 
 Character::Character()
-    : texture {"C"}, tile{nullptr}
+    : texture {"C"}, tile{nullptr},strength{20},stamina{20},hitPoints{getMaxHP()}
 {}
 
-Character::Character(const std::string &texture, Tile *tile)
-    : texture{texture}, tile{tile}
+Character::Character(const std::string &texture, Tile *tile, int str, int sta)
+    : texture{texture}, tile{tile}, strength{str},stamina{sta},hitPoints{getMaxHP()}
 {}
 
 
@@ -30,5 +30,20 @@ int Character::getLastMovingDir() const
 void Character::setLastMovingDir(int newLastMovingDir)
 {
     lastMovingDir = newLastMovingDir;
+}
+
+int Character::getMaxHP(){
+    int maxHP = (stamina * 5) + 20;
+    return maxHP;
+}
+
+int Character::getStrength() const
+{
+    return strength;
+}
+
+int Character::getStamina() const
+{
+    return stamina;
 }
 

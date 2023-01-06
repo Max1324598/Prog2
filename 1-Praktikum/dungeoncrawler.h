@@ -14,6 +14,7 @@ public:
     //Methoden
     void turn(int movingDir);
     void turnMove(int movingDir,Character* character);
+    void setLevel(Level*);
 
 private:
     Level* currentLevel;

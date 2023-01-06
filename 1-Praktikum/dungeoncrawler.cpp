@@ -140,4 +140,9 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
     }
 }
 
+void DungeonCrawler::setLevel(Level * newLevel)
+{
+    currentLevel = newLevel;
+}
+
 

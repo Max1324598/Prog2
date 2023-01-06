@@ -51,7 +51,7 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>60</y>
+       <y>70</y>
        <width>861</width>
        <height>521</height>
       </rect>
@@ -69,7 +69,7 @@
      <property name="geometry">
       <rect>
        <x>940</x>
-       <y>310</y>
+       <y>340</y>
        <width>256</width>
        <height>181</height>
       </rect>
@@ -297,9 +297,42 @@
       <bool>false</bool>
      </property>
     </widget>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>80</y>
+       <width>104</width>
+       <height>70</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="textEdit_2">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>170</y>
+       <width>104</width>
+       <height>70</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="textEdit_3">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>250</y>
+       <width>104</width>
+       <height>70</height>
+      </rect>
+     </property>
+    </widget>
     <zorder>label</zorder>
     <zorder>gridLayoutWidget</zorder>
     <zorder>gridLayoutWidget_2</zorder>
+    <zorder>textEdit</zorder>
+    <zorder>textEdit_2</zorder>
+    <zorder>textEdit_3</zorder>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -308,7 +341,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
