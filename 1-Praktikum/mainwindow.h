@@ -31,6 +31,8 @@ public:
     
     void setStatusBar(Level *level);
 
+    void initLevel();
+
 public slots:
     void buttonOneMove();
     void buttonTwoMove();

@@ -31,101 +31,7 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
 
     setStatusBar(level);
 
-
-    for (int i{}; i<level->getMaxRow();i++){
-        fieldLabel.push_back(vector<QLabel*>());
-
-        for (int j{}; j<level->getMaxColumn();j++){
-            stageVectorContent = level->getStageVector().at(i).at(j);
-            bool hasCharacter = level->getStageVector().at(i).at(j)->hasCharacter();
-
-
-            fieldLabel.at(i).push_back(new QLabel());
-            auto* label = fieldLabel.at(i).at(j);
-            label->setMinimumSize(30,30);
-            label->setScaledContents(true);
-
-
-            if(dynamic_cast<Floor*>(stageVectorContent) != nullptr){
-                label->setPixmap(currentGui->getRandomFloorTexture());
-                ui->levelLayout->addWidget(label,i,j);
-            }
-            if(dynamic_cast<Wall*>(stageVectorContent) != nullptr){
-                label->setPixmap(currentGui->getWallTexture());
-                ui->levelLayout->addWidget(label,i,j);
-            }
-
-            if(dynamic_cast<Door*>(stageVectorContent) != nullptr){
-                Door* door = dynamic_cast<Door*>(stageVectorContent);
-                if(!door->getIsOpen())
-                    label->setPixmap(currentGui->getDoorTextures().at(0));
-                else
-                    label->setPixmap(currentGui->getDoorTextures().at(1));
-
-                ui->levelLayout->addWidget(label,i,j);
-            }
-            if(dynamic_cast<Pit*>(stageVectorContent) != nullptr){
-                label->setPixmap(currentGui->getPitTexture());
-                ui->levelLayout->addWidget(label,i,j);
-            }
-
-            if(dynamic_cast<Ramp*>(stageVectorContent) != nullptr){
-                label->setPixmap(currentGui->getRampTexture());
-                ui->levelLayout->addWidget(label,i,j);
-            }
-
-            if(dynamic_cast<Portal*>(stageVectorContent) != nullptr){
-                Portal* portal = dynamic_cast<Portal*>(stageVectorContent);
-                if(portal->getPortalType() == 1)
-                    label->setPixmap(currentGui->getPortalTextures().at(0));
-                if(portal->getPortalType() == 2)
-                    label->setPixmap(currentGui->getPortalTextures().at(1));
-                if(portal->getPortalType() == 3)
-                    label->setPixmap(currentGui->getPortalTextures().at(2));
-
-                ui->levelLayout->addWidget(label,i,j);
-            }
-
-            if(dynamic_cast<LevelChanger*>(stageVectorContent) != nullptr){
-                label->setPixmap(currentGui->getPortalTextures().at(2));
-                ui->levelLayout->addWidget(label,i,j);
-            }
-            if(dynamic_cast<Switch*>(stageVectorContent) != nullptr){
-                label->setPixmap(currentGui->getSwitchTexture());
-                ui->levelLayout->addWidget(label,i,j);
-            }
-
-
-            if(hasCharacter){
-                bool isNPC = false;
-                if(dynamic_cast<Npc*>(level->getStageVector().at(i).at(j)->getCharacter()) != nullptr) // dynamic_cast funktioniert nicht "character is not polyphormic"
-                    isNPC = true;
-
-                if(isNPC){
-                    QLabel* npcLabel = new QLabel(this);
-                    npcLabel->setPixmap(currentGui->getZombieRight());
-                    npcLabel->setScaledContents(true);
-                    npcLabel->setMinimumSize(30,30);
-                    npcLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
-                    fieldLabel.at(i).at(j)->lower();
-                    npcLabel->raise();
-                    ui->levelLayout->addWidget(npcLabel, i, j);
-                    npcLabels.push_back(npcLabel);
-                }
-                else{
-                    QLabel* characterLabel = new QLabel(this);
-                    characterLabel->setPixmap(currentGui->getCharacterTextureDown());
-                    ui->levelLayout->addWidget(characterLabel, i, j);
-                    characterLabel->setScaledContents(true);
-                    characterLabel->setMinimumSize(30,30);
-                    characterLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
-                    fieldLabel.at(i).at(j)->lower();
-                    characterLabel->raise();
-                    playerLabel = characterLabel;
-                }
-            }
-        }
-    }
+    initLevel();
 
 
     //TODO: Eigene Button Klasse
@@ -149,32 +55,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::reBuild()
+void MainWindow::initLevel()
 {
-    std::cout << "REBUILD!";
-
-    for (int i {}; i<fieldLabel.size();i++){
-        for (int j{}; j<fieldLabel.at(i).size();j++){
-            delete fieldLabel.at(i).at(j);
-            ui->levelLayout->removeWidget(fieldLabel.at(i).at(j));
-        }
-    }
-    for(unsigned int i = 0; i < npcLabels.size(); i++){ //nicht aktuelle npcs löschen
-        ui->levelLayout->removeWidget(npcLabels.at(i));
-        delete npcLabels.at(i);
-    }
-    npcLabels.clear();
-    fieldLabel.clear();
-    ui->levelLayout->removeWidget(playerLabel);
-    delete playerLabel;
-
-    std::cout << "2";
     Level* level = currentGui->getCurrentLevel();
     Tile* stageVectorContent{nullptr};
 
     for (int i{}; i<level->getMaxRow();i++){
         fieldLabel.push_back(vector<QLabel*>());
-        std::cout << "2,5";
 
         for (int j{}; j<level->getMaxColumn();j++){
             stageVectorContent = level->getStageVector().at(i).at(j);
@@ -267,8 +154,28 @@ void MainWindow::reBuild()
             }
         }
     }
+}
 
-    std::cout << "3";
+void MainWindow::reBuild()
+{
+
+    for (int i {}; i<fieldLabel.size();i++){
+        for (int j{}; j<fieldLabel.at(i).size();j++){
+            delete fieldLabel.at(i).at(j);
+            ui->levelLayout->removeWidget(fieldLabel.at(i).at(j));
+        }
+    }
+    for(unsigned int i = 0; i < npcLabels.size(); i++){ //nicht aktuelle npcs löschen
+        ui->levelLayout->removeWidget(npcLabels.at(i));
+        delete npcLabels.at(i);
+    }
+    npcLabels.clear();
+    fieldLabel.clear();
+    ui->levelLayout->removeWidget(playerLabel);
+    delete playerLabel;
+
+    initLevel();
+
 }
 
 
