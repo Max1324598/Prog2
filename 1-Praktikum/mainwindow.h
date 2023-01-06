@@ -20,6 +20,7 @@ public:
     explicit MainWindow(GraphicalUI* currentGui, QWidget *parent = nullptr);
     ~MainWindow();
 
+    void reBuild();
     void draw(Level* level);
 
     void setCurrentGui(GraphicalUI *newCurrentGui);
@@ -27,6 +28,8 @@ public:
     void getCharacterTexture(QLabel* characterLabel, Tile* stageVectorContent);
     void setCharacterLabelTexture(Tile* stageVectorContent, QLabel* characterLabel);
     void setNpcLabelTexture(QLabel* npcLabel, Tile* stageVectorContent);
+    
+    void setStatusBar(Level *level);
 
 public slots:
     void buttonOneMove();

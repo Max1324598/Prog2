@@ -30,3 +30,8 @@ int Portal::getPortalType() const
 {
     return portalType;
 }
+
+Tile *Portal::getDestination() const
+{
+    return destination;
+}

@@ -8,6 +8,7 @@
 #include "tile.h"
 #include "graphicalui.h"
 #include "wall.h"
+#include "levelchanger.h"
 #include <iostream>
 #include <qlabel.h>
 #include <QStatusBar>
@@ -27,6 +28,8 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
     ui->levelLayout->setSpacing(0);
 
     Level* level = currentGui->getCurrentLevel();
+
+    setStatusBar(level);
 
 
     for (int i{}; i<level->getMaxRow();i++){
@@ -80,6 +83,11 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
                 if(portal->getPortalType() == 3)
                     label->setPixmap(currentGui->getPortalTextures().at(2));
 
+                ui->levelLayout->addWidget(label,i,j);
+            }
+
+            if(dynamic_cast<LevelChanger*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getPortalTextures().at(2));
                 ui->levelLayout->addWidget(label,i,j);
             }
             if(dynamic_cast<Switch*>(stageVectorContent) != nullptr){
@@ -141,22 +149,135 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::reBuild()
+{
+    std::cout << "REBUILD!";
+
+    for (int i {}; i<fieldLabel.size();i++){
+        for (int j{}; j<fieldLabel.at(i).size();j++){
+            delete fieldLabel.at(i).at(j);
+            ui->levelLayout->removeWidget(fieldLabel.at(i).at(j));
+        }
+    }
+    for(unsigned int i = 0; i < npcLabels.size(); i++){ //nicht aktuelle npcs löschen
+        ui->levelLayout->removeWidget(npcLabels.at(i));
+        delete npcLabels.at(i);
+    }
+    npcLabels.clear();
+    fieldLabel.clear();
+    ui->levelLayout->removeWidget(playerLabel);
+    delete playerLabel;
+
+    std::cout << "2";
+    Level* level = currentGui->getCurrentLevel();
+    Tile* stageVectorContent{nullptr};
+
+    for (int i{}; i<level->getMaxRow();i++){
+        fieldLabel.push_back(vector<QLabel*>());
+        std::cout << "2,5";
+
+        for (int j{}; j<level->getMaxColumn();j++){
+            stageVectorContent = level->getStageVector().at(i).at(j);
+            bool hasCharacter = level->getStageVector().at(i).at(j)->hasCharacter();
+
+
+            fieldLabel.at(i).push_back(new QLabel());
+            auto* label = fieldLabel.at(i).at(j);
+            label->setMinimumSize(30,30);
+            label->setScaledContents(true);
+
+
+            if(dynamic_cast<Floor*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getRandomFloorTexture());
+                ui->levelLayout->addWidget(label,i,j);
+            }
+            if(dynamic_cast<Wall*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getWallTexture());
+                ui->levelLayout->addWidget(label,i,j);
+            }
+
+            if(dynamic_cast<Door*>(stageVectorContent) != nullptr){
+                Door* door = dynamic_cast<Door*>(stageVectorContent);
+                if(!door->getIsOpen())
+                    label->setPixmap(currentGui->getDoorTextures().at(0));
+                else
+                    label->setPixmap(currentGui->getDoorTextures().at(1));
+
+                ui->levelLayout->addWidget(label,i,j);
+            }
+            if(dynamic_cast<Pit*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getPitTexture());
+                ui->levelLayout->addWidget(label,i,j);
+            }
+
+            if(dynamic_cast<Ramp*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getRampTexture());
+                ui->levelLayout->addWidget(label,i,j);
+            }
+
+            if(dynamic_cast<Portal*>(stageVectorContent) != nullptr){
+                Portal* portal = dynamic_cast<Portal*>(stageVectorContent);
+                if(portal->getPortalType() == 1)
+                    label->setPixmap(currentGui->getPortalTextures().at(0));
+                if(portal->getPortalType() == 2)
+                    label->setPixmap(currentGui->getPortalTextures().at(1));
+                if(portal->getPortalType() == 3)
+                    label->setPixmap(currentGui->getPortalTextures().at(2));
+
+                ui->levelLayout->addWidget(label,i,j);
+            }
+
+            if(dynamic_cast<LevelChanger*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getPortalTextures().at(2));
+                ui->levelLayout->addWidget(label,i,j);
+            }
+            if(dynamic_cast<Switch*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getSwitchTexture());
+                ui->levelLayout->addWidget(label,i,j);
+            }
+
+
+            if(hasCharacter){
+                bool isNPC = false;
+                if(dynamic_cast<Npc*>(level->getStageVector().at(i).at(j)->getCharacter()) != nullptr) // dynamic_cast funktioniert nicht "character is not polyphormic"
+                    isNPC = true;
+
+                if(isNPC){
+                    QLabel* npcLabel = new QLabel(this);
+                    npcLabel->setPixmap(currentGui->getZombieRight());
+                    npcLabel->setScaledContents(true);
+                    npcLabel->setMinimumSize(30,30);
+                    npcLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
+                    fieldLabel.at(i).at(j)->lower();
+                    npcLabel->raise();
+                    ui->levelLayout->addWidget(npcLabel, i, j);
+                    npcLabels.push_back(npcLabel);
+                }
+                else{
+                    QLabel* characterLabel = new QLabel(this);
+                    characterLabel->setPixmap(currentGui->getCharacterTextureDown());
+                    ui->levelLayout->addWidget(characterLabel, i, j);
+                    characterLabel->setScaledContents(true);
+                    characterLabel->setMinimumSize(30,30);
+                    characterLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
+                    fieldLabel.at(i).at(j)->lower();
+                    characterLabel->raise();
+                    playerLabel = characterLabel;
+                }
+            }
+        }
+    }
+
+    std::cout << "3";
+}
+
+
 void MainWindow::draw(Level *level)
 {
 
     Tile* stageVectorContent{nullptr};
-    QString stamina = "Stamina: ";
-       QString hp = "Hitpoints: ";
-       QString strength = "Strength: ";
-       QString stamFull = stamina + QString::number(level->getPlayerCharacter()->getStamina());
-       QString hpFull = hp + QString::number(level->getPlayerCharacter()->getMaxHP());
-       QString strengthFull = strength + QString::number(level->getPlayerCharacter()->getStrength());
-       ui->textEdit->setText(stamFull);
-       ui->textEdit->setAlignment(Qt::AlignCenter);
-       ui->textEdit_3->setText(hpFull);
-       ui->textEdit_3->setAlignment(Qt::AlignCenter);
-       ui->textEdit_2->setText(strengthFull);
-       ui->textEdit_2->setAlignment(Qt::AlignCenter);
+
+    setStatusBar(level);
 
     for (int i{}; i<level->getMaxRow();i++){
         for (int j{}; j<level->getMaxColumn();j++){
@@ -181,6 +302,7 @@ void MainWindow::draw(Level *level)
             }
         }
     }
+
 
     if(!level->getCharacterVector().empty()){
 
@@ -235,10 +357,26 @@ void MainWindow::draw(Level *level)
         fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
     }
 
-
-
 }
 
+void MainWindow::setStatusBar(Level *level)
+{
+    ui->textEdit->setTextColor(QColorConstants::White);
+    ui->textEdit_2->setTextColor(QColorConstants::White);
+    ui->textEdit_3->setTextColor(QColorConstants::White);
+    QString stamina = "Stamina: ";
+    QString hp = "Hitpoints: ";
+    QString strength = "Strength: ";
+    QString stamFull = stamina + QString::number(level->getPlayerCharacter()->getStamina());
+    QString hpFull = hp + QString::number(level->getPlayerCharacter()->getMaxHP());
+    QString strengthFull = strength + QString::number(level->getPlayerCharacter()->getStrength());
+    ui->textEdit->setText(stamFull);
+    ui->textEdit->setAlignment(Qt::AlignCenter);
+    ui->textEdit_3->setText(hpFull);
+    ui->textEdit_3->setAlignment(Qt::AlignCenter);
+    ui->textEdit_2->setText(strengthFull);
+    ui->textEdit_2->setAlignment(Qt::AlignCenter);
+}
 void MainWindow::setCharacterLabelTexture(Tile* stageVectorContent, QLabel* characterLabel)
 {
     if(stageVectorContent->getCharacter()->getLastMovingDir() == 2)

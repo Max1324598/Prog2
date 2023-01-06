@@ -126,3 +126,8 @@ const QPixmap &GraphicalUI::getZombieLeft() const
 {
     return zombieLeft;
 }
+
+MainWindow *GraphicalUI::getMainWindow() const
+{
+    return mainWindow;
+}

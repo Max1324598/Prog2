@@ -35,6 +35,8 @@ public:
     const QPixmap &getZombieRight() const;
     const QPixmap &getZombieLeft() const;
 
+    MainWindow *getMainWindow() const;
+
 private:
     StartScreen* startScreen;
     MainWindow* mainWindow;

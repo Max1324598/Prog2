@@ -11,6 +11,7 @@
 #include "pit.h"
 #include "ramp.h"
 #include "door.h"
+#include "levelchanger.h"
 Level::Level()
     : maxRow{10}, maxColumn{10}, stageVector{}, characterVector{}
 {
@@ -168,6 +169,13 @@ void Level::setRamp(int row, int column)
     Ramp* newRamp = new Ramp (row,column, nullptr);
     delete stageVector.at(row).at(column);
     stageVector.at(row).at(column) = newRamp;
+}
+
+void Level::setLevelChanger(int row, int column)
+{
+    LevelChanger* newLevelChanger = new LevelChanger(row,column,nullptr,nullptr,nullptr);
+    delete stageVector.at(row).at(column);
+    stageVector.at(row).at(column) = newLevelChanger;
 }
 
 

@@ -24,6 +24,7 @@ public:
     void setSwitch(int row, int column);
     void setPit(int row, int column);
     void setRamp (int row, int column);
+    void setLevelChanger(int row, int column);
     void placeCharacter(Character *c, int row, int col);
 
     Tile *getTile(int row, int col);

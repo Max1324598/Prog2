@@ -1,18 +1,22 @@
 #ifndef LEVELCHANGER_H
 #define LEVELCHANGER_H
-#include "tile.h"
-#include "level.h"
-class LevelChanger : public Tile
-{
-public:
-    LevelChanger(int row, int col,Level* currentLevel ,Level* linkedLevel);
-    Level* getLinkedLevel() const;
 
-    Tile* onEnter(Tile* fromTile, Character* who);
+#include "active.h"
+#include "portal.h"
+
+class Level;
+
+class LevelChanger: public Active, public Portal{
+public:
+    LevelChanger(int row,int column, Character* character, Tile* destination,Level* nextLevel);
+    Tile* onEnter(Tile* fromTile, Character* who) override;
     Tile* onLeave(Tile* destTile, Character* who) override;
+    void detach(Passive*) override;;
+
+
 private:
-    Level* currentLevel;
-    Level* linkedLevel;
+    Level* nextLevel;
+
 };
 
 #endif // LEVELCHANGER_H

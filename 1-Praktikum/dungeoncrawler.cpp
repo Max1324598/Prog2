@@ -1,14 +1,38 @@
 #include "dungeoncrawler.h"
+#include "mainwindow.h"
 #include "tile.h"
 #include "level.h"
 #include "character.h"
 #include "abstractUI.h"
+#include "levelchanger.h"
+#include "graphicalui.h"
 #include <iostream>
 
-DungeonCrawler::DungeonCrawler(Level *currentLevel, AbstractUI *currentAbcractUI,Character* currentCharacter)
-    : currentLevel {currentLevel}, currentAbstractUI{currentAbcractUI}, currentCharacter{currentCharacter}
+DungeonCrawler::DungeonCrawler()
+    : currentAbstractUI{currentAbstractUI}
 {
-    currentAbcractUI->setCurrentDungeonCrawler(this);
+    Level* level1 = new Level();
+    Level* level2 = new Level();
+
+    Character* player = new Character();
+    level1->placeCharacter(player,1,1);
+
+    level1->setLevelChanger(2,2);
+    level2->setLevelChanger(2,7);
+    LevelChanger* lc1 = dynamic_cast<LevelChanger*>(level1->getStageVector().at(2).at(2));
+    LevelChanger* lc2 = dynamic_cast<LevelChanger*>(level2->getStageVector().at(2).at(7));
+
+    lc1->setDestination(lc2);
+    lc1->attach(this);
+    levelVector.push_back(level1);
+
+    lc2->attach(this);
+    levelVector.push_back(level2);
+
+    currentLevel = level1;
+    currentCharacter = currentLevel->getPlayerCharacter();
+
+
 }
 
 void DungeonCrawler::turn(int movingDir)
@@ -143,6 +167,44 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
 void DungeonCrawler::setLevel(Level * newLevel)
 {
     currentLevel = newLevel;
+    GraphicalUI* currentUI = dynamic_cast<GraphicalUI*>(currentAbstractUI);
+    currentUI->setCurrentLevel(newLevel);
+}
+
+void DungeonCrawler::notify(Active *source)
+{
+    GraphicalUI* currentUI = dynamic_cast<GraphicalUI*>(currentAbstractUI);
+    setLevel(levelVector.at(1));
+    LevelChanger* lc = dynamic_cast<LevelChanger*>(source);
+
+    levelVector.at(1)->placeCharacter(currentCharacter,lc->getDestination()->getRow(), lc->getDestination()->getColumn() );
+    currentUI->getMainWindow()->reBuild();
+
+    for (int i{}; i<levelVector.size();i++){
+//        if(levelVector.at(i) == currentLevel){
+//            setLevel(levelVector.at(i+1));
+//
+//            break;
+       // }
+    }
+}
+
+void DungeonCrawler::saveLevels()
+{
+    Level* level1 = new Level();
+
+}
+
+Level *DungeonCrawler::getCurrentLevel() const
+{
+    return currentLevel;
+}
+
+void DungeonCrawler::setCurrentAbstractUI(AbstractUI *newCurrentAbstractUI)
+{
+    currentAbstractUI = newCurrentAbstractUI;
+    currentAbstractUI->setCurrentDungeonCrawler(this);
+
 }
 
 

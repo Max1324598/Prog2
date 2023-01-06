@@ -2,22 +2,31 @@
 #define DUNGEONCRAWLER_H
 #include "character.h"
 #include "npc.h"
+#include "passive.h"
+#include <vector>
 class AbstractUI;
 class Level;
 
-class DungeonCrawler
+class DungeonCrawler: public Passive
 {
 public:
-    DungeonCrawler() = delete;
-    DungeonCrawler(Level* currentLevel, AbstractUI* currentAbcractUI,Character* currentCharacter);
+
+    DungeonCrawler();
 
     //Methoden
     void turn(int movingDir);
     void turnMove(int movingDir,Character* character);
     void setLevel(Level*);
+    virtual void notify(Active* source) override;
+    void saveLevels();
+
+    Level *getCurrentLevel() const;
+
+    void setCurrentAbstractUI(AbstractUI *newCurrentAbstractUI);
 
 private:
     Level* currentLevel;
+    std::vector<Level*> levelVector;
     AbstractUI* currentAbstractUI;
     Character* currentCharacter;
 

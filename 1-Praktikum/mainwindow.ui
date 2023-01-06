@@ -306,6 +306,15 @@
        <height>70</height>
       </rect>
      </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
     </widget>
     <widget class="QTextEdit" name="textEdit_2">
      <property name="geometry">
@@ -316,6 +325,9 @@
        <height>70</height>
       </rect>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
     </widget>
     <widget class="QTextEdit" name="textEdit_3">
      <property name="geometry">
@@ -325,6 +337,9 @@
        <width>104</width>
        <height>70</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
      </property>
     </widget>
     <zorder>label</zorder>
@@ -341,7 +356,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

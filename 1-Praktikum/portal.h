@@ -15,11 +15,13 @@ public:
     Tile* onLeave(Tile* destTile, Character* who) override;
 
     //setter
-    void setDestination(Tile *newDestination);
+    virtual void setDestination(Tile *newDestination);
 
     int getPortalType() const;
 
-private:
+    Tile *getDestination() const;
+
+protected:
     Tile* destination;
     int portalType;
 };
