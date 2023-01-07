@@ -115,7 +115,7 @@ void MainWindow::initLevel()
             }
 
             if(dynamic_cast<LevelChanger*>(stageVectorContent) != nullptr){
-                label->setPixmap(currentGui->getPortalTextures().at(2));
+                label->setPixmap(currentGui->getLevelChangerTexture());
                 ui->levelLayout->addWidget(label,i,j);
             }
             if(dynamic_cast<Switch*>(stageVectorContent) != nullptr){

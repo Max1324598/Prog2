@@ -37,6 +37,8 @@ public:
 
     MainWindow *getMainWindow() const;
 
+    const QPixmap &getLevelChangerTexture() const;
+
 private:
     StartScreen* startScreen;
     MainWindow* mainWindow;
@@ -53,6 +55,7 @@ private:
 
 
     QPixmap wallTexture = QPixmap("../textures/wall/wall1.png");
+    QPixmap levelChangerTexture = QPixmap("../textures/levelchanger.png");
     QPixmap switchTexture= QPixmap ("../textures/switch.png");
     QPixmap rampTexture = QPixmap("../textures/ramp.png");
     QPixmap pitTexture = QPixmap("../textures/pit.png");

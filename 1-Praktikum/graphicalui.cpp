@@ -131,3 +131,8 @@ MainWindow *GraphicalUI::getMainWindow() const
 {
     return mainWindow;
 }
+
+const QPixmap &GraphicalUI::getLevelChangerTexture() const
+{
+    return levelChangerTexture;
+}
