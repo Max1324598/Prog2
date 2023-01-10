@@ -2,7 +2,7 @@
 #include "startscreen.h"
 #include "mainwindow.h"
 #include <cstdlib>
-
+#include "endscreen.h"
 
 
 GraphicalUI::GraphicalUI(Level *currentLevel): currentLevel{currentLevel}
@@ -27,6 +27,7 @@ GraphicalUI::GraphicalUI(Level *currentLevel): currentLevel{currentLevel}
 
     mainWindow = new MainWindow(this);
 
+    endScreen = new EndScreen(this);
     startScreen->show();
 
 }
@@ -49,6 +50,20 @@ void GraphicalUI::switchWindow()
     startScreen->hide();
     mainWindow->show();
 }
+
+void GraphicalUI::showEndScreen(bool gameWon)
+{
+    mainWindow->hide();
+    endScreen->show();
+    if(gameWon)
+        endScreen->winMessage();
+    else
+        endScreen->loseMessage();
+}
+
+
+
+
 
 QPixmap GraphicalUI::getRandomFloorTexture()
 {
@@ -135,4 +150,14 @@ MainWindow *GraphicalUI::getMainWindow() const
 const QPixmap &GraphicalUI::getLevelChangerTexture() const
 {
     return levelChangerTexture;
+}
+
+const QPixmap &GraphicalUI::getEndTexture() const
+{
+    return endTexture;
+}
+
+const QPixmap &GraphicalUI::getLootChestTexture() const
+{
+    return lootChestTexture;
 }

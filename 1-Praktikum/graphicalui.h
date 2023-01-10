@@ -1,6 +1,7 @@
 #ifndef GRAPHICALUI_H
 #define GRAPHICALUI_H
 #include "abstractUI.h"
+#include "endscreen.h"
 
 #include <QPixmap>
 
@@ -17,6 +18,10 @@ public:
     void draw(Level* level) override;
     void switchWindow();
 
+
+    void showEndScreen(bool gameWon);
+
+    void newGameWindow();
     void setCurrentLevel(Level *newCurrentLevel);
     Level *getCurrentLevel() const;
 
@@ -39,9 +44,14 @@ public:
 
     const QPixmap &getLevelChangerTexture() const;
 
+    const QPixmap &getEndTexture() const;
+
+    const QPixmap &getLootChestTexture() const;
+
 private:
     StartScreen* startScreen;
     MainWindow* mainWindow;
+    EndScreen* endScreen;
     Level* currentLevel;
 
     std::vector<QPixmap> floorTextures;
@@ -52,8 +62,8 @@ private:
     QPixmap characterTextureLeft = QPixmap("../textures/char/left/char_left_1.png");
     QPixmap characterTextureRight = QPixmap("../textures/char/right/char_right_1.png");
     QPixmap characterTextureUp = QPixmap("../textures/char/back/char_back_1.png");
-
-
+    QPixmap endTexture = QPixmap("../textures/startscreen.png");
+    QPixmap lootChestTexture = QPixmap("../textures/chest.png");
     QPixmap wallTexture = QPixmap("../textures/wall/wall1.png");
     QPixmap levelChangerTexture = QPixmap("../textures/levelchanger.png");
     QPixmap switchTexture= QPixmap ("../textures/switch.png");

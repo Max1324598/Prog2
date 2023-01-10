@@ -22,6 +22,15 @@ void Character::setTile(Tile *newTile)
     tile = newTile;
 }
 
+bool Character::isDead()
+{
+    if(getHitPoints() <= 0)
+        return true;
+    else
+        return false;
+
+}
+
 int Character::getLastMovingDir() const
 {
     return lastMovingDir;
@@ -45,5 +54,20 @@ int Character::getStrength() const
 int Character::getStamina() const
 {
     return stamina;
+}
+
+void Character::setHitPoints(int newHitPoints)
+{
+    hitPoints = newHitPoints;
+}
+
+int Character::getHitPoints() const
+{
+    return hitPoints;
+}
+
+void Character::setStrength(int newStrength)
+{
+    strength = newStrength;
 }
 

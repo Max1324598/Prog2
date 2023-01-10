@@ -12,6 +12,7 @@
 #include <iostream>
 #include <qlabel.h>
 #include <QStatusBar>
+#include <lootchest.h>
 MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
     QMainWindow(parent),ui(new Ui::MainWindow),fieldLabel{}, currentGui{currentGui}
 {
@@ -122,6 +123,10 @@ void MainWindow::initLevel()
                 label->setPixmap(currentGui->getSwitchTexture());
                 ui->levelLayout->addWidget(label,i,j);
             }
+            if(dynamic_cast<LootChest*>(stageVectorContent) != nullptr){
+                label->setPixmap(currentGui->getLootChestTexture());
+                ui->levelLayout->addWidget(label,i,j);
+            }
 
 
             if(hasCharacter){
@@ -183,8 +188,12 @@ void MainWindow::draw(Level *level)
 {
 
     Tile* stageVectorContent{nullptr};
-
     setStatusBar(level);
+    if(currentGui->getCurrentLevel()->getPlayerCharacter()->isDead())
+ {
+        this->hide();
+
+}
 
     for (int i{}; i<level->getMaxRow();i++){
         for (int j{}; j<level->getMaxColumn();j++){
@@ -219,25 +228,28 @@ void MainWindow::draw(Level *level)
         }
         npcLabels.clear();
         for(int k = 0; k < level->getCharacterVector().size(); k++){
-            QLabel* npcLabel = new QLabel();
-            npcLabel->setScaledContents(true);
-            npcLabel->raise();
-            npcLabel->setMinimumSize(30,30);
-            npcLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
+            if(!level->getCharacterVector().at(k)->isDead())
+            {QLabel* npcLabel = new QLabel();
+                npcLabel->setScaledContents(true);
+                npcLabel->raise();
+                npcLabel->setMinimumSize(30,30);
+                npcLabel->setStyleSheet("background-color: rgba(0,0,0,0)");
 
-            int row = level->getCharacterVector().at(k)->getTile()->getRow();
-            int col = level->getCharacterVector().at(k)->getTile()->getColumn();
-            fieldLabel.at(row).at(col)->lower();
+                int row = level->getCharacterVector().at(k)->getTile()->getRow();
+                int col = level->getCharacterVector().at(k)->getTile()->getColumn();
+                fieldLabel.at(row).at(col)->lower();
 
-            setNpcLabelTexture(npcLabel, level->getStageVector().at(row).at(col));
+                setNpcLabelTexture(npcLabel, level->getCharacterVector().at(k));
 
 
-            ui->levelLayout->addWidget(npcLabel, row, col);
-            npcLabels.push_back(npcLabel);
-            if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
-                fieldLabel.at(row).at(col)->raise();
-                fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
+                ui->levelLayout->addWidget(npcLabel, row, col);
+                npcLabels.push_back(npcLabel);
+                if(dynamic_cast<Pit*>(level->getStageVector().at(row).at(col)) != nullptr){
+                    fieldLabel.at(row).at(col)->raise();
+                    fieldLabel.at(row).at(col)->setStyleSheet("background-color: rgba(0,0,0,0)");
+                }
             }
+
         }
     }
 
@@ -254,7 +266,7 @@ void MainWindow::draw(Level *level)
     int row = level->getPlayerCharacter()->getTile()->getRow();
     int col = level->getPlayerCharacter()->getTile()->getColumn();
 
-    setCharacterLabelTexture(level->getStageVector().at(row).at(col), characterLabel);
+    setCharacterLabelTexture(characterLabel, level->getPlayerCharacter());
 
     ui->levelLayout->addWidget(characterLabel, row, col);
     playerLabel = characterLabel;
@@ -275,7 +287,7 @@ void MainWindow::setStatusBar(Level *level)
     QString hp = "Hitpoints: ";
     QString strength = "Strength: ";
     QString stamFull = stamina + QString::number(level->getPlayerCharacter()->getStamina());
-    QString hpFull = hp + QString::number(level->getPlayerCharacter()->getMaxHP());
+    QString hpFull = hp + QString::number(level->getPlayerCharacter()->getHitPoints());
     QString strengthFull = strength + QString::number(level->getPlayerCharacter()->getStrength());
     ui->textEdit->setText(stamFull);
     ui->textEdit->setAlignment(Qt::AlignCenter);
@@ -284,52 +296,37 @@ void MainWindow::setStatusBar(Level *level)
     ui->textEdit_2->setText(strengthFull);
     ui->textEdit_2->setAlignment(Qt::AlignCenter);
 }
-void MainWindow::setCharacterLabelTexture(Tile* stageVectorContent, QLabel* characterLabel)
+void MainWindow::setCharacterLabelTexture(QLabel* characterLabel, Character *playerCharacter)
 {
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 2)
+    int movingDir = playerCharacter->getLastMovingDir();
+
+    switch(movingDir){
+    case 1: case 4: case 7:
+        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
+        break;
+    case 2: case 5:
         characterLabel->setPixmap(currentGui->getCharacterTextureDown());
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 1)
-        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 3)
+        break;
+    case 3: case 6: case 9:
         characterLabel->setPixmap(currentGui->getCharacterTextureRight());
-
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 4)
-        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 5)
-        characterLabel->setPixmap(currentGui->getCharacterTextureDown());
-
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 6)
-        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 7)
-        characterLabel->setPixmap(currentGui->getCharacterTextureLeft());
-
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 8)
+        break;
+    case 8:
         characterLabel->setPixmap(currentGui->getCharacterTextureUp());
-    else if(stageVectorContent->getCharacter()->getLastMovingDir() == 9)
-        characterLabel->setPixmap(currentGui->getCharacterTextureRight());
+        break;
+    }
 }
 
-void MainWindow::setNpcLabelTexture(QLabel* npcLabel, Tile* stageVectorContent)
+void MainWindow::setNpcLabelTexture(QLabel* npcLabel, Character *currentNpc)
 {
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 1)
+    int movingDir = currentNpc->getLastMovingDir();
+    switch(movingDir){
+    case 1: case 2: case 4: case 7:
         npcLabel->setPixmap(currentGui->getZombieLeft());
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 2)
-        npcLabel->setPixmap(currentGui->getZombieLeft());
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 3)
+        break;
+    case 3: case 5: case 6: case 8: case 9:
         npcLabel->setPixmap(currentGui->getZombieRight());
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 4)
-        npcLabel->setPixmap(currentGui->getZombieLeft());
-
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 5)
-        npcLabel->setPixmap(currentGui->getZombieRight());
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 6)
-        npcLabel->setPixmap(currentGui->getZombieRight());
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 7)
-        npcLabel->setPixmap(currentGui->getZombieLeft());
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 8)
-        npcLabel->setPixmap(currentGui->getZombieRight());
-    if(stageVectorContent->getCharacter()->getLastMovingDir() == 9)
-        npcLabel->setPixmap(currentGui->getZombieRight());
+        break;
+    }
 }
 
 void MainWindow::buttonOneMove(){

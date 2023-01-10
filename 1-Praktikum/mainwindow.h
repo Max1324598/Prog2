@@ -26,9 +26,9 @@ public:
     void setCurrentGui(GraphicalUI *newCurrentGui);
 
     void getCharacterTexture(QLabel* characterLabel, Tile* stageVectorContent);
-    void setCharacterLabelTexture(Tile* stageVectorContent, QLabel* characterLabel);
-    void setNpcLabelTexture(QLabel* npcLabel, Tile* stageVectorContent);
-    
+    void setCharacterLabelTexture(QLabel* characterLabel,Character* playerCharacter);
+    void setNpcLabelTexture(QLabel* npcLabel, Character* currentNpc);
+    void showEndScreen();
     void setStatusBar(Level *level);
 
     void initLevel();

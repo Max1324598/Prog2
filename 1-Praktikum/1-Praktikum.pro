@@ -14,13 +14,16 @@ SOURCES += \
         character.cpp \
         door.cpp \
         dungeoncrawler.cpp \
+        endscreen.cpp \
         floor.cpp \
         graphicalui.cpp \
         guardcontroller.cpp \
         level.cpp \
         levelchanger.cpp \
+        lootchest.cpp \
         main.cpp \
         mainwindow.cpp \
+        mylist.cpp \
         npc.cpp \
         passive.cpp \
         pit.cpp \
@@ -44,12 +47,15 @@ HEADERS += \
     character.h \
     door.h \
     dungeoncrawler.h \
+    endscreen.h \
     floor.h \
     graphicalui.h \
     guardcontroller.h \
     level.h \
     levelchanger.h \
+    lootchest.h \
     mainwindow.h \
+    mylist.h \
     npc.h \
     passive.h \
     pit.h \
@@ -62,5 +68,6 @@ HEADERS += \
     wall.h
 
 FORMS += \
+    endscreen.ui \
     mainwindow.ui \
     startscreen.ui

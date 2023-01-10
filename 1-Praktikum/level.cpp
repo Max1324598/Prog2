@@ -12,10 +12,23 @@
 #include "ramp.h"
 #include "door.h"
 #include "levelchanger.h"
+
+#include <lootchest.h>
 Level::Level()
     : maxRow{10}, maxColumn{10}, stageVector{}, characterVector{}
 {
-    createStringLevel(maxRow,maxColumn);
+    std::string levelString {
+        "##########"
+        "#........#"
+        "#...<....#"
+        "#..___...#"
+        "#..___...#"
+        "#........#"
+        "#######X##"
+        "#........#"
+        "#...?....#"
+        "##########"};
+    createStringLevel(maxRow,maxColumn, levelString);
     Switch* sp = dynamic_cast<Switch*>(stageVector.at(8).at(4));
     Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
     sp->attach(dp);
@@ -25,6 +38,10 @@ Level::Level()
 
     setPortals(1,8,8,1,1);
 }
+
+Level::Level(int row, int col)
+    : maxRow{row}, maxColumn{col}, stageVector{}, characterVector{}
+{}
 
 
 
@@ -76,21 +93,9 @@ void Level::createEmptyLevel(int rows, int columns)
 
 }
 
-void Level::createStringLevel(int rows, int columns)
+void Level::createStringLevel(int rows, int columns, std::string string)
 {
-    const std::string lev = {
-        "##########"
-        "#........#"
-        "#...<....#"
-        "#..___...#"
-        "#..___...#"
-        "#........#"
-        "#######X##"
-        "#........#"
-        "#...?....#"
-        "##########" };
-
-
+    const std::string lev = string;
 
     int k{0};
 
@@ -119,6 +124,9 @@ void Level::createStringLevel(int rows, int columns)
             }
             if (lev.at(k)== 'X'){
                 stageVector.at(i).push_back(new Door(i,j,nullptr));
+            }
+            if (lev.at(k)== '$'){
+                stageVector.at(i).push_back(new LootChest(i,j,nullptr));
             }
             k++;
         }
@@ -171,9 +179,9 @@ void Level::setRamp(int row, int column)
     stageVector.at(row).at(column) = newRamp;
 }
 
-void Level::setLevelChanger(int row, int column)
+void Level::setLevelChanger(int row, int column, bool isExit)
 {
-    LevelChanger* newLevelChanger = new LevelChanger(row,column,nullptr,nullptr,nullptr);
+    LevelChanger* newLevelChanger = new LevelChanger(row,column,isExit,this);
     delete stageVector.at(row).at(column);
     stageVector.at(row).at(column) = newLevelChanger;
 }
@@ -185,6 +193,14 @@ void Level::placeCharacter(Character *c, int row, int col)
     c->setTile(getTile(row,col));
     stageVector.at(row).at(col)->setCharacter(c);
     playerCharacter = c;
+}
+
+void Level::placeLootChest(int row, int column)
+{
+    LootChest* lootChest = new LootChest(row,column,nullptr);
+    delete stageVector.at(row).at(column);
+    stageVector.at(row).at(column) = lootChest;
+
 }
 
 void Level::createNpc(int row, int col, std::vector<int> pattern) {

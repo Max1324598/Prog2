@@ -58,12 +58,16 @@ SOURCES       = ../1-Praktikum/abstractUI.cpp \
 		../1-Praktikum/character.cpp \
 		../1-Praktikum/door.cpp \
 		../1-Praktikum/dungeoncrawler.cpp \
+		../1-Praktikum/endscreen.cpp \
 		../1-Praktikum/floor.cpp \
 		../1-Praktikum/graphicalui.cpp \
 		../1-Praktikum/guardcontroller.cpp \
 		../1-Praktikum/level.cpp \
+		../1-Praktikum/levelchanger.cpp \
+		../1-Praktikum/lootchest.cpp \
 		../1-Praktikum/main.cpp \
 		../1-Praktikum/mainwindow.cpp \
+		../1-Praktikum/mylist.cpp \
 		../1-Praktikum/npc.cpp \
 		../1-Praktikum/passive.cpp \
 		../1-Praktikum/pit.cpp \
@@ -73,7 +77,8 @@ SOURCES       = ../1-Praktikum/abstractUI.cpp \
 		../1-Praktikum/switch.cpp \
 		../1-Praktikum/terminalUI.cpp \
 		../1-Praktikum/tile.cpp \
-		../1-Praktikum/wall.cpp moc_mainwindow.cpp \
+		../1-Praktikum/wall.cpp moc_endscreen.cpp \
+		moc_mainwindow.cpp \
 		moc_startscreen.cpp
 OBJECTS       = abstractUI.o \
 		abstractcontroller.o \
@@ -81,12 +86,16 @@ OBJECTS       = abstractUI.o \
 		character.o \
 		door.o \
 		dungeoncrawler.o \
+		endscreen.o \
 		floor.o \
 		graphicalui.o \
 		guardcontroller.o \
 		level.o \
+		levelchanger.o \
+		lootchest.o \
 		main.o \
 		mainwindow.o \
+		mylist.o \
 		npc.o \
 		passive.o \
 		pit.o \
@@ -97,6 +106,7 @@ OBJECTS       = abstractUI.o \
 		terminalUI.o \
 		tile.o \
 		wall.o \
+		moc_endscreen.o \
 		moc_mainwindow.o \
 		moc_startscreen.o
 DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
@@ -222,6 +232,7 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_post.prf \
+		../1-Praktikum/.qmake.stash \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -248,11 +259,15 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../1-Praktikum/character.h \
 		../1-Praktikum/door.h \
 		../1-Praktikum/dungeoncrawler.h \
+		../1-Praktikum/endscreen.h \
 		../1-Praktikum/floor.h \
 		../1-Praktikum/graphicalui.h \
 		../1-Praktikum/guardcontroller.h \
 		../1-Praktikum/level.h \
+		../1-Praktikum/levelchanger.h \
+		../1-Praktikum/lootchest.h \
 		../1-Praktikum/mainwindow.h \
+		../1-Praktikum/mylist.h \
 		../1-Praktikum/npc.h \
 		../1-Praktikum/passive.h \
 		../1-Praktikum/pit.h \
@@ -268,12 +283,16 @@ DIST          = ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../1-Praktikum/character.cpp \
 		../1-Praktikum/door.cpp \
 		../1-Praktikum/dungeoncrawler.cpp \
+		../1-Praktikum/endscreen.cpp \
 		../1-Praktikum/floor.cpp \
 		../1-Praktikum/graphicalui.cpp \
 		../1-Praktikum/guardcontroller.cpp \
 		../1-Praktikum/level.cpp \
+		../1-Praktikum/levelchanger.cpp \
+		../1-Praktikum/lootchest.cpp \
 		../1-Praktikum/main.cpp \
 		../1-Praktikum/mainwindow.cpp \
+		../1-Praktikum/mylist.cpp \
 		../1-Praktikum/npc.cpp \
 		../1-Praktikum/passive.cpp \
 		../1-Praktikum/pit.cpp \
@@ -292,7 +311,7 @@ TARGET        = 1-Praktikum
 first: all
 ####### Build rules
 
-1-Praktikum: ui_mainwindow.h ui_startscreen.h $(OBJECTS)  
+1-Praktikum: ui_endscreen.h ui_mainwindow.h ui_startscreen.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET)  $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../1-Praktikum/1-Praktikum.pro ../../../Qt/6.4.0/gcc_64/mkspecs/linux-g++/qmake.conf ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_pre.prf \
@@ -418,6 +437,7 @@ Makefile: ../1-Praktikum/1-Praktikum.pro ../../../Qt/6.4.0/gcc_64/mkspecs/linux-
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/6.4.0/gcc_64/mkspecs/features/default_pre.prf \
@@ -566,6 +586,7 @@ Makefile: ../1-Praktikum/1-Praktikum.pro ../../../Qt/6.4.0/gcc_64/mkspecs/linux-
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/qt_config.prf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/toolchain.prf:
 ../../../Qt/6.4.0/gcc_64/mkspecs/features/default_pre.prf:
@@ -605,9 +626,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/abstractcontroller.h ../1-Praktikum/active.h ../1-Praktikum/character.h ../1-Praktikum/door.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/floor.h ../1-Praktikum/graphicalui.h ../1-Praktikum/guardcontroller.h ../1-Praktikum/level.h ../1-Praktikum/mainwindow.h ../1-Praktikum/npc.h ../1-Praktikum/passive.h ../1-Praktikum/pit.h ../1-Praktikum/portal.h ../1-Praktikum/ramp.h ../1-Praktikum/startscreen.h ../1-Praktikum/switch.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/abstractcontroller.cpp ../1-Praktikum/active.cpp ../1-Praktikum/character.cpp ../1-Praktikum/door.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/graphicalui.cpp ../1-Praktikum/guardcontroller.cpp ../1-Praktikum/level.cpp ../1-Praktikum/main.cpp ../1-Praktikum/mainwindow.cpp ../1-Praktikum/npc.cpp ../1-Praktikum/passive.cpp ../1-Praktikum/pit.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/ramp.cpp ../1-Praktikum/startscreen.cpp ../1-Praktikum/switch.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../1-Praktikum/mainwindow.ui ../1-Praktikum/startscreen.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.h ../1-Praktikum/abstractcontroller.h ../1-Praktikum/active.h ../1-Praktikum/character.h ../1-Praktikum/door.h ../1-Praktikum/dungeoncrawler.h ../1-Praktikum/endscreen.h ../1-Praktikum/floor.h ../1-Praktikum/graphicalui.h ../1-Praktikum/guardcontroller.h ../1-Praktikum/level.h ../1-Praktikum/levelchanger.h ../1-Praktikum/lootchest.h ../1-Praktikum/mainwindow.h ../1-Praktikum/mylist.h ../1-Praktikum/npc.h ../1-Praktikum/passive.h ../1-Praktikum/pit.h ../1-Praktikum/portal.h ../1-Praktikum/ramp.h ../1-Praktikum/startscreen.h ../1-Praktikum/switch.h ../1-Praktikum/terminalUI.h ../1-Praktikum/tile.h ../1-Praktikum/wall.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/abstractUI.cpp ../1-Praktikum/abstractcontroller.cpp ../1-Praktikum/active.cpp ../1-Praktikum/character.cpp ../1-Praktikum/door.cpp ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/endscreen.cpp ../1-Praktikum/floor.cpp ../1-Praktikum/graphicalui.cpp ../1-Praktikum/guardcontroller.cpp ../1-Praktikum/level.cpp ../1-Praktikum/levelchanger.cpp ../1-Praktikum/lootchest.cpp ../1-Praktikum/main.cpp ../1-Praktikum/mainwindow.cpp ../1-Praktikum/mylist.cpp ../1-Praktikum/npc.cpp ../1-Praktikum/passive.cpp ../1-Praktikum/pit.cpp ../1-Praktikum/portal.cpp ../1-Praktikum/ramp.cpp ../1-Praktikum/startscreen.cpp ../1-Praktikum/switch.cpp ../1-Praktikum/terminalUI.cpp ../1-Praktikum/tile.cpp ../1-Praktikum/wall.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../1-Praktikum/endscreen.ui ../1-Praktikum/mainwindow.ui ../1-Praktikum/startscreen.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -639,9 +660,150 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -Wextra -fPIC -dM -E -o moc_predefs.h ../../../Qt/6.4.0/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_startscreen.cpp
+compiler_moc_header_make_all: moc_endscreen.cpp moc_mainwindow.cpp moc_startscreen.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_startscreen.cpp
+	-$(DEL_FILE) moc_endscreen.cpp moc_mainwindow.cpp moc_startscreen.cpp
+moc_endscreen.cpp: ../1-Praktikum/endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QDialog \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtcoreexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompare_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qforeach.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtmetamacros.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydataops.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearrayview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringfwd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qanystringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qutf8stringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompare.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopeguard.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevicebase.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterable.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetacontainer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmath.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qaction.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qicon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qimage.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qregion.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qline.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qset.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfont.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qbitmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qurl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qeventpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvectornd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpointingdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qinputdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QList \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QObject \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QRect \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSize \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSizeF \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QTransform \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnativeinterface.h \
+		moc_predefs.h \
+		../../../Qt/6.4.0/gcc_64/libexec/moc
+	/home/max/Qt/6.4.0/gcc_64/libexec/moc $(DEFINES) --include /home/max/Desktop/Prog2/build-1-Praktikum-Desktop-Debug/moc_predefs.h -I/home/max/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -I/home/max/Desktop/Prog2/1-Praktikum -I/home/max/Qt/6.4.0/gcc_64/include -I/home/max/Qt/6.4.0/gcc_64/include/QtWidgets -I/home/max/Qt/6.4.0/gcc_64/include/QtGui -I/home/max/Qt/6.4.0/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../1-Praktikum/endscreen.h -o moc_endscreen.cpp
+
 moc_mainwindow.cpp: ../1-Praktikum/mainwindow.h \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -788,6 +950,9 @@ moc_mainwindow.cpp: ../1-Praktikum/mainwindow.h \
 		../1-Praktikum/character.h \
 		../1-Praktikum/npc.h \
 		../1-Praktikum/abstractcontroller.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/mylist.h \
 		../1-Praktikum/level.h \
 		moc_predefs.h \
 		../../../Qt/6.4.0/gcc_64/libexec/moc
@@ -938,9 +1103,13 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_startscreen.h
+compiler_uic_make_all: ui_endscreen.h ui_mainwindow.h ui_startscreen.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_startscreen.h
+	-$(DEL_FILE) ui_endscreen.h ui_mainwindow.h ui_startscreen.h
+ui_endscreen.h: ../1-Praktikum/endscreen.ui \
+		../../../Qt/6.4.0/gcc_64/libexec/uic
+	/home/max/Qt/6.4.0/gcc_64/libexec/uic ../1-Praktikum/endscreen.ui -o ui_endscreen.h
+
 ui_mainwindow.h: ../1-Praktikum/mainwindow.ui \
 		../../../Qt/6.4.0/gcc_64/libexec/uic
 	/home/max/Qt/6.4.0/gcc_64/libexec/uic ../1-Praktikum/mainwindow.ui -o ui_mainwindow.h
@@ -982,19 +1151,13 @@ dungeoncrawler.o: ../1-Praktikum/dungeoncrawler.cpp ../1-Praktikum/dungeoncrawle
 		../1-Praktikum/character.h \
 		../1-Praktikum/npc.h \
 		../1-Praktikum/abstractcontroller.h \
-		../1-Praktikum/tile.h \
-		../1-Praktikum/level.h \
-		../1-Praktikum/abstractUI.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dungeoncrawler.o ../1-Praktikum/dungeoncrawler.cpp
-
-floor.o: ../1-Praktikum/floor.cpp ../1-Praktikum/floor.h \
-		../1-Praktikum/tile.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o floor.o ../1-Praktikum/floor.cpp
-
-graphicalui.o: ../1-Praktikum/graphicalui.cpp ../1-Praktikum/graphicalui.h \
-		../1-Praktikum/abstractUI.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/mylist.h \
+		../1-Praktikum/mainwindow.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QMainWindow \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
@@ -1022,15 +1185,16 @@ graphicalui.o: ../1-Praktikum/graphicalui.cpp ../1-Praktikum/graphicalui.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qforeach.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qwidget.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qnamespace.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qstring.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qchar.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringview.h \
@@ -1050,52 +1214,48 @@ graphicalui.o: ../1-Praktikum/graphicalui.cpp ../1-Praktikum/graphicalui.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qutf8stringview.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringtokenizer.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterator.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qalgorithms.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetatype.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompare.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qdatastream.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevicebase.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterable.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetacontainer.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainerinfo.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qtaggedpointer.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qmath.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qaction.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qicon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qimage.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qtransform.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qpolygon.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qregion.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qline.h \
-		../1-Praktikum/startscreen.h \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QDialog \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreevent.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject_impl.h \
-		../../../Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qaction.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qkeysequence.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/qicon.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
@@ -1131,6 +1291,352 @@ graphicalui.o: ../1-Praktikum/graphicalui.cpp ../1-Praktikum/graphicalui.h \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/QSizeF \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/QTransform \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qnativeinterface.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlabel.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpicture.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtextdocument.h \
+		../1-Praktikum/level.h \
+		../1-Praktikum/tile.h \
+		../1-Praktikum/abstractUI.h \
+		../1-Praktikum/levelchanger.h \
+		../1-Praktikum/portal.h \
+		../1-Praktikum/graphicalui.h \
+		../1-Praktikum/endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QDialog \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
+		../1-Praktikum/lootchest.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dungeoncrawler.o ../1-Praktikum/dungeoncrawler.cpp
+
+endscreen.o: ../1-Praktikum/endscreen.cpp ../1-Praktikum/endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QDialog \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtcoreexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompare_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qforeach.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtmetamacros.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydataops.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearrayview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringfwd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qanystringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qutf8stringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompare.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopeguard.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevicebase.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterable.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetacontainer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmath.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qaction.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qicon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qimage.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qregion.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qline.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qset.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfont.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qbitmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qurl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qeventpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvectornd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpointingdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qinputdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QList \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QObject \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QRect \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSize \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSizeF \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QTransform \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnativeinterface.h \
+		ui_endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QVariant \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QApplication \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qeventloop.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qjnitypes.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfuture.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfutureinterface.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtsan_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qresultstore.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfuture_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qthreadpool.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qthread.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdeadlinetimer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrunnable.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qexception.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpromise.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qguiapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qinputmethod.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qguiapplication_platform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QLabel \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlabel.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpicture.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtextdocument.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QPushButton \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QWidget \
+		../1-Praktikum/graphicalui.h \
+		../1-Praktikum/abstractUI.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QMessageBox \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qmessagebox.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlayout.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qgridlayout.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o endscreen.o ../1-Praktikum/endscreen.cpp
+
+floor.o: ../1-Praktikum/floor.cpp ../1-Praktikum/floor.h \
+		../1-Praktikum/tile.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o floor.o ../1-Praktikum/floor.cpp
+
+graphicalui.o: ../1-Praktikum/graphicalui.cpp ../1-Praktikum/graphicalui.h \
+		../1-Praktikum/abstractUI.h \
+		../1-Praktikum/endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QDialog \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtconfigmacros.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtcoreexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompare_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qforeach.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtguiexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtmetamacros.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydatapointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qarraydataops.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearrayview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringfwd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qanystringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qutf8stringview.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringtokenizer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcompare.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qscopeguard.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevicebase.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiterable.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmetacontainer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontainerinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtaggedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmath.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qaction.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qicon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsize.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrect.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qimage.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qregion.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qline.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qstringconverter_base.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qshareddata_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qset.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfont.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qbitmap.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpointer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qurl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qeventpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvectornd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpointingdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qinputdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QList \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QObject \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QRect \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSize \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSizeF \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QTransform \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qnativeinterface.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
+		../1-Praktikum/startscreen.h \
 		../1-Praktikum/mainwindow.h \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1143,6 +1649,9 @@ graphicalui.o: ../1-Praktikum/graphicalui.cpp ../1-Praktikum/graphicalui.h \
 		../1-Praktikum/character.h \
 		../1-Praktikum/npc.h \
 		../1-Praktikum/abstractcontroller.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/mylist.h \
 		../1-Praktikum/level.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphicalui.o ../1-Praktikum/graphicalui.cpp
 
@@ -1164,8 +1673,25 @@ level.o: ../1-Praktikum/level.cpp ../1-Praktikum/level.h \
 		../1-Praktikum/portal.h \
 		../1-Praktikum/switch.h \
 		../1-Praktikum/pit.h \
-		../1-Praktikum/ramp.h
+		../1-Praktikum/ramp.h \
+		../1-Praktikum/levelchanger.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o level.o ../1-Praktikum/level.cpp
+
+levelchanger.o: ../1-Praktikum/levelchanger.cpp ../1-Praktikum/levelchanger.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/portal.h \
+		../1-Praktikum/tile.h \
+		../1-Praktikum/level.h \
+		../1-Praktikum/npc.h \
+		../1-Praktikum/character.h \
+		../1-Praktikum/abstractcontroller.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o levelchanger.o ../1-Praktikum/levelchanger.cpp
+
+lootchest.o: ../1-Praktikum/lootchest.cpp ../1-Praktikum/lootchest.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/tile.h \
+		../1-Praktikum/passive.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lootchest.o ../1-Praktikum/lootchest.cpp
 
 main.o: ../1-Praktikum/main.cpp ../../../Qt/6.4.0/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qapplication.h \
@@ -1302,11 +1828,42 @@ main.o: ../1-Praktikum/main.cpp ../../../Qt/6.4.0/gcc_64/include/QtWidgets/QAppl
 		../1-Praktikum/level.h \
 		../1-Praktikum/graphicalui.h \
 		../1-Praktikum/abstractUI.h \
+		../1-Praktikum/endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QDialog \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qaction.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qicon.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfont.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qevent.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qurl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qeventpoint.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qvectornd.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpointingdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qinputdevice.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QList \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QObject \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QRect \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSize \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QSizeF \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QTransform \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
 		../1-Praktikum/dungeoncrawler.h \
 		../1-Praktikum/character.h \
 		../1-Praktikum/npc.h \
-		../1-Praktikum/abstractcontroller.h
+		../1-Praktikum/abstractcontroller.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/mylist.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../1-Praktikum/main.cpp
 
 mainwindow.o: ../1-Praktikum/mainwindow.cpp ../1-Praktikum/mainwindow.h \
@@ -1455,22 +2012,80 @@ mainwindow.o: ../1-Praktikum/mainwindow.cpp ../1-Praktikum/mainwindow.h \
 		../1-Praktikum/character.h \
 		../1-Praktikum/npc.h \
 		../1-Praktikum/abstractcontroller.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/mylist.h \
 		../1-Praktikum/level.h \
 		../1-Praktikum/door.h \
 		../1-Praktikum/tile.h \
-		../1-Praktikum/passive.h \
-		../1-Praktikum/active.h \
 		../1-Praktikum/floor.h \
 		../1-Praktikum/pit.h \
 		../1-Praktikum/ramp.h \
 		../1-Praktikum/portal.h \
 		../1-Praktikum/switch.h \
 		ui_mainwindow.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QVariant \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QIcon \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QApplication \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qeventloop.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qjnitypes.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfuture.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfutureinterface.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtsan_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qresultstore.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfuture_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qthreadpool.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qthread.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdeadlinetimer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrunnable.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qexception.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpromise.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qguiapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qinputmethod.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qguiapplication_platform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QGridLayout \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlayout.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QGroupBox \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qgroupbox.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QLabel \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QMenuBar \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qmenubar.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qmenu.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QPushButton \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QTextEdit \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qtextedit.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtextoption.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtextcursor.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qtextformat.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qpen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QWidget \
 		../1-Praktikum/graphicalui.h \
 		../1-Praktikum/abstractUI.h \
+		../1-Praktikum/endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QDialog \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qdialog.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
-		../1-Praktikum/wall.h
+		../1-Praktikum/wall.h \
+		../1-Praktikum/levelchanger.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QStatusBar \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qstatusbar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../1-Praktikum/mainwindow.cpp
+
+mylist.o: ../1-Praktikum/mylist.cpp ../1-Praktikum/mylist.h \
+		../1-Praktikum/level.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mylist.o ../1-Praktikum/mylist.cpp
 
 npc.o: ../1-Praktikum/npc.cpp ../1-Praktikum/npc.h \
 		../1-Praktikum/character.h \
@@ -1487,7 +2102,10 @@ pit.o: ../1-Praktikum/pit.cpp ../1-Praktikum/pit.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pit.o ../1-Praktikum/pit.cpp
 
 portal.o: ../1-Praktikum/portal.cpp ../1-Praktikum/portal.h \
-		../1-Praktikum/tile.h
+		../1-Praktikum/tile.h \
+		../1-Praktikum/character.h \
+		../1-Praktikum/npc.h \
+		../1-Praktikum/abstractcontroller.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o portal.o ../1-Praktikum/portal.cpp
 
 ramp.o: ../1-Praktikum/ramp.cpp ../1-Praktikum/ramp.h \
@@ -1632,14 +2250,35 @@ startscreen.o: ../1-Praktikum/startscreen.cpp ../1-Praktikum/startscreen.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/QTransform \
 		../../../Qt/6.4.0/gcc_64/include/QtCore/qnativeinterface.h \
 		ui_startscreen.h \
-		../1-Praktikum/graphicalui.h \
-		../1-Praktikum/abstractUI.h \
-		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QVBoxLayout \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/QVariant \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QApplication \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qeventloop.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qjnitypes.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfuture.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfutureinterface.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qtsan_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qresultstore.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qfuture_impl.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qthreadpool.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qthread.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qdeadlinetimer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qelapsedtimer.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qrunnable.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qexception.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qpromise.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qguiapplication.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qinputmethod.h \
+		../../../Qt/6.4.0/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/qguiapplication_platform.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QGridLayout \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlayout.h \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlayoutitem.h \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QLabel \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qlabel.h \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qframe.h \
@@ -1647,7 +2286,12 @@ startscreen.o: ../1-Praktikum/startscreen.cpp ../1-Praktikum/startscreen.h \
 		../../../Qt/6.4.0/gcc_64/include/QtGui/qtextdocument.h \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QPushButton \
 		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qabstractbutton.h
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../Qt/6.4.0/gcc_64/include/QtWidgets/QVBoxLayout \
+		../1-Praktikum/graphicalui.h \
+		../1-Praktikum/abstractUI.h \
+		../1-Praktikum/endscreen.h \
+		../../../Qt/6.4.0/gcc_64/include/QtGui/QPixmap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o startscreen.o ../1-Praktikum/startscreen.cpp
 
 switch.o: ../1-Praktikum/switch.cpp ../1-Praktikum/switch.h \
@@ -1662,7 +2306,10 @@ terminalUI.o: ../1-Praktikum/terminalUI.cpp ../1-Praktikum/terminalUI.h \
 		../1-Praktikum/dungeoncrawler.h \
 		../1-Praktikum/character.h \
 		../1-Praktikum/npc.h \
-		../1-Praktikum/abstractcontroller.h
+		../1-Praktikum/abstractcontroller.h \
+		../1-Praktikum/passive.h \
+		../1-Praktikum/active.h \
+		../1-Praktikum/mylist.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o terminalUI.o ../1-Praktikum/terminalUI.cpp
 
 tile.o: ../1-Praktikum/tile.cpp ../1-Praktikum/tile.h \
@@ -1672,6 +2319,9 @@ tile.o: ../1-Praktikum/tile.cpp ../1-Praktikum/tile.h \
 wall.o: ../1-Praktikum/wall.cpp ../1-Praktikum/wall.h \
 		../1-Praktikum/tile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wall.o ../1-Praktikum/wall.cpp
+
+moc_endscreen.o: moc_endscreen.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_endscreen.o moc_endscreen.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

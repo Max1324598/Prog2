@@ -183,12 +183,17 @@ public:
         textEdit = new QTextEdit(groupBox);
         textEdit->setObjectName("textEdit");
         textEdit->setGeometry(QRect(910, 80, 104, 70));
+        textEdit->setAutoFillBackground(false);
+        textEdit->setFrameShape(QFrame::NoFrame);
+        textEdit->setLineWidth(1);
         textEdit_2 = new QTextEdit(groupBox);
         textEdit_2->setObjectName("textEdit_2");
         textEdit_2->setGeometry(QRect(910, 170, 104, 70));
+        textEdit_2->setFrameShape(QFrame::NoFrame);
         textEdit_3 = new QTextEdit(groupBox);
         textEdit_3->setObjectName("textEdit_3");
         textEdit_3->setGeometry(QRect(910, 250, 104, 70));
+        textEdit_3->setFrameShape(QFrame::NoFrame);
         label->raise();
         gridLayoutWidget->raise();
         gridLayoutWidget_2->raise();
@@ -198,7 +203,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1200, 22));
+        menubar->setGeometry(QRect(0, 0, 1200, 25));
         MainWindow->setMenuBar(menubar);
         QWidget::setTabOrder(direction7, direction8);
         QWidget::setTabOrder(direction8, direction9);

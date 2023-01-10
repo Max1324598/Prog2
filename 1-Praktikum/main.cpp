@@ -5,12 +5,10 @@
 #include "level.h"
 #include "graphicalui.h"
 #include "dungeoncrawler.h"
-
 int main(int argc, char *argv[]) try
 {
     srand(time(NULL));
     QApplication QApplication(argc, argv);
-
 
 
     DungeonCrawler* dg = new DungeonCrawler();

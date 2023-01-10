@@ -16,6 +16,7 @@ public:
     virtual Tile *getTile() const;
     //setter
     void setTile(Tile *newTile);
+    bool isDead();
 
     int getLastMovingDir() const;
     void setLastMovingDir(int newLastMovingDir);
@@ -24,13 +25,21 @@ public:
 
     int getStamina() const;
 
+    void setHitPoints(int newHitPoints);
+
+    int getHitPoints() const;
+
+    void setStrength(int newStrength);
+
 private:
     string texture;
     Tile* tile;
     int lastMovingDir = 5;
     int strength;
+
     int stamina;
     int hitPoints;
+
 };
 
 #endif // CHARACTER_H

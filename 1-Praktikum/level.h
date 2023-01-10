@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <string>
 #include <vector>
 using std::vector;
 
@@ -11,12 +12,13 @@ class Level
 {
 public:
     Level();
+    Level (int row, int col);
     ~Level();
 
     //Methoden
     bool isBoundary(int currentRow, int currentColumn) const;
     void createEmptyLevel(int rows, int columns);
-    void createStringLevel (int rows, int columns);
+    void createStringLevel (int rows, int columns, std::string string);
     void createCharacter (int row, int col);
     void createNpc(int row, int col, std::vector<int> pattern);
     void setPortals(int row1, int column1, int row2, int column2, int type);
@@ -24,9 +26,9 @@ public:
     void setSwitch(int row, int column);
     void setPit(int row, int column);
     void setRamp (int row, int column);
-    void setLevelChanger(int row, int column);
+    void setLevelChanger(int row, int column,bool isExit);
     void placeCharacter(Character *c, int row, int col);
-
+    void placeLootChest(int row, int column);
     Tile *getTile(int row, int col);
     const Tile *getTile(int row, int col) const;
 
