@@ -12,10 +12,13 @@
 #include "ramp.h"
 #include "door.h"
 #include "levelchanger.h"
-
+#include <algorithm>
+#include "attackcontroller.h"
+#include <limits>
 #include <lootchest.h>
+#include <queue>
 Level::Level()
-    : maxRow{10}, maxColumn{10}, stageVector{}, characterVector{}
+    : maxRow{10}, maxColumn{10}, stageVector{}, characterVector{}, graph(maxRow, maxColumn)
 {
     std::string levelString {
         "##########"
@@ -33,14 +36,17 @@ Level::Level()
     Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
     sp->attach(dp);
 
-    createNpc(5,5, {6,6,2,2,4,4,8,8});
-    createNpc(8,8, {8,8,8,2,2,2});
+    createGraph();
+    createAttackNpc(5,5);
+
+    //createNpc(5,5, {6,6,2,2,4,4,8,8});
+    //createNpc(8,8, {8,8,8,2,2,2});
 
     setPortals(1,8,8,1,1);
 }
 
 Level::Level(int row, int col)
-    : maxRow{row}, maxColumn{col}, stageVector{}, characterVector{}
+    : maxRow{row}, maxColumn{col}, stageVector{}, characterVector{},graph(maxRow,maxColumn)
 {}
 
 
@@ -68,6 +74,81 @@ bool Level::isBoundary(int currentRow, int currentColumn) const
     if (currentRow == 0 || currentRow == maxRow-1) return true;
     else if (currentColumn == 0 || currentColumn == maxColumn-1) return true;
     else return false;
+}
+
+void Level::createGraph()
+{
+    Npc* testNpc = new Npc("N", nullptr, nullptr);
+
+    for (int row{}; row<maxRow; row++){
+        for (int col{}; col<maxColumn; col++){
+            graph.addNode(new Node{stageVector.at(row).at(col),row,col,0,nullptr,false});
+        }
+    }
+
+    for (int row{}; row<maxRow; row++){
+        for (int col{}; col<maxColumn; col++){
+            Node* currentNode = graph.getNodeVector().at(row).at(col);
+
+            //1
+            if ((currentNode->row < this->getMaxRow()-1) && (currentNode->col  > 0 )){
+                Node* nextNode = graph.getNodeVector().at(row+1).at(col-1);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+
+            //2
+            if (currentNode->row < this->getMaxRow()-1){
+                Node* nextNode = graph.getNodeVector().at(row+1).at(col);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+            //3
+            if ((currentNode->row < this->getMaxRow()-1) && (currentNode->col < this->getMaxColumn()-1 )){
+                Node* nextNode = graph.getNodeVector().at(row+1).at(col+1);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+            //4
+            if ((currentNode->col > 0)){
+                Node* nextNode = graph.getNodeVector().at(row).at(col-1);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+            //6
+            if (currentNode->col < this->getMaxColumn()-1){
+                Node* nextNode = graph.getNodeVector().at(row).at(col+1);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+            //7
+            if ((currentNode->row > 0) && (currentNode->col  > 0 )){
+                Node* nextNode = graph.getNodeVector().at(row-1).at(col-1);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+            //8
+            if (currentNode->row > 0){
+                Node* nextNode = graph.getNodeVector().at(row-1).at(col);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+            //9
+            if ((currentNode->row > 0) && (currentNode->col  < this->getMaxColumn()-1)){
+                Node* nextNode = graph.getNodeVector().at(row-1).at(col+1);
+                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                    graph.addEdge(new Edge{currentNode,nextNode});
+                }
+            }
+        }
+    }
 }
 
 
@@ -211,6 +292,15 @@ void Level::createNpc(int row, int col, std::vector<int> pattern) {
     characterVector.push_back(npc);
 }
 
+void Level::createAttackNpc(int row, int col)
+{
+    AttackController* npcController = new AttackController(this);
+    Npc* npc = new Npc("N", nullptr, npcController);
+    npcController->setNpc(npc);
+    placeCharacter(npc, row, col);
+    characterVector.push_back(npc);
+}
+
 
 void Level::createCharacter(int row, int col)
 {
@@ -244,6 +334,48 @@ int Level::getMaxColumn() const
     return maxColumn;
 }
 
+vector<Tile*> Level::getPath(Node* source, Node* target)
+{
+    vector<Tile*> result;
+    auto currentNodeVector = graph.getNodeVector();
+
+    for(int i{}; i<currentNodeVector.size(); i++){
+        for(int j{}; j<currentNodeVector.at(i).size(); j++){
+            Node* currentNode = currentNodeVector.at(i).at(j);
+            currentNode->distance = std::numeric_limits<int>::max();
+            currentNode->parent = nullptr;
+        }
+    }
+    source->distance = 0;
+
+    std::queue<Node *> q;
+    q.push(source);
+
+    while (!q.empty()){
+        auto *u = q.front();
+        q.pop();
+
+        auto connected = graph.getConnections(u);
+
+        for (auto &v : connected) {
+
+            if(u->distance+1 < v->distance){
+                v->distance = u->distance + 1;
+                v->parent = u;
+                q.push(v);
+            }
+        }
+    }
+
+    Node* pathNodes = target;
+    for(int i{};i<target->distance-1;i++){
+        result.push_back(pathNodes->parent->tile);
+        pathNodes = target->parent;
+    }
+    std::reverse(result.begin(), result.end());
+    return result;
+}
+
 const vector<Character *> &Level::getCharacterVector() const
 {
     return characterVector;
@@ -252,5 +384,10 @@ const vector<Character *> &Level::getCharacterVector() const
 Character *Level::getPlayerCharacter() const
 {
     return playerCharacter;
+}
+
+const Graph &Level::getGraph() const
+{
+    return graph;
 }
 

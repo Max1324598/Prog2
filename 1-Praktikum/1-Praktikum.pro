@@ -11,11 +11,13 @@ SOURCES += \
         abstractUI.cpp \
         abstractcontroller.cpp \
         active.cpp \
+        attackcontroller.cpp \
         character.cpp \
         door.cpp \
         dungeoncrawler.cpp \
         endscreen.cpp \
         floor.cpp \
+        graph.cpp \
         graphicalui.cpp \
         guardcontroller.cpp \
         level.cpp \
@@ -44,11 +46,13 @@ HEADERS += \
     abstractUI.h \
     abstractcontroller.h \
     active.h \
+    attackcontroller.h \
     character.h \
     door.h \
     dungeoncrawler.h \
     endscreen.h \
     floor.h \
+    graph.h \
     graphicalui.h \
     guardcontroller.h \
     level.h \
