@@ -236,7 +236,6 @@ void DungeonCrawler::saveLevels()
 {
     //1.Level
     Level* level1 = new Level();
-    level1->createNpc(1,2, {2});
     Character* player = new Character();
     level1->placeCharacter(player,1,1);
     levelList.push_back(level1);
