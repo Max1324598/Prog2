@@ -295,6 +295,7 @@ void DungeonCrawler::saveLevels()
     level3->createStringLevel(15,15,level3String);
     level3->setLevelChanger(8,8,false);
 
+
     LevelChanger* level3Entrance = dynamic_cast<LevelChanger*>(level3->getStageVector().at(8).at(8));
     level3Entrance->attach(this);
 

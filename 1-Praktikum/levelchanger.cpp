@@ -12,8 +12,7 @@ LevelChanger::LevelChanger(int row, int column, bool isExit, Level* level)
 
 Tile *LevelChanger::onEnter(Tile *fromTile, Character *who)
 {
-    if(dynamic_cast<Pit*>(fromTile) != nullptr)
-        return nullptr;
+
     if (typeid(*who) != typeid(Npc)){
 
     activate();
