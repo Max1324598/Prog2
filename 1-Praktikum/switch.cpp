@@ -1,4 +1,5 @@
 #include "switch.h"
+#include "npc.h"
 
 
 Switch::Switch(int row, int column, Character* character)
@@ -6,8 +7,12 @@ Switch::Switch(int row, int column, Character* character)
 
 
 Tile* Switch::onEnter(Tile* fromTile,Character* who){
-    for(auto& n : passiveObjects){
-        activate();
+
+    if (typeid(*who) != typeid(Npc)){
+
+        for(auto& n : passiveObjects){
+            activate();
+        }
     }
     return this;
 }
