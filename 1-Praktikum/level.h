@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "graph.h"
+#include "passive.h"
 using std::vector;
 
 class Tile;
@@ -32,8 +33,10 @@ public:
     void setLevelChanger(int row, int column,bool isExit);
     void placeCharacter(Character *c, int row, int col);
     void placeLootChest(int row, int column);
+    void rebuildGraph();
     Tile *getTile(int row, int col);
     const Tile *getTile(int row, int col) const;
+
 
     //getter
 

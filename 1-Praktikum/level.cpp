@@ -37,11 +37,10 @@ Level::Level()
     Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
     sp->attach(dp);
 
+
     createGraph();
     createAttackNpc(5,5);
 
-    //createNpc(5,5, {6,6,2,2,4,4,8,8});
-    //createNpc(8,8, {8,8,8,2,2,2});
 
     setPortals(1,8,8,1,1);
 }
@@ -216,7 +215,7 @@ void Level::createStringLevel(int rows, int columns, std::string string)
                 stageVector.at(i).push_back(new Switch(i,j,nullptr));
             }
             if (lev.at(k)== 'X'){
-                stageVector.at(i).push_back(new Door(i,j,nullptr));
+                stageVector.at(i).push_back(new Door(i,j,nullptr,this));
             }
             if (lev.at(k)== '$'){
                 stageVector.at(i).push_back(new LootChest(i,j,nullptr));
@@ -246,7 +245,7 @@ void Level::setPortals(int row1, int column1, int row2, int column2, int type)
 
 void Level::setDoor(int row, int column)
 {
-    Door* newDoor = new Door (row,column, nullptr);
+    Door* newDoor = new Door (row,column, nullptr,this);
     delete stageVector.at(row).at(column);
     stageVector.at(row).at(column) = newDoor;
 }
@@ -294,6 +293,24 @@ void Level::placeLootChest(int row, int column)
     delete stageVector.at(row).at(column);
     stageVector.at(row).at(column) = lootChest;
 
+}
+
+void Level::rebuildGraph()
+{
+    for(int i{}; i<graph.getNodeVector().size();i++){
+        for (int j{}; j<graph.getNodeVector().at(i).size();j++){
+            delete graph.getNodeVector().at(i).at(j);
+        }
+    }
+
+   auto adjacencyList = graph.getAdjacencyList();
+    auto it = adjacencyList.begin();
+    while (it != adjacencyList.end()){
+        adjacencyList.erase(it);
+        it++;
+    }
+
+    createGraph();
 }
 
 void Level::createNpc(int row, int col, std::vector<int> pattern) {
@@ -380,7 +397,9 @@ vector<Tile*> Level::getPath(Node* source, Node* target)
     }
 
     Node* pathNodes = target;
-    std::cout << target->distance;
+
+
+    if (target->distance > 1000) return result;
 
     while (pathNodes->distance > 1){
         result.push_back(pathNodes->parent->tile);

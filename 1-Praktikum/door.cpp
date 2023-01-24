@@ -1,7 +1,12 @@
 #include "door.h"
+#include "level.h"
 
-Door::Door(int row, int column, Character* character)
-    :Tile{row,column,"X",character}{isOpen = false;}
+Door::Door(int row, int column, Character* character, Level* level)
+    :Tile{row,column,"X",character}
+{
+    isOpen = false;
+    currentLevel = level;
+}
 
 Tile* Door::onEnter(Tile* fromTile, Character* who){
     if(isOpen)
@@ -24,6 +29,9 @@ void Door::notify(Active* source){
         this->texture = "X";
         isOpen = false;
     }
+
+    currentLevel->rebuildGraph();
+
 }
 
 bool Door::getIsOpen() const

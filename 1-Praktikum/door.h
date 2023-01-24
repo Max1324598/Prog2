@@ -2,10 +2,12 @@
 #define DOOR_H
 #include "tile.h"
 #include "passive.h"
+class Level;
+
 class Door : public Tile, public Passive
 {
 public:
-    Door(int row, int column, Character* character);
+    Door(int row, int column, Character* character,Level* level);
     Tile* onEnter(Tile* fromTile, Character* who) override;
     Tile* onLeave(Tile* fromTile, Character* who) override;
     void notify(Active* source) override;
@@ -14,6 +16,7 @@ public:
 
 private:
      bool isOpen;
+     Level* currentLevel;
 };
 
 #endif // DOOR_H

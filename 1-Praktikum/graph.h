@@ -28,12 +28,15 @@ class Graph
 {
 public:
     Graph(int row, int col);
+    ~Graph();
     void addNode(Node* node);
     void addEdge(Edge* edge);
     void print();
     std::vector<Node*> getConnections (Node* node);
 
     const std::vector<std::vector<Node *> > &getNodeVector() const;
+
+    const std::unordered_map<Node *, std::list<Edge *> > &getAdjacencyList() const;
 
 private:
     std::unordered_map <Node*, std::list<Edge*> > adjacencyList;
