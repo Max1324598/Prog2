@@ -14,6 +14,7 @@
 #include "levelchanger.h"
 #include <algorithm>
 #include "attackcontroller.h"
+#include <iostream>
 #include <limits>
 #include <lootchest.h>
 #include <queue>
@@ -78,7 +79,7 @@ bool Level::isBoundary(int currentRow, int currentColumn) const
 
 void Level::createGraph()
 {
-    Npc* testNpc = new Npc("N", nullptr, nullptr);
+    Character* testNpc = new Npc("N", nullptr, nullptr);
 
     for (int row{}; row<maxRow; row++){
         for (int col{}; col<maxColumn; col++){
@@ -89,61 +90,72 @@ void Level::createGraph()
     for (int row{}; row<maxRow; row++){
         for (int col{}; col<maxColumn; col++){
             Node* currentNode = graph.getNodeVector().at(row).at(col);
+            testNpc->setTile(currentNode->tile);
+            Tile* nextTile;
 
             //1
             if ((currentNode->row < this->getMaxRow()-1) && (currentNode->col  > 0 )){
-                Node* nextNode = graph.getNodeVector().at(row+1).at(col-1);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row+1).at(col-1)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
+
             }
 
             //2
             if (currentNode->row < this->getMaxRow()-1){
-                Node* nextNode = graph.getNodeVector().at(row+1).at(col);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row+1).at(col)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
             }
             //3
             if ((currentNode->row < this->getMaxRow()-1) && (currentNode->col < this->getMaxColumn()-1 )){
-                Node* nextNode = graph.getNodeVector().at(row+1).at(col+1);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row+1).at(col+1)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
             }
             //4
             if ((currentNode->col > 0)){
-                Node* nextNode = graph.getNodeVector().at(row).at(col-1);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row).at(col-1)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
             }
             //6
             if (currentNode->col < this->getMaxColumn()-1){
-                Node* nextNode = graph.getNodeVector().at(row).at(col+1);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row).at(col+1)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
             }
             //7
             if ((currentNode->row > 0) && (currentNode->col  > 0 )){
-                Node* nextNode = graph.getNodeVector().at(row-1).at(col-1);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row-1).at(col-1)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
             }
             //8
             if (currentNode->row > 0){
-                Node* nextNode = graph.getNodeVector().at(row-1).at(col);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row-1).at(col)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
             }
             //9
             if ((currentNode->row > 0) && (currentNode->col  < this->getMaxColumn()-1)){
-                Node* nextNode = graph.getNodeVector().at(row-1).at(col+1);
-                if (nextNode->tile->onEnter(currentNode->tile, testNpc) != nullptr){
+                nextTile = stageVector.at(row-1).at(col+1)->onEnter(currentNode->tile,testNpc);
+                if (nextTile != nullptr && currentNode->tile->onLeave(nextTile,testNpc)){
+                    Node* nextNode = graph.getNodeVector().at(nextTile->getRow()).at(nextTile->getColumn());
                     graph.addEdge(new Edge{currentNode,nextNode});
                 }
             }
@@ -355,9 +367,9 @@ vector<Tile*> Level::getPath(Node* source, Node* target)
         auto *u = q.front();
         q.pop();
 
-        auto connected = graph.getConnections(u);
+        std::vector<Node*> connected = graph.getConnections(u);
 
-        for (auto &v : connected) {
+        for (Node* v : connected) {
 
             if(u->distance+1 < v->distance){
                 v->distance = u->distance + 1;
@@ -368,11 +380,20 @@ vector<Tile*> Level::getPath(Node* source, Node* target)
     }
 
     Node* pathNodes = target;
-    for(int i{};i<target->distance-1;i++){
+    std::cout << target->distance;
+
+    while (pathNodes->distance > 1){
         result.push_back(pathNodes->parent->tile);
-        pathNodes = target->parent;
+        pathNodes = pathNodes->parent;
     }
+
+
+
+
+
     std::reverse(result.begin(), result.end());
+    std::cout<< result.size();
+
     return result;
 }
 
