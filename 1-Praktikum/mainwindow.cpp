@@ -20,6 +20,8 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
 
     ui->label->raise();
     ui->gridLayoutWidget_2->raise();
+    ui->saveButton->setStyleSheet("background-color: red");
+    ui->saveButton->raise();
 
 
     Tile* stageVectorContent{nullptr};
@@ -45,6 +47,8 @@ MainWindow::MainWindow(GraphicalUI *currentGui, QWidget *parent) :
     connect(ui->direction7, &QPushButton::clicked, this, &MainWindow::buttonSevenMove);
     connect(ui->direction8, &QPushButton::clicked, this, &MainWindow::buttonEightMove);
     connect(ui->direction9, &QPushButton::clicked, this, &MainWindow::buttonNineMove);
+
+    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveButton);
 
 
 
@@ -373,6 +377,11 @@ void MainWindow::buttonEightMove(){
 void MainWindow::buttonNineMove(){
     currentGui->getCurrentDungeonCrawler()->turn(9);
     currentGui->draw(currentGui->getCurrentLevel());
+}
+
+void MainWindow::saveButton()
+{
+    currentGui->getCurrentDungeonCrawler()->saveLevelsJson();
 }
 
 

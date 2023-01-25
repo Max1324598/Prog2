@@ -10,18 +10,28 @@
 #include <iostream>
 #include <lootchest.h>
 #include <vector>
+#include "door.h"
+#include "floor.h"
+#include "json.h"
+#include "pit.h"
+#include "switch.h"
+#include "wall.h"
+#include <fstream>
 
 DungeonCrawler::DungeonCrawler()
     : currentAbstractUI{currentAbstractUI}
 {
     saveLevels();
+    //loadFromJson();
 
     auto it = levelList.begin();
     currentLevel = *it;
     currentCharacter = currentLevel->getPlayerCharacter();
-
+    saveLevelsJson();
 
 }
+
+
 
 void DungeonCrawler::turn(int movingDir)
 {
@@ -103,7 +113,6 @@ void DungeonCrawler::turnMove(int movingDir,Character* character)
 
         //stand still
     case 5:{
-        std::cout << "Diese Runde wurde ausgesetzt.\n\n";
         currentChar->setLastMovingDir(5);
         break;
     }
@@ -214,15 +223,16 @@ void DungeonCrawler::notify(Active *source)
 
                 break;
             }
-                ++it;
+            ++it;
         }
 
         if (lc->getIsExit() == false) --it;
 
 
-
+        currentLevel->setPlayerCharacter(nullptr);
         setLevel(*it);
-        (*it)->placeCharacter(currentCharacter,lc->getDestination()->getRow(), lc->getDestination()->getColumn() );
+        (*it)->placePlayerCharacter(currentCharacter,lc->getDestination()->getRow(), lc->getDestination()->getColumn() );
+
         currentUI->getMainWindow()->reBuild();
     }
     if(dynamic_cast<LootChest*>(source) != nullptr){
@@ -237,7 +247,7 @@ void DungeonCrawler::saveLevels()
     //1.Level
     Level* level1 = new Level();
     Character* player = new Character();
-    level1->placeCharacter(player,1,1);
+    level1->placePlayerCharacter(player,1,1);
     levelList.push_back(level1);
 
     level1->setLevelChanger(2,2,true);
@@ -259,9 +269,8 @@ void DungeonCrawler::saveLevels()
     level2->createStringLevel(8,10,level2String);
     level2->setLevelChanger(6,6,false);
     level2->setLevelChanger(3,3,true);
+    level2->createAttackNpc(1,8);
 
-    level2->createNpc(1,1, {2,2,2,2,2});
-    level2->createNpc(1,8, {4});
     level2->placeLootChest(1,5);
     LootChest* lootChest = dynamic_cast<LootChest*>(level2->getTile(1,5));
     lootChest->attach(this);
@@ -310,6 +319,122 @@ void DungeonCrawler::saveLevels()
     level3Entrance->setDestination(level2Exit);
     level2Exit->setDestination(level3Entrance);
 
+    level2->createGraph();
+    level3->createGraph();
+
+
+
+}
+
+void DungeonCrawler::saveLevelsJson()
+{
+    nlohmann::json j;
+    std::ofstream file;
+    file.open("../Levels.json", std::ios::out);
+
+
+
+    j["count"] = levelList.size();
+    j["levels"] = nlohmann::json::array();
+
+    auto it = levelList.begin();
+    int i = 0;
+
+    while(it != levelList.end()){
+        auto level = *it;
+        nlohmann::json jlevel;
+
+        jlevel["maxrows"] = level->getMaxRow();
+        jlevel["maxcols"] = level->getMaxColumn();
+
+        jlevel["player"] = nlohmann::json::array();
+        nlohmann::json jplayer;
+        if(level->getPlayerCharacter() == nullptr){
+            jplayer["hasPlayer"] = "0";
+        }
+        else {
+            jplayer["hasPlayer"] = "1";
+            jplayer["row"] = level->getPlayerCharacter()->getTile()->getRow();
+            jplayer["col"] = level->getPlayerCharacter()->getTile()->getColumn();
+            jplayer["stamina"] = level->getPlayerCharacter()->getStamina();
+            jplayer["strength"] = level->getPlayerCharacter()->getStrength();
+            jplayer["hitpoints"] = level->getPlayerCharacter()->getHitPoints();
+        }
+        jlevel["player"].push_back(jplayer);
+
+
+        i = 0;
+        for(auto row : level->getStageVector()){
+            for(auto tile : row){
+                jlevel["field"][i].push_back(getTileType(tile));
+            }
+            i++;
+        }
+
+        jlevel["portalpairs"] = nlohmann::json::array();
+        for (vector<int> portalPair : level->getPortalPairs()){
+            nlohmann::json jportal;
+            jportal["row1"] = portalPair.at(0);
+            jportal["column1"] = portalPair.at(1);
+            jportal["row2"] = portalPair.at(2);
+            jportal["column2"] = portalPair.at(3);
+            jlevel["portalpairs"].push_back(jportal);
+        }
+
+        jlevel["doorswitchpairs"] = nlohmann::json::array();
+        for (vector<int> doorSwitchPair : level->getDoorSwitchPairs()){
+            nlohmann::json jdoorSwitch;
+            jdoorSwitch["row1"] = doorSwitchPair.at(0);
+            jdoorSwitch["column1"] = doorSwitchPair.at(1);
+            jdoorSwitch["row2"] = doorSwitchPair.at(2);
+            jdoorSwitch["column2"] = doorSwitchPair.at(3);
+
+            jlevel["doorswitchpairs"].push_back(jdoorSwitch);
+        }
+
+        jlevel["doors"] = nlohmann::json::array();
+        for (Door* door : level->getDoorVector()){
+            nlohmann::json jdoor;
+            jdoor["isOpen"] = door->getIsOpen();
+            jdoor["row"] = door->getRow();
+            jdoor["column"] = door->getColumn();
+
+            jlevel["doors"].push_back(jdoor);
+        }
+
+        jlevel["levelchangers"] = nlohmann::json::array();
+        for (LevelChanger* levelChanger : level->getLevelChangers()){
+            nlohmann::json jlevelChanger;
+            jlevelChanger["row"] = levelChanger->getRow();
+            jlevelChanger["column"] = levelChanger->getColumn();
+            jlevelChanger["isExit"] = levelChanger->getIsExit();
+
+
+            jlevel["levelchangers"].push_back(jlevelChanger);
+        }
+
+        jlevel["character"] = nlohmann::json::array();
+        i = 0;
+        for(auto Npc : level->getCharacterVector()){
+
+            nlohmann::json jchar;
+
+            jchar["row"] = Npc->getTile()->getRow();
+            jchar["col"] = Npc->getTile()->getColumn();
+            jchar["stamina"] = Npc->getStamina();
+            jchar["strength"] = Npc->getStrength();
+            jchar["hitpoints"] = Npc->getHitPoints();
+
+            jlevel["character"].push_back(jchar);
+        }
+        ++it;
+        j["levels"].push_back(jlevel);
+    }
+
+
+
+    file << j.dump(2);
+    file.close();
 
 
 }
@@ -325,6 +450,108 @@ bool DungeonCrawler::checkForFights()
         }
     }
     return fight;
+
+}
+
+void DungeonCrawler::loadFromJson()
+{
+
+    std::ifstream fileLevel;
+    fileLevel.open("../Levels.json", std::ios::in);
+    nlohmann::json jlevels;
+    fileLevel >> jlevels;
+    //int levelcount = jlevels["count"]
+    for(const auto& level : jlevels["levels"]){
+
+        auto tmpLVL = new Level(level);
+
+        levelList.push_back(tmpLVL);
+
+    }
+
+    auto it = levelList.begin();
+
+    std::tuple<int,int,bool,int> levelChanger;
+    std::vector<std::tuple<int,int,bool,int>> levelChangerTuples;
+    int levelCounter = 1;
+
+    for(const auto& level : jlevels["levels"]){
+        auto currentLevel = *it;
+
+        for(const auto& levelChanger : level["levelchangers"]){
+            levelChangerTuples.push_back({levelChanger["row"],levelChanger["column"],levelChanger["isExit"], levelCounter});
+
+            auto currentTile = currentLevel->getStageVector().at(levelChanger["row"]).at(levelChanger["column"]);
+            LevelChanger* currentLevelChanger = dynamic_cast<LevelChanger*>(currentTile);
+            if (levelChanger["isExit"] == true){
+                currentLevelChanger->setIsExit(true);
+            }
+            else currentLevelChanger->setIsExit(false);
+
+        }
+        ++it;
+        levelCounter++;
+    }
+
+    it = levelList.begin();
+
+    levelCounter = 1;
+
+    for(const auto& level : jlevels["levels"]){
+        auto currentLevel = *it;
+        for(const auto& levelChanger : level["levelchangers"]){
+            auto currentTile = currentLevel->getStageVector().at(levelChanger["row"]).at(levelChanger["column"]);
+            LevelChanger* currentLevelChanger = dynamic_cast<LevelChanger*>(currentTile);
+
+            LevelChanger* nextLevelChanger = nullptr;
+            std::tuple<int,int,bool,int> nextLevelChangerTuple;
+
+            if(currentLevelChanger->getIsExit() == true){
+                ++it;
+                levelCounter++;
+                auto nextLevel = *it;
+                --it;
+                for(int i{}; i<levelChangerTuples.size();i++){
+                    if(std::get<3>(levelChangerTuples.at(i)) == levelCounter && std::get<2>(levelChangerTuples.at(i)) == false){
+                        nextLevelChangerTuple = levelChangerTuples.at(i);
+                        break;
+                    }
+                }
+
+                Tile* nextTile = nextLevel->getStageVector().at(std::get<0>(nextLevelChangerTuple)).at(std::get<1>(nextLevelChangerTuple));
+                nextLevelChanger = dynamic_cast<LevelChanger*>(currentTile);
+                currentLevelChanger->attach(this);
+                currentLevelChanger->setDestination(nextTile);
+
+                levelCounter--;
+            }
+            if(currentLevelChanger->getIsExit() == false){
+                --it;
+                levelCounter--;
+                Level* previousLevel = *it;
+                ++it;
+                for(int i{}; i<levelChangerTuples.size();i++){
+                    if(std::get<3>(levelChangerTuples.at(i)) == levelCounter && std::get<2>(levelChangerTuples.at(i)) == true){
+                        nextLevelChangerTuple = levelChangerTuples.at(i);
+                        break;
+                    }
+                }
+
+                Tile* nextTile = previousLevel->getStageVector().at(std::get<0>(nextLevelChangerTuple)).at(std::get<1>(nextLevelChangerTuple));
+                nextLevelChanger = dynamic_cast<LevelChanger*>(currentTile);
+                currentLevelChanger->attach(this);
+                currentLevelChanger->setDestination(nextTile);
+
+                levelCounter++;
+            }
+
+
+        }
+        ++it;
+        levelCounter++;
+    }
+
+
 
 }
 
@@ -356,7 +583,6 @@ void DungeonCrawler::battlePhase(Character *attacker, Character *defender)
 
     if(dynamic_cast<Npc*>(defender) != nullptr){
         Npc* npc = dynamic_cast<Npc*>(defender);
-        std::cout << "npc wouldve been dead";
         std::vector<Character*> temp = currentLevel->getCharacterVector();
         if(defender->isDead())
             defender->setStrength(0);
@@ -383,6 +609,40 @@ void DungeonCrawler::setCurrentAbstractUI(AbstractUI *newCurrentAbstractUI)
 {
     currentAbstractUI = newCurrentAbstractUI;
     currentAbstractUI->setCurrentDungeonCrawler(this);
+
+}
+
+string DungeonCrawler::getTileType(Tile* tile) const
+{
+    if (typeid(*tile) == typeid(Door)){
+        return "door";
+    }
+    else if (typeid(*tile) == typeid(Floor)){
+        return "floor";
+    }
+    else if (typeid(*tile) == typeid(LevelChanger)){
+        return "levelchanger";
+    }
+    else if (typeid(*tile) == typeid(LootChest)){
+        return "lootchest";
+    }
+    else if (typeid(*tile) == typeid(Pit)){
+        return "pit";
+    }
+    else if (typeid(*tile) == typeid(Portal)){
+        return "portal";
+    }
+    else if (typeid(*tile) == typeid(Ramp)){
+        return "ramp";
+    }
+    else if (typeid(*tile) == typeid(Switch)){
+        return "switch";
+    }
+    else if (typeid(*tile) == typeid(Wall)){
+        return "wall";
+    } else {
+        return "invalid tile";
+    }
 
 }
 

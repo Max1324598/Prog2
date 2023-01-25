@@ -21,14 +21,16 @@ public:
     void setLevel(Level*);
     virtual void notify(Active* source) override;
     void saveLevels();
+    void saveLevelsJson();
     bool checkForFights();
+    void loadFromJson();
     Character* getEnemy() const;
     void battlePhase(Character* attacker, Character* defender);
     void showEndScreen(bool b);
     Level *getCurrentLevel() const;
 
     void setCurrentAbstractUI(AbstractUI *newCurrentAbstractUI);
-
+    string getTileType(Tile*) const;
     void getEnemy(bool fight);
     void gameOver();
 private:

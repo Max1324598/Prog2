@@ -43,3 +43,8 @@ Level *LevelChanger::getLevel() const
     return level;
 }
 
+void LevelChanger::setIsExit(bool newIsExit)
+{
+    isExit = newIsExit;
+}
+

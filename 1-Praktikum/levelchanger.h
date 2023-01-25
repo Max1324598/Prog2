@@ -18,6 +18,8 @@ public:
 
     Level *getLevel() const;
 
+    void setIsExit(bool newIsExit);
+
 private:
     bool isExit;
     Level* level;

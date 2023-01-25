@@ -44,6 +44,8 @@ public slots:
     void buttonEightMove();
     void buttonNineMove();
 
+    void saveButton();
+
 private:
     Ui::MainWindow *ui;
     std::vector<std::vector<QLabel*>> fieldLabel;

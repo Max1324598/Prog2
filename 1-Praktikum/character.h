@@ -31,6 +31,8 @@ public:
 
     void setStrength(int newStrength);
 
+    void setStamina(int newStamina);
+
 private:
     string texture;
     Tile* tile;

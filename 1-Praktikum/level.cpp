@@ -33,10 +33,8 @@ Level::Level()
         "#...?....#"
         "##########"};
     createStringLevel(maxRow,maxColumn, levelString);
-    Switch* sp = dynamic_cast<Switch*>(stageVector.at(8).at(4));
-    Door* dp = dynamic_cast<Door*>(stageVector.at(6).at(7));
-    sp->attach(dp);
 
+    createDoorSwitch(6,7,8,4);
 
     createGraph();
     createAttackNpc(5,5);
@@ -47,7 +45,75 @@ Level::Level()
 
 Level::Level(int row, int col)
     : maxRow{row}, maxColumn{col}, stageVector{}, characterVector{},graph(maxRow,maxColumn)
-{}
+{
+}
+
+Level::Level(nlohmann::json level)
+    : maxRow{10}, maxColumn{10}, stageVector{}, characterVector{},graph(maxRow,maxColumn)
+{
+    this->maxRow = level["maxrows"];
+    this->maxColumn = level["maxcols"];
+
+    for (int i{}; i<maxRow; i++){
+        stageVector.emplace_back();
+        for (int j{}; j<maxColumn; j++){
+            std::string tmpstring = level["field"][i][j];
+            auto tmpTile = createTileFromString(tmpstring, i, j);
+            this->stageVector.at(i).push_back(tmpTile);
+        }
+    }
+
+
+
+    graph = Graph(maxRow,maxColumn);
+
+    for(const auto& jplayer : level["player"] ){
+        if(jplayer["hasPlayer"] == "1"){
+
+            Character* player = new Character();
+            player->setHitPoints(jplayer["hitpoints"]);
+            player->setStamina(jplayer["stamina"]);
+            player->setStrength(jplayer["strength"]);
+            placePlayerCharacter(player, jplayer["row"], jplayer["col"]);
+        }
+
+    }
+
+    for(const auto& jcharacter: level["character"]){
+
+        AttackController* npcController = new AttackController(this);
+        Npc* npc = new Npc("N", nullptr, npcController);
+        npcController->setNpc(npc);
+        npc->setStamina(jcharacter["stamina"]);
+        npc->setStrength(jcharacter["strength"]);
+        npc->setHitPoints(jcharacter["hitpoints"]);
+        placeCharacter(npc, jcharacter["row"], jcharacter["col"]);
+        characterVector.push_back(npc);
+
+    }
+
+
+    for(const auto& jportal : level["portalpairs"] ){
+        setPortals(jportal["row1"],jportal["column1"],jportal["row2"],jportal["column2"],1);
+    }
+
+    for (const auto& jdoorSwitch: level["doorswitchpairs"]) {
+        createDoorSwitch(jdoorSwitch["row1"],jdoorSwitch["column1"],jdoorSwitch["row2"],jdoorSwitch["column2"]);
+    }
+
+     for (const auto& jdoor: level["doors"]) {
+         Tile* doorTile = stageVector.at(jdoor["row"]).at(jdoor["column"]);
+         Door* door = dynamic_cast<Door*>(doorTile);
+         door->setIsOpen(jdoor["isOpen"]);
+     }
+
+
+    graph = Graph(maxRow,maxColumn);
+    createGraph();
+}
+
+
+
 
 
 
@@ -212,7 +278,7 @@ void Level::createStringLevel(int rows, int columns, std::string string)
                 stageVector.at(i).push_back(new Ramp(i, j, nullptr));
             }
             if (lev.at(k)== '?'){
-                stageVector.at(i).push_back(new Switch(i,j,nullptr));
+                stageVector.at(i).push_back(new Switch(i,j,nullptr,this));
             }
             if (lev.at(k)== 'X'){
                 stageVector.at(i).push_back(new Door(i,j,nullptr,this));
@@ -241,6 +307,9 @@ void Level::setPortals(int row1, int column1, int row2, int column2, int type)
 
     stageVector.at(row1).at(column1) = newPortal1;
     stageVector.at(row2).at(column2) = newPortal2;
+
+    vector<int> portalpair {row1,column1,row2,column2};
+    portalPairs.push_back(portalpair);
 }
 
 void Level::setDoor(int row, int column)
@@ -252,9 +321,26 @@ void Level::setDoor(int row, int column)
 
 void Level::setSwitch(int row, int column)
 {
-    Switch* newSwitch = new Switch (row,column, nullptr);
+    Switch* newSwitch = new Switch (row,column, nullptr,this);
     delete stageVector.at(row).at(column);
     stageVector.at(row).at(column) = newSwitch;
+}
+
+void Level::createDoorSwitch(int row1, int col1, int row2, int col2)
+{
+    auto door = new Door(row1, col1,nullptr,this);
+    auto leaver =new Switch(row2, col2,nullptr,this);
+    leaver->attach(door);
+
+    delete stageVector.at(row1).at(col1);
+    delete stageVector.at(row2).at(col2);
+
+    stageVector.at(row1).at(col1) = door;
+    stageVector.at(row2).at(col2) = leaver;
+
+    doorVector.push_back(door);
+    doorSwitchPairs.push_back({row1,col1,row2,col2});
+
 }
 
 void Level::setPit(int row, int column)
@@ -276,6 +362,7 @@ void Level::setLevelChanger(int row, int column, bool isExit)
     LevelChanger* newLevelChanger = new LevelChanger(row,column,isExit,this);
     delete stageVector.at(row).at(column);
     stageVector.at(row).at(column) = newLevelChanger;
+    levelChangers.push_back(newLevelChanger);
 }
 
 
@@ -284,7 +371,19 @@ void Level::placeCharacter(Character *c, int row, int col)
 {
     c->setTile(getTile(row,col));
     stageVector.at(row).at(col)->setCharacter(c);
+
+}
+
+void Level::placePlayerCharacter(Character *c, int row, int col)
+{
+    c->setTile(getTile(row,col));
+    stageVector.at(row).at(col)->setCharacter(c);
     playerCharacter = c;
+}
+
+const vector<Door *> &Level::getDoorVector() const
+{
+    return doorVector;
 }
 
 void Level::placeLootChest(int row, int column)
@@ -303,7 +402,7 @@ void Level::rebuildGraph()
         }
     }
 
-   auto adjacencyList = graph.getAdjacencyList();
+    auto adjacencyList = graph.getAdjacencyList();
     auto it = adjacencyList.begin();
     while (it != adjacencyList.end()){
         adjacencyList.erase(it);
@@ -328,6 +427,30 @@ void Level::createAttackNpc(int row, int col)
     npcController->setNpc(npc);
     placeCharacter(npc, row, col);
     characterVector.push_back(npc);
+}
+
+Tile *Level::createTileFromString(std::string tileToCreate, int row, int col)
+{
+    if (tileToCreate == "door") {
+        return new Door(row, col,nullptr,this);
+    } else if (tileToCreate == "floor") {
+        return new Floor(row, col,nullptr);
+    } else if (tileToCreate == "levelchanger") {
+        return new LevelChanger(row, col,0,this);
+    } else if (tileToCreate == "lootchest") {
+        return new LootChest(row, col,nullptr);
+    } else if (tileToCreate == "pit") {
+        return new Pit(row, col,nullptr);
+    } else if (tileToCreate == "portal") {
+        return new Portal(row, col, nullptr, nullptr, 0);
+    } else if (tileToCreate == "ramp") {
+        return new Ramp(row, col,nullptr);
+    } else if (tileToCreate == "switch") {
+        return new Switch(row, col,nullptr,this);
+    } else if (tileToCreate == "wall") {
+        return new Wall(row, col,nullptr);
+    }
+
 }
 
 
@@ -411,7 +534,7 @@ vector<Tile*> Level::getPath(Node* source, Node* target)
 
 
     std::reverse(result.begin(), result.end());
-    std::cout<< result.size();
+
 
     return result;
 }
@@ -429,5 +552,25 @@ Character *Level::getPlayerCharacter() const
 const Graph &Level::getGraph() const
 {
     return graph;
+}
+
+const vector<vector<int> > &Level::getPortalPairs() const
+{
+    return portalPairs;
+}
+
+vector<vector<int>> &Level::getDoorSwitchPairs()
+{
+    return doorSwitchPairs;
+}
+
+const vector<LevelChanger *> &Level::getLevelChangers() const
+{
+    return levelChangers;
+}
+
+void Level::setPlayerCharacter(Character *newPlayerCharacter)
+{
+    playerCharacter = newPlayerCharacter;
 }
 

@@ -71,3 +71,8 @@ void Character::setStrength(int newStrength)
     strength = newStrength;
 }
 
+void Character::setStamina(int newStamina)
+{
+    stamina = newStamina;
+}
+

@@ -14,6 +14,8 @@ public:
 
     bool getIsOpen() const;
 
+    void setIsOpen(bool newIsOpen);
+
 private:
      bool isOpen;
      Level* currentLevel;

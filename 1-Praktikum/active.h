@@ -7,7 +7,7 @@ class Active
 public:
     virtual ~Active() = default;
     std::vector<Passive*> passiveObjects;
-    void attach(Passive*);
+    virtual void attach(Passive*);
     virtual void detach(Passive*) = 0;
     virtual void activate();
 

@@ -1,9 +1,27 @@
 #include "switch.h"
 #include "npc.h"
+#include "level.h"
+#include "door.h"
+#include <iostream>
 
 
-Switch::Switch(int row, int column, Character* character)
-    : Tile{row, column, "?",character},Active(){}
+
+Switch::Switch(int row, int column, Character* character, Level* level)
+    : Tile{row, column, "?",character},Active(),level{level}
+{ }
+
+void Switch::attach(Passive* newPassiveObject)
+{
+    bool alreadyListed = false;
+    for(auto &listedObject : passiveObjects){
+        if(listedObject == newPassiveObject)
+            alreadyListed = true;
+    }
+    if(!alreadyListed)
+        passiveObjects.emplace_back(newPassiveObject);
+
+}
+
 
 
 Tile* Switch::onEnter(Tile* fromTile,Character* who){

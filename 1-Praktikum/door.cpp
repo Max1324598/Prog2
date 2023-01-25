@@ -39,3 +39,8 @@ bool Door::getIsOpen() const
     return isOpen;
 }
 
+void Door::setIsOpen(bool newIsOpen)
+{
+    isOpen = newIsOpen;
+}
+

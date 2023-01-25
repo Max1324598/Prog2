@@ -17,6 +17,7 @@ private:
     int movingDir;
     Level* level;
     Npc* npc;
+    int counter;
 };
 
 #endif // ATTACKCONTROLLER_H
