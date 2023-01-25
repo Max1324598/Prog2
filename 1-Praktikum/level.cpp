@@ -386,6 +386,11 @@ const vector<Door *> &Level::getDoorVector() const
     return doorVector;
 }
 
+void Level::addToLcVector(LevelChanger * lc)
+{
+    levelChangers.push_back(lc);
+}
+
 void Level::placeLootChest(int row, int column)
 {
     LootChest* lootChest = new LootChest(row,column,nullptr);

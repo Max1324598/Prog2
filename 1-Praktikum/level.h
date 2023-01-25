@@ -70,6 +70,7 @@ public:
 
     void placePlayerCharacter(Character *c, int row, int col);
     const vector<Door *> &getDoorVector() const;
+    void addToLcVector(LevelChanger*);
 
 private:
     int maxRow;

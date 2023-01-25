@@ -21,13 +21,12 @@
 DungeonCrawler::DungeonCrawler()
     : currentAbstractUI{currentAbstractUI}
 {
-    saveLevels();
-    //loadFromJson();
+    //saveLevels();
+    loadFromJson();
 
-    auto it = levelList.begin();
-    currentLevel = *it;
+
     currentCharacter = currentLevel->getPlayerCharacter();
-    saveLevelsJson();
+    //saveLevelsJson();
 
 }
 
@@ -323,6 +322,10 @@ void DungeonCrawler::saveLevels()
     level3->createGraph();
 
 
+    auto it = levelList.begin();
+    currentLevel = *it;
+
+
 
 }
 
@@ -476,13 +479,14 @@ void DungeonCrawler::loadFromJson()
     int levelCounter = 1;
 
     for(const auto& level : jlevels["levels"]){
-        auto currentLevel = *it;
+        auto lcLevel = *it;
 
         for(const auto& levelChanger : level["levelchangers"]){
             levelChangerTuples.push_back({levelChanger["row"],levelChanger["column"],levelChanger["isExit"], levelCounter});
 
-            auto currentTile = currentLevel->getStageVector().at(levelChanger["row"]).at(levelChanger["column"]);
+            auto currentTile = lcLevel->getStageVector().at(levelChanger["row"]).at(levelChanger["column"]);
             LevelChanger* currentLevelChanger = dynamic_cast<LevelChanger*>(currentTile);
+            lcLevel->addToLcVector(currentLevelChanger);
             if (levelChanger["isExit"] == true){
                 currentLevelChanger->setIsExit(true);
             }
@@ -498,9 +502,9 @@ void DungeonCrawler::loadFromJson()
     levelCounter = 1;
 
     for(const auto& level : jlevels["levels"]){
-        auto currentLevel = *it;
+        auto lcLevel = *it;
         for(const auto& levelChanger : level["levelchangers"]){
-            auto currentTile = currentLevel->getStageVector().at(levelChanger["row"]).at(levelChanger["column"]);
+            auto currentTile = lcLevel->getStageVector().at(levelChanger["row"]).at(levelChanger["column"]);
             LevelChanger* currentLevelChanger = dynamic_cast<LevelChanger*>(currentTile);
 
             LevelChanger* nextLevelChanger = nullptr;
@@ -551,6 +555,10 @@ void DungeonCrawler::loadFromJson()
         levelCounter++;
     }
 
+    it = levelList.begin();
+    for (auto level : levelList){
+        if(level->getPlayerCharacter() != nullptr) currentLevel = level;
+    }
 
 
 }

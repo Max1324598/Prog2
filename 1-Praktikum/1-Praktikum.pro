@@ -55,6 +55,7 @@ HEADERS += \
     graph.h \
     graphicalui.h \
     guardcontroller.h \
+    json.h \
     level.h \
     levelchanger.h \
     lootchest.h \
